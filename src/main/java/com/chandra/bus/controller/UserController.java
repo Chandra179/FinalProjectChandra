@@ -61,11 +61,11 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupCustomRequest signupCustomRequest) {
 		if (userRepository.existsByUsername(signupCustomRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Username is already taken!"));
 		}
 
 		if (userRepository.existsByEmail(signupCustomRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Email is already in use!"));
 		}
 
 		// Create new user's account
@@ -108,7 +108,7 @@ public class UserController {
 				signupCustomRequest.getDetails(), user);
 		agencyRepository.save(agency);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
 	}
 
 	@PutMapping("/{id}")

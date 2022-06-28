@@ -10,4 +10,9 @@ public class MessageResponse<T> {
 	private Boolean success;
 	private List<T> data;
 	private T object;
+
+	public MessageResponse(String message) {
+		super();
+		this.message = message;
+	}
 }
