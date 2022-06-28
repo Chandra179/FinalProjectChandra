@@ -14,7 +14,8 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_agency")
 public class Agency {
-    @Id
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,4 +31,12 @@ public class Agency {
 
     @OneToMany(mappedBy = "agency", cascade = CascadeType.ALL)
     private Set<Bus> buses;
+
+	public Agency(String code, String name, String details, User owner) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.details = details;
+		this.owner = owner;
+	}
 }
