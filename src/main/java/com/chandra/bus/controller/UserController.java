@@ -5,8 +5,11 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.model.user.UserRoles;
 import com.chandra.bus.payload.request.SignupCustomRequest;
+import com.chandra.bus.payload.request.UserCustomRequest;
 import com.chandra.bus.payload.request.UserPasswordRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
