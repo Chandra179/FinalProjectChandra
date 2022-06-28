@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.Role;
@@ -67,7 +69,7 @@ public class UserController {
 				encoder.encode(signupCustomRequest.getPassword()),
 				signupCustomRequest.getFirstName(),
 				signupCustomRequest.getLastName(),
-				signupCustomRequest.getMobileNumber())
+				signupCustomRequest.getMobileNumber()
 		);
 
 		Set<String> strRoles = signupCustomRequest.getRole();
