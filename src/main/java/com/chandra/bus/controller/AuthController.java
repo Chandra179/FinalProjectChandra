@@ -29,6 +29,7 @@ import com.chandra.bus.security.services.UserDetailsImpl;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
+	
 	@Autowired
 	AuthenticationManager authenticationManager;
 
@@ -38,14 +39,14 @@ public class AuthController {
 	@Autowired
 	RoleRepository roleRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
+//	@Autowired
+//	PasswordEncoder encoder;
 
 	@Autowired
 	JwtUtils jwtUtils;
 
 	@PostMapping("/auth")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
