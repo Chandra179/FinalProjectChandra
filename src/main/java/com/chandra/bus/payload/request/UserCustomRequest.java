@@ -14,4 +14,10 @@ public class UserCustomRequest {
 	private String lastName;
 
 	private String mobileNumber;
+
+	public UserCustomRequest(String firstName, String lastName, String mobileNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.mobileNumber = mobileNumber;
+	}
 }
