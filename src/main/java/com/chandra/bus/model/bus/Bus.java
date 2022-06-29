@@ -10,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_bus")
 public class Bus {
-    @Id
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,4 +24,11 @@ public class Bus {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agency_id")
     private Agency agency;
+
+	public Bus(String code, int capacity, String make, Agency agency) {
+		this.code = code;
+		this.capacity = capacity;
+		this.make = make;
+		this.agency = agency;
+	}
 }

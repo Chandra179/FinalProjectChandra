@@ -34,4 +34,12 @@ public class Trip {
     @JoinColumn(name = "agency_id")
     private Agency agency;
 
+	public Trip(int fare, int journeyTime, Stop sourceStop, Stop destStop, Bus bus, Agency agency) {
+		this.fare = fare;
+		this.journeyTime = journeyTime;
+		this.sourceStop = sourceStop;
+		this.destStop = destStop;
+		this.bus = bus;
+		this.agency = agency;
+	}
 }

@@ -29,4 +29,12 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User passenger;
+
+	public Ticket(int seatNumber, Boolean cancellable, String journeyDate, User passenger, TripSchedule tripSchedule) {
+		this.seatNumber = seatNumber;
+		this.cancellable = cancellable;
+		this.journeyDate = journeyDate;
+		this.passenger = passenger;
+		this.tripSchedule = tripSchedule;
+	}
 }

@@ -4,6 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+import com.sun.istack.NotNull;
+
 import java.util.Set;
 
 @Data
@@ -22,7 +26,15 @@ public class TripSchedule {
     @OneToMany(mappedBy = "tripSchedule", cascade = CascadeType.ALL)
     private Set<Ticket> ticketsSold;
 
+	@NotBlank
     private String tripDate;
 
+	@NotNull
     private int availableSeats;
+
+	public TripSchedule(String tripDate, int availableSeats, Trip tripDetail) {
+		this.tripDate = tripDate;
+		this.availableSeats = availableSeats;
+		this.tripDetail = tripDetail;
+	}
 }

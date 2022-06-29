@@ -33,7 +33,6 @@ public class Agency {
     private Set<Bus> buses;
 
 	public Agency(String code, String name, String details, User owner) {
-		super();
 		this.code = code;
 		this.name = name;
 		this.details = details;

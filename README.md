@@ -1,4 +1,4 @@
-## Database Migration (FLyWay) (PostgreSQL)
+### Database Migration (FLyWay) (PostgreSQL)
 
 Untuk migrasi database diwajibkan membuat tabel terlebih dahulu (DDL)
 	

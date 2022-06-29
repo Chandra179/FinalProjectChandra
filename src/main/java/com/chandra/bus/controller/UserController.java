@@ -5,22 +5,18 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.Role;
@@ -34,6 +30,11 @@ import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.security.jwt.JwtUtils;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 
 @CrossOrigin(origins = "*", maxAge = 3600, methods = { RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET })
 @RestController
@@ -69,14 +70,9 @@ public class UserController {
 		}
 
 		// Create new user's account
-		User user = new User(
-				signupCustomRequest.getUsername(),
-				signupCustomRequest.getEmail(),
-				encoder.encode(signupCustomRequest.getPassword()),
-				signupCustomRequest.getFirstName(),
-				signupCustomRequest.getLastName(),
-				signupCustomRequest.getMobileNumber()
-		);
+		User user = new User(signupCustomRequest.getFirstName(), signupCustomRequest.getLastName(),
+				signupCustomRequest.getMobileNumber(), signupCustomRequest.getUsername(),
+				signupCustomRequest.getEmail(), encoder.encode(signupCustomRequest.getPassword()));
 
 		Set<String> strRoles = signupCustomRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -104,8 +100,8 @@ public class UserController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		Agency agency = new Agency(signupCustomRequest.getCode(), signupCustomRequest.getName(),
-				signupCustomRequest.getDetails(), user);
+		Agency agency = new Agency(signupCustomRequest.getCode(), signupCustomRequest.getDetails(),
+				signupCustomRequest.getName(), user);
 		agencyRepository.save(agency);
 
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));

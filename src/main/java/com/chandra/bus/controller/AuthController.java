@@ -29,7 +29,7 @@ import com.chandra.bus.security.services.UserDetailsImpl;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-	
+
 	@Autowired
 	AuthenticationManager authenticationManager;
 
@@ -39,14 +39,14 @@ public class AuthController {
 	@Autowired
 	RoleRepository roleRepository;
 
-//	@Autowired
-//	PasswordEncoder encoder;
+	@Autowired
+	PasswordEncoder encoder;
 
 	@Autowired
 	JwtUtils jwtUtils;
 
 	@PostMapping("/auth")
-	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -57,16 +57,9 @@ public class AuthController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		
+
 		return ResponseEntity
-				.ok(new JwtResponse(
-						jwt,
-						userDetails.getId(),
-						userDetails.getUsername(),
-						userDetails.getEmail(),
-						userDetails.getFirstName(),
-						userDetails.getLastName(),
-						userDetails.getMobileNumber(),
-						roles));
+				.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(),
+						userDetails.getFirstName(), userDetails.getLastName(), userDetails.getMobileNumber(), roles));
 	}
 }
