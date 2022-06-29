@@ -16,11 +16,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_user", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+@Table(name = "tb_user", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "username"),
 		@UniqueConstraint(columnNames = "email") 
 })
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -57,10 +57,8 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User(String username, @Email String email,
-			String password, String firstName,
+	public User(String username, @Email String email, String password, String firstName,
 			String lastName, String mobileNumber) {
-		super();
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -68,8 +66,4 @@ public class User {
 		this.lastName = lastName;
 		this.mobileNumber = mobileNumber;
 	}
-	
-
-	
-
 }
