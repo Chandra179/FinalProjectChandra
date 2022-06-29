@@ -25,7 +25,7 @@ public class FinalProjectChandraApplication {
 	@Bean
 	public Docket postsApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.example.spring.controller")).build()
+				.apis(RequestHandlerSelectors.basePackage("com.chandra.bus.controller")).build()
 				.securitySchemes(Arrays.asList(apiKey()));
 	}
 

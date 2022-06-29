@@ -1,6 +1,7 @@
 package com.chandra.bus.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.security.jwt.JwtUtils;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -58,6 +60,28 @@ public class UserController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+
+	@GetMapping("")
+	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getAllUser() {
+		List<User> user = userRepository.findAll();
+		if (user.isEmpty()) {
+			return ResponseEntity.badRequest().body(new MessageResponse<String>("No users found"));
+		}
+		return ResponseEntity.ok(user);
+	}
+
+	@GetMapping("/{id}")
+	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getUser(@PathVariable(value = "id") Long id) {
+		User user = userRepository.findById(id).get();
+		if (user == null) {
+			return ResponseEntity.badRequest().body(new MessageResponse<String>("User with ID " + id + " not found"));
+		}
+		return ResponseEntity.ok(user);
+	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupCustomRequest signupCustomRequest) {
@@ -89,7 +113,7 @@ public class UserController {
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
-				case "admin":
+				case "ROLE_ADMIN":
 					Role adminRole = roleRepository.findByName(UserRoles.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
@@ -105,8 +129,12 @@ public class UserController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		Agency agency = new Agency(signupCustomRequest.getCode(), signupCustomRequest.getDetails(),
-				signupCustomRequest.getName(), user);
+		Agency agency = new Agency(
+				signupCustomRequest.getCode(),
+				signupCustomRequest.getName(),
+				signupCustomRequest.getDetails(),
+				user
+		);
 		agencyRepository.save(agency);
 
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
