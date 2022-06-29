@@ -17,19 +17,25 @@ public class MessageResponse<T> {
 	private List<T> data;
 	private T object;
 
-	public MessageResponse(boolean b, String result) {
-		// TODO Auto-generated constructor stub
+	public MessageResponse(String message) {
+		this.message = message;
 	}
 
-	public MessageResponse(boolean b, String string, Agency updatedAgency) {
-		// TODO Auto-generated constructor stub
+	public MessageResponse(Boolean success, String message, List<T> data) {
+		this.success = success;
+		this.message = message;
+		this.data = data;
 	}
 
-	public MessageResponse(boolean b, String string, AgencyRequest dataResult) {
-		// TODO Auto-generated constructor stub
+	public MessageResponse(Boolean success, String message, T object) {
+		this.success = success;
+		this.message = message;
+		this.object = object;
 	}
 
-	public MessageResponse(boolean b, String string, List<AgencyRequest> dataArrResult) {
-		// TODO Auto-generated constructor stub
+	public MessageResponse(Boolean success, String message) {
+		this.success = success;
+		this.message = message;
+		this.data = null;
 	}
 }

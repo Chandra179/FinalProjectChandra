@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chandra.bus.model.Stop;
+import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.repository.StopRepository;
 
 import io.swagger.annotations.Authorization;

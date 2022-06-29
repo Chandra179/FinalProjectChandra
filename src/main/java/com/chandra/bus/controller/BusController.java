@@ -49,8 +49,12 @@ public class BusController {
 	public ResponseEntity<?> addBusByUserId(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody BusCustomRequest busCustomRequest) {
 		Agency agency = agencyRepository.findByOwnerUser(id);
-		Bus bus = new Bus(busCustomRequest.getCode(), busCustomRequest.getCapacity(), busCustomRequest.getMake(),
-				agency);
+		Bus bus = new Bus(
+				busCustomRequest.getCode(),
+				busCustomRequest.getCapacity(),
+				busCustomRequest.getMake(),
+				agency
+		);
 		return ResponseEntity.ok(busRepository.save(bus));
 	}
 

@@ -70,9 +70,14 @@ public class UserController {
 		}
 
 		// Create new user's account
-		User user = new User(signupCustomRequest.getFirstName(), signupCustomRequest.getLastName(),
-				signupCustomRequest.getMobileNumber(), signupCustomRequest.getUsername(),
-				signupCustomRequest.getEmail(), encoder.encode(signupCustomRequest.getPassword()));
+		User user = new User(
+				signupCustomRequest.getUsername(),
+				signupCustomRequest.getEmail(),
+				encoder.encode(signupCustomRequest.getPassword()),
+				signupCustomRequest.getFirstName(),
+				signupCustomRequest.getLastName(),
+				signupCustomRequest.getMobileNumber()
+		);
 
 		Set<String> strRoles = signupCustomRequest.getRole();
 		Set<Role> roles = new HashSet<>();

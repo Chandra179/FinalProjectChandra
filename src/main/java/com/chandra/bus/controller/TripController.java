@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chandra.bus.model.Agency;
-import com.chandra.bus.model.Bus;
-import com.chandra.bus.model.Stop;
-import com.chandra.bus.model.Trip;
+import com.chandra.bus.model.bus.Agency;
+import com.chandra.bus.model.bus.Bus;
+import com.chandra.bus.model.bus.Stop;
+import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;

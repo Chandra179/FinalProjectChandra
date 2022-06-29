@@ -68,8 +68,13 @@ public class AgencyController {
 		if (agency == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			AgencyRequest dataResult = new AgencyRequest(agency.getId(), agency.getCode(), agency.getName(),
-					agency.getDetails(), agency.getOwner().getId());
+			AgencyRequest dataResult = new AgencyRequest(
+					agency.getId(),
+					agency.getCode(),
+					agency.getName(),
+					agency.getDetails(),
+					agency.getOwner().getId()
+			);
 			return ResponseEntity.ok(new MessageResponse<AgencyRequest>(true, "Success Retrieving Data", dataResult));
 		}
 	}
@@ -79,7 +84,12 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 		User user = userRepository.findById(agencyRequest.getOwner()).get();
-		Agency agency = new Agency(agencyRequest.getCode(), agencyRequest.getDetails(), agencyRequest.getName(), user);
+		Agency agency = new Agency(
+				agencyRequest.getCode(),
+				agencyRequest.getDetails(),
+				agencyRequest.getName(),
+				user
+		);
 		return ResponseEntity
 				.ok(new MessageResponse<Agency>(true, "Success Adding Data", agencyRepository.save(agency)));
 	}
@@ -121,5 +131,4 @@ public class AgencyController {
 			return ResponseEntity.ok(new MessageResponse<Agency>(false, result));
 		}
 	}
-
 }

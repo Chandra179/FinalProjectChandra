@@ -19,5 +19,4 @@ public class JwtResponse {
 	private String lastName;
 	private String mobileNumber;
 	private List<String> roles;
-
 }
