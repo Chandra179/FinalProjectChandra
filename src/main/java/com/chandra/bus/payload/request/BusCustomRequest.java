@@ -6,62 +6,28 @@ import javax.validation.constraints.NotNull;
 import com.chandra.bus.model.user.User;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BusCustomRequest {
 	
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
+	@NotBlank
 	private String code;
 
+	@NotNull
 	private int capacity;
 
+	@NotBlank
 	private String make;
 
 	@ApiModelProperty(hidden = true)
+	@NotBlank
 	private User agencyId;
-
-	public BusCustomRequest() {
-	}
-
-	public BusCustomRequest(Long id, @NotNull int capacity, @NotBlank String code, @NotBlank String make,
-			@NotBlank User agencyId) {
-		this.id = id;
-		this.capacity = capacity;
-		this.code = code;
-		this.make = make;
-		this.agencyId = agencyId;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
-	public String getMake() {
-		return make;
-	}
-
-	public void setMake(String make) {
-		this.make = make;
-	}
-
-	public User getAgencyId() {
-		return agencyId;
-	}
-
-	public void setAgencyId(User agencyId) {
-		this.agencyId = agencyId;
-	}
 }
