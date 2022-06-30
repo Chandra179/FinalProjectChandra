@@ -43,6 +43,7 @@ public class StopController {
 				stopReq.getName(),
 				stopReq.getDetail()
 				);
-		return ResponseEntity.ok(stopRepository.save(stop));
+		Stop result = stopRepository.save(stop);
+		return ResponseEntity.ok(result);
 	}
 }

@@ -1,6 +1,5 @@
 package com.chandra.bus.controller;
 
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chandra.bus.model.bus.Agency;
-import com.chandra.bus.model.bus.Bus;
-import com.chandra.bus.payload.request.BusCustomRequest;
 import com.chandra.bus.payload.request.TicketRequest;
-import com.chandra.bus.repository.AgencyRepository;
-import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.TicketRepository;
 
 import io.swagger.annotations.ApiOperation;

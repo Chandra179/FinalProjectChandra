@@ -1,11 +1,16 @@
 package com.chandra.bus.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +20,7 @@ import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
+import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
@@ -60,4 +66,30 @@ public class TripController {
 				agency);
 		return ResponseEntity.ok(tripRepository.save(trip));
 	}
+
+	@GetMapping("/bus/{id}")
+	@ApiOperation(value = "get trip by bus id", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripByBus(@PathVariable(value = "id") Long id) {
+
+		Optional<Bus> bus = busRepository.findById(id);
+
+		if (!bus.isPresent()) {
+			return ResponseEntity.ok("trip dengan bus ID" + id + " tidak ditemukan");
+		}
+		List<Trip> trip = tripRepository.findByBus(bus);
+
+		return ResponseEntity.ok(trip);
+	}
+
+	@GetMapping("/stop")
+	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripByStop(@RequestBody StopRequest tripRequest) {
+
+		List<Trip> trip = tripRepository.findTripsByStops(tripRequest.getSource_stop(), tripRequest.getDest_stop());
+
+		return ResponseEntity.ok(trip);
+	}
+
 }
