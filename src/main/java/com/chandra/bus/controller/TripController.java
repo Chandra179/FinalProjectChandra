@@ -22,6 +22,7 @@ import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
 
 import io.swagger.annotations.Authorization;
+import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -44,18 +45,19 @@ public class TripController {
 	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
+
 		Agency agency = agencyRepository.findById(tripRequest.getAgencyId()).get();
 		Bus bus = busRepository.findById(tripRequest.getBusId()).get();
 		Stop sourceStop = stopRepository.findById(tripRequest.getSourceStopId()).get();
 		Stop destStop = stopRepository.findById(tripRequest.getDestStopId()).get();
+
 		Trip trip = new Trip(
 				tripRequest.getFare(),
 				tripRequest.getJourneyTime(),
 				sourceStop,
 				destStop,
 				bus,
-				agency
-				);
+				agency);
 		return ResponseEntity.ok(tripRepository.save(trip));
 	}
 }

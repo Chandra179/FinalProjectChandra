@@ -1,3 +1,7 @@
+--
+-- PostgreSQL database dump
+--
+
 -- Dumped from database version 14.3
 -- Dumped by pg_dump version 14.3
 
@@ -586,3 +590,4 @@ ALTER TABLE ONLY public.tb_ticket
 --
 -- PostgreSQL database dump complete
 --
+

@@ -18,43 +18,36 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusCustomRequest;
+import com.chandra.bus.payload.request.TicketRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
+import com.chandra.bus.repository.TicketRepository;
 
-import io.swagger.annotations.Authorization;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1/bus")
-public class BusController {
+@RequestMapping("/api/v1/ticket")
+public class TicketController {
 
 	@Autowired
-	BusRepository busRepository;
-
-	@Autowired
-	AgencyRepository agencyRepository;
+	TicketRepository TicketRepository;
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "get bus agency", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "get booking ticket", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getBusByAgencyId(@PathVariable(value = "id") Long id) {
-		List<Bus> bus = busRepository.findByAgencyId(id);
-		return ResponseEntity.ok(bus);
+	public ResponseEntity<?> getTicket(@PathVariable(value = "id") Long id) {
+
+		return ResponseEntity.ok("");
 	}
 
 	@PostMapping("/{id}")
-	@ApiOperation(value = "owner add new bus", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addBusByUserId(@PathVariable(value = "id") Long id,
-			@Valid @RequestBody BusCustomRequest busCustomRequest) {
-		Agency agency = agencyRepository.findByOwnerUser(id);
-		Bus bus = new Bus(
-				busCustomRequest.getCode(),
-				busCustomRequest.getCapacity(),
-				busCustomRequest.getMake(),
-				agency
-		);
-		return ResponseEntity.ok(busRepository.save(bus));
+	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> bookTicket(@PathVariable(value = "id") Long id,
+			@Valid @RequestBody TicketRequest ticketRequest) {
+
+		return ResponseEntity.ok("");
 	}
 }

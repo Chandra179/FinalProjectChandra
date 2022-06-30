@@ -96,9 +96,10 @@ public class AgencyController {
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateAgency(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody AgencyRequest agencyDetail) {
+
 		Agency agency = agencyRepository.findById(id).get();
 		User user = userRepository.findById(agencyDetail.getOwner()).get();
 		if (agency == null) {
@@ -111,7 +112,8 @@ public class AgencyController {
 
 		Agency updatedAgency = agencyRepository.save(agency);
 
-		return ResponseEntity.ok(new MessageResponse<Agency>(true, "Success Updating Data", updatedAgency));
+		return ResponseEntity
+				.ok(new MessageResponse<Agency>(true, "Success Updating Data", updatedAgency));
 	}
 
 	@DeleteMapping("/{id}")

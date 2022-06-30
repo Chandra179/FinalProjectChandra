@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Stop;
+import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.repository.StopRepository;
 
 import io.swagger.annotations.Authorization;
@@ -27,17 +28,21 @@ public class StopController {
 	StopRepository stopRepository;
 
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ADMIN')")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "get all stops", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getAllStops() {
 		return ResponseEntity.ok(stopRepository.findAll());
 	}
 
 	@PostMapping("/")
-	@PreAuthorize("hasRole('ADMIN')")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	public ResponseEntity<?> addStop(@Valid @RequestBody Stop stop) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "add stop", authorizations = { @Authorization(value = "apiKey") })
+	public ResponseEntity<?> addStop(@Valid @RequestBody StopRequest stopReq) {
+		Stop stop = new Stop(
+				stopReq.getCode(),
+				stopReq.getName(),
+				stopReq.getDetail()
+				);
 		return ResponseEntity.ok(stopRepository.save(stop));
 	}
-
 }

@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
-import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.model.user.UserRoles;
-import com.chandra.bus.payload.request.SignupCustomRequest;
+import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserCustomRequest;
 import com.chandra.bus.payload.request.UserPasswordRequest;
 import com.chandra.bus.payload.response.MessageResponse;
-import com.chandra.bus.repository.AgencyRepository;
+
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.security.jwt.JwtUtils;
@@ -56,9 +56,6 @@ public class UserController {
 	PasswordEncoder encoder;
 
 	@Autowired
-	AgencyRepository agencyRepository;
-
-	@Autowired
 	JwtUtils jwtUtils;
 
 	@GetMapping("")
@@ -85,21 +82,26 @@ public class UserController {
 
 	@PostMapping("/signup")
 	@ApiOperation(value = "register new user")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupCustomRequest signupCustomRequest) {
-		if (userRepository.existsByUsername(signupCustomRequest.getUsername())) {
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest SignupRequest) {
+		if (userRepository.existsByUsername(SignupRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Username is already taken!"));
 		}
 
-		if (userRepository.existsByEmail(signupCustomRequest.getEmail())) {
+		if (userRepository.existsByEmail(SignupRequest.getEmail())) {
 			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Email is already in use!"));
 		}
 
-		// Create new user's account
-		User user = new User(signupCustomRequest.getUsername(), signupCustomRequest.getEmail(),
-				encoder.encode(signupCustomRequest.getPassword()), signupCustomRequest.getFirstName(),
-				signupCustomRequest.getLastName(), signupCustomRequest.getMobileNumber());
+		// create new user account
+		User user = new User(
+				SignupRequest.getUsername(),
+				SignupRequest.getEmail(),
+				encoder.encode(SignupRequest.getPassword()),
+				SignupRequest.getFirstName(),
+				SignupRequest.getLastName(),
+				SignupRequest.getMobileNumber()
+				);
 
-		Set<String> strRoles = signupCustomRequest.getRole();
+		Set<String> strRoles = SignupRequest.getRole();
 		Set<Role> roles = new HashSet<>();
 
 		if (strRoles == null) {
@@ -125,10 +127,6 @@ public class UserController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		Agency agency = new Agency(signupCustomRequest.getCode(), signupCustomRequest.getName(),
-				signupCustomRequest.getDetails(), user);
-		agencyRepository.save(agency);
-
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
 	}
 
@@ -153,7 +151,7 @@ public class UserController {
 	@PutMapping("/password/{id}")
 	@ApiOperation(value = "update user password", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> updatePassword(@PathVariable(value = "id") Long id,
+	public ResponseEntity<?> updateUserPassword(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody UserPasswordRequest userPasswordRequest) {
 		User user = userRepository.findById(id).get();
 		if (user == null) {
@@ -167,6 +165,15 @@ public class UserController {
 		return ResponseEntity.ok(updatedUser);
 	}
 
-	// user tidak boleh di delete karena agency mempunyai FK ke user
-	// violates foreign key constraint
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "delete user", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long id) {
+		User user = userRepository.findById(id).get();
+		if (user == null) {
+			return ResponseEntity.notFound().build();
+		}
+		userRepository.deleteById(id);
+		return ResponseEntity.ok(new MessageResponse<String>("Success delete user!"));
+	}
 }
