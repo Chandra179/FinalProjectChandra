@@ -1,7 +1,5 @@
 package com.chandra.bus.payload.request;
 
-import javax.validation.constraints.NotBlank;
-
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -17,18 +15,18 @@ public class TripRequest {
 	@NotNull
 	private int fare;
 
-	@NotBlank
+	@NotNull
 	private int journeyTime;
 
-	@NotBlank
+	@NotNull
 	private Long sourceStopId;
 
-	@NotBlank
+	@NotNull
 	private Long destStopId;
 
-	@NotBlank
+	@NotNull
 	private Long busId;
 
-	@NotBlank
+	@NotNull
 	private Long agencyId;
 }

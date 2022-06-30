@@ -62,8 +62,8 @@ public class UserController {
 	JwtUtils jwtUtils;
 
 	@GetMapping("")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@ApiOperation(value = "get all user", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUser() {
 		List<User> user = userRepository.findAll();
 		if (user.isEmpty()) {
@@ -73,8 +73,8 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@ApiOperation(value = "get user by id", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getUser(@PathVariable(value = "id") Long id) {
 		User user = userRepository.findById(id).get();
 		if (user == null) {
@@ -84,6 +84,7 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
+	@ApiOperation(value = "register new user")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupCustomRequest signupCustomRequest) {
 		if (userRepository.existsByUsername(signupCustomRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Username is already taken!"));
@@ -94,14 +95,9 @@ public class UserController {
 		}
 
 		// Create new user's account
-		User user = new User(
-				signupCustomRequest.getUsername(),
-				signupCustomRequest.getEmail(),
-				encoder.encode(signupCustomRequest.getPassword()),
-				signupCustomRequest.getFirstName(),
-				signupCustomRequest.getLastName(),
-				signupCustomRequest.getMobileNumber()
-		);
+		User user = new User(signupCustomRequest.getUsername(), signupCustomRequest.getEmail(),
+				encoder.encode(signupCustomRequest.getPassword()), signupCustomRequest.getFirstName(),
+				signupCustomRequest.getLastName(), signupCustomRequest.getMobileNumber());
 
 		Set<String> strRoles = signupCustomRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -129,20 +125,16 @@ public class UserController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		Agency agency = new Agency(
-				signupCustomRequest.getCode(),
-				signupCustomRequest.getName(),
-				signupCustomRequest.getDetails(),
-				user
-		);
+		Agency agency = new Agency(signupCustomRequest.getCode(), signupCustomRequest.getName(),
+				signupCustomRequest.getDetails(), user);
 		agencyRepository.save(agency);
 
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
 	}
 
 	@PutMapping("/{id}")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateUser(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody UserCustomRequest userCustomRequest) {
 		User user = userRepository.findById(id).get();
@@ -159,8 +151,8 @@ public class UserController {
 	}
 
 	@PutMapping("/password/{id}")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@ApiOperation(value = "update user password", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updatePassword(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody UserPasswordRequest userPasswordRequest) {
 		User user = userRepository.findById(id).get();
@@ -174,4 +166,7 @@ public class UserController {
 
 		return ResponseEntity.ok(updatedUser);
 	}
+
+	// user tidak boleh di delete karena agency mempunyai FK ke user
+	// violates foreign key constraint
 }
