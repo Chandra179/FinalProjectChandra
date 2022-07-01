@@ -17,8 +17,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	List<Trip> findByBus(Optional<Bus> bus);
 
-	@Query(value = "SELECT * from tb_trip as t INNER JOIN tb_stop as s on t.id = s.id WHERE s.name LIKE '%"
-			+ ":destStop" + "%'", nativeQuery = true)
+	@Query(value = "SELECT * FROM tb_trip t INNER JOIN tb_stop s on t.id = s.id WHERE s.name LIKE %:destStop%", nativeQuery = true)
 	List<Trip> findByDestStop(String destStop);
 
 	List<Trip> findBySourceStop(String sourceStop);
