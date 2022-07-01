@@ -44,7 +44,7 @@ public class AgencyController {
 	BusRepository busRepository;
 
 	@GetMapping("/")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "get all agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAll() {
 		List<AgencyRequest> dataArrResult = new ArrayList<>();
@@ -61,7 +61,7 @@ public class AgencyController {
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "get agency by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAgencyById(@PathVariable(value = "id") Long id) {
 		Agency agency = agencyRepository.findById(id).get();
@@ -80,7 +80,7 @@ public class AgencyController {
 	}
 
 	@PostMapping("/")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "add new agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 		User user = userRepository.findById(agencyRequest.getOwner()).get();
@@ -117,7 +117,7 @@ public class AgencyController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "delete agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteAgency(@PathVariable(value = "id") Long id) {
 		String result = "";

@@ -25,8 +25,8 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	List<Trip> findByAgency(String agency);
 
-	@Query(value = "SELECT DISTINCT * FROM tb_trip WHERE source_stop_id = :sourceStop AND dest_stop_id = :destStop", nativeQuery = true)
-	List<Trip> findTripsByStops(Integer sourceStop, Integer destStop);
+	@Query(value = "SELECT DISTINCT * FROM tb_trip WHERE source_stop_id = :sourceStopId AND dest_stop_id = :destStopId", nativeQuery = true)
+	List<Trip> findTripsByStops(Long sourceStopId, Long destStopId);
 
 	@Query(value = "SELECT * FROM tb_trip WHERE agency_id = :id", nativeQuery = true)
 	List<Trip> findByAgencyId(Long id);

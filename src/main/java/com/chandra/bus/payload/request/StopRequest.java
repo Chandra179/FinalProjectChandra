@@ -1,16 +1,18 @@
 package com.chandra.bus.payload.request;
 
-import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
 public class StopRequest {
-	@NotNull
-	private Integer source_stop;
+	@NotBlank
+	private String code;
 
-	@NotNull
-	private Integer dest_stop;
+	@NotBlank
+	private String name;
+
+	@NotBlank
+	private String detail;
 }

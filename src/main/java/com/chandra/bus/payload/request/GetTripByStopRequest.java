@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class GetTripByStopRequest {
-	private Long sourceStopid;
+	private Long sourceStopId;
 
 	private Long destStopId;
 }

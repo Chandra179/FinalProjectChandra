@@ -20,6 +20,7 @@ import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
+import com.chandra.bus.payload.request.GetTripByStopRequest;
 import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.repository.AgencyRepository;
@@ -28,7 +29,6 @@ import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
 
 import io.swagger.annotations.Authorization;
-import lombok.extern.slf4j.Slf4j;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -82,12 +82,14 @@ public class TripController {
 		return ResponseEntity.ok(trip);
 	}
 
-	@GetMapping("/stop")
+	@PostMapping("/stop")
 	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByStop(@RequestBody StopRequest tripRequest) {
+	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
 
-		List<Trip> trip = tripRepository.findTripsByStops(tripRequest.getSource_stop(), tripRequest.getDest_stop());
+		List<Trip> trip = tripRepository.findTripsByStops(
+				getTripByStopRequest.getSourceStopId(),
+				getTripByStopRequest.getDestStopId());
 
 		return ResponseEntity.ok(trip);
 	}

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusCustomRequest;
+import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 
@@ -40,11 +41,11 @@ public class BusController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getBusByAgencyId(@PathVariable(value = "id") Long id) {
 		List<Bus> bus = busRepository.findByAgencyId(id);
-		return ResponseEntity.ok(bus);
+		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Retrieving Data", bus));
 	}
 
 	@PostMapping("/{id}")
-	@ApiOperation(value = "owner add new bus", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "add new bus by owner id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addBusByUserId(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody BusCustomRequest busCustomRequest) {
@@ -55,6 +56,7 @@ public class BusController {
 				busCustomRequest.getMake(),
 				agency
 		);
-		return ResponseEntity.ok(busRepository.save(bus));
+		Bus savedBus = busRepository.save(bus);
+		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Adding Data", savedBus));
 	}
 }

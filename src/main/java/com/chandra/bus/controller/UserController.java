@@ -58,7 +58,7 @@ public class UserController {
 	@Autowired
 	JwtUtils jwtUtils;
 
-	@GetMapping("")
+	@GetMapping("/")
 	@ApiOperation(value = "get all user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUser() {
@@ -72,7 +72,7 @@ public class UserController {
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get user by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getUser(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Long id) {
 		User user = userRepository.findById(id).get();
 		if (user == null) {
 			return ResponseEntity.badRequest().body(new MessageResponse<String>("User with ID " + id + " not found"));
