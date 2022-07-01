@@ -71,6 +71,23 @@ public class TripController {
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Adding Data", tripRepository.save(trip)));
 	}
 
+	
+
+	@GetMapping("/")
+	@ApiOperation(value = "get all trip", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllTrip() {
+
+		List<Trip> trip = tripRepository.findAll();
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+	}
+
+	
 
 	@PostMapping("/fare")
 	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
@@ -106,6 +123,22 @@ public class TripController {
 	}
 
 
+	@PostMapping("/stop")
+	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
+
+		List<Trip> trip = tripRepository.findByStopBetween(getTripByStopRequest.getSourceStopId(),
+				getTripByStopRequest.getDestStopId());
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+	}
+
+
 	@GetMapping("/bus/{id}")
 	@ApiOperation(value = "get trip by bus id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -120,18 +153,47 @@ public class TripController {
 		List<Trip> trip = tripRepository.findByBus(bus);
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
-
-
-	@PostMapping("/stop")
-	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
+	
+	
+	@PostMapping("/deststop")
+	@ApiOperation(value = "get trip by destination stop", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
+	public ResponseEntity<?> getTripByDestStop(@PathVariable(value = "name") String name) {
 
-		List<Trip> trip = tripRepository.findTripsByStops(getTripByStopRequest.getSourceStopId(),
-				getTripByStopRequest.getDestStopId());
+		List<Trip> trip = tripRepository.findByDestStop(name);
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+	}
+	
+	
+	@PostMapping("/sourcestop")
+	@ApiOperation(value = "get trip by source stop", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripBySourceStop(@PathVariable(value = "name") String name) {
+
+		List<Trip> trip = tripRepository.findBySourceStop(name);
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+	}
+
+
+	@PostMapping("/sourcestop")
+	@ApiOperation(value = "get trip by agency", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripByAgency(@PathVariable(value = "name") String name) {
+
+		List<Trip> trip = tripRepository.findByAgency(name);
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Agency found"), HttpStatus.NOT_FOUND);
 		}
 
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
