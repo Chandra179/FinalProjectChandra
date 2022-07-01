@@ -186,7 +186,7 @@ public class TripController {
 	}
 
 
-	@PostMapping("/sourcestop")
+	@PostMapping("/agency")
 	@ApiOperation(value = "get trip by agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByAgency(@PathVariable(value = "name") String name) {
