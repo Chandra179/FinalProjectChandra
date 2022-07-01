@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Agency;
@@ -159,7 +160,7 @@ public class TripController {
 	@PostMapping("/deststop")
 	@ApiOperation(value = "get trip by destination stop", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByDestStop(@PathVariable(value = "name") String name) {
+	public ResponseEntity<?> getTripByDestStop(@RequestParam(value = "name") String name) {
 
 		List<Trip> trip = tripRepository.findByDestStop(name);
 
@@ -171,25 +172,25 @@ public class TripController {
 	}
 	
 	
-	@PostMapping("/sourcestop")
-	@ApiOperation(value = "get trip by source stop", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripBySourceStop(@PathVariable(value = "name") String name) {
-
-		List<Trip> trip = tripRepository.findBySourceStop(name);
-
-		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
-		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
-	}
+//	@PostMapping("/sourcestop")
+//	@ApiOperation(value = "get trip by source stop", authorizations = { @Authorization(value = "apiKey") })
+//	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//	public ResponseEntity<?> getTripBySourceStop(@RequestParam(value = "name") String name) {
+//
+//		List<Trip> trip = tripRepository.findBySourceStop(name);
+//
+//		if (trip.isEmpty()) {
+//			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
+//		}
+//
+//		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+//	}
 
 
 	@PostMapping("/agency")
 	@ApiOperation(value = "get trip by agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByAgency(@PathVariable(value = "name") String name) {
+	public ResponseEntity<?> getTripByAgency(@RequestParam(value = "name") String name) {
 
 		List<Trip> trip = tripRepository.findByAgency(name);
 
