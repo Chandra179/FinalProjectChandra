@@ -7,17 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.chandra.bus.model.bus.Bus;
-import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
-	List<Trip> findAllBySourceStopAndDestStop(Stop sourceStop, Stop destStop);
 
 	List<Trip> findByFareBetween(Integer minFare, Integer maxFare);
 
-	List<Trip> findByFare(Integer fare);
-
-	List<Trip> findByJourneyTime(String journeyTime);
+	List<Trip> findByJourneyTimeBetween(Integer minJourneyTime, Integer maxJourneyTime);
 
 	List<Trip> findBySourceStop(String sourceStop);
 

@@ -4,12 +4,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
-public class GetTripByStopRequest {
+public class GetTripByJourneyTimeRequest {
 
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
-	private Integer sourceStopId;
+	private int minJourneyTime;
 
-	private Integer destStopId;
+	private int maxJourneyTime;
 }

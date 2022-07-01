@@ -3,11 +3,9 @@ package com.chandra.bus.payload.request;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class TripRequest {
 	@ApiModelProperty(hidden = true)
 	private Long id;

@@ -69,6 +69,8 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
+	
+	
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get user by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -80,6 +82,8 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
+	
+	
 	@PostMapping("/signup")
 	@ApiOperation(value = "register new user")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest SignupRequest) {
@@ -129,6 +133,8 @@ public class UserController {
 
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
 	}
+	
+	
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
@@ -148,6 +154,8 @@ public class UserController {
 		return ResponseEntity.ok(updatedUser);
 	}
 
+
+
 	@PutMapping("/password/{id}")
 	@ApiOperation(value = "update user password", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -165,6 +173,8 @@ public class UserController {
 		return ResponseEntity.ok(updatedUser);
 	}
 
+	
+	
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "delete user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -1,9 +1,15 @@
 package com.chandra.bus.payload.request;
 
-import lombok.Data;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
 
-@Data
+@Getter
 public class GetTripByFareRequest {
+
+	@ApiModelProperty(hidden = true)
+	private Long id;
+
 	private Integer minFare;
+
 	private Integer maxFare;
 }

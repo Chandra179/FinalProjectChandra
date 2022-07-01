@@ -1,11 +1,9 @@
 package com.chandra.bus.payload.request;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
+@Getter
 public class UserPasswordRequest {
 	@ApiModelProperty(hidden = true)
 	private Long id;

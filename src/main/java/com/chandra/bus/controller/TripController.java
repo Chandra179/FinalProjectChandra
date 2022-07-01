@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,7 @@ import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.payload.request.GetTripByFareRequest;
+import com.chandra.bus.payload.request.GetTripByJourneyTimeRequest;
 import com.chandra.bus.payload.request.GetTripByStopRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.payload.response.MessageResponse;
@@ -48,6 +50,7 @@ public class TripController {
 	@Autowired
 	StopRepository stopRepository;
 
+
 	@PostMapping("/")
 	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -68,6 +71,7 @@ public class TripController {
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Adding Data", tripRepository.save(trip)));
 	}
 
+
 	@PostMapping("/fare")
 	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -76,8 +80,31 @@ public class TripController {
 		List<Trip> trip = tripRepository.findByFareBetween(getTripByFareRequest.getMinFare(),
 				getTripByFareRequest.getMaxFare());
 
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		}
+
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
+
+
+	@PostMapping("/journeytime")
+	@ApiOperation(value = "get trip by journey time", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getJourneyTimeBetween(
+			@Valid @RequestBody GetTripByJourneyTimeRequest getTripByJourneyRequest) {
+
+		List<Trip> trip = tripRepository.findByJourneyTimeBetween(
+				getTripByJourneyRequest.getMinJourneyTime(),
+				getTripByJourneyRequest.getMaxJourneyTime());
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+	}
+
 
 	@GetMapping("/bus/{id}")
 	@ApiOperation(value = "get trip by bus id", authorizations = { @Authorization(value = "apiKey") })
@@ -87,12 +114,13 @@ public class TripController {
 		Optional<Bus> bus = busRepository.findById(id);
 
 		if (!bus.isPresent()) {
-			return ResponseEntity.ok("trip dengan bus ID" + id + " tidak ditemukan");
+			return new ResponseEntity<>(new MessageResponse<Bus>(false, "No trip found"), HttpStatus.NOT_FOUND);
 		}
-		List<Trip> trip = tripRepository.findByBus(bus);
 
+		List<Trip> trip = tripRepository.findByBus(bus);
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
+
 
 	@PostMapping("/stop")
 	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
@@ -101,6 +129,10 @@ public class TripController {
 
 		List<Trip> trip = tripRepository.findTripsByStops(getTripByStopRequest.getSourceStopId(),
 				getTripByStopRequest.getDestStopId());
+
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		}
 
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
