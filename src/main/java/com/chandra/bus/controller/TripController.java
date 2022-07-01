@@ -20,9 +20,10 @@ import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
+import com.chandra.bus.payload.request.GetTripByFareRequest;
 import com.chandra.bus.payload.request.GetTripByStopRequest;
-import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.payload.request.TripRequest;
+import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
@@ -64,12 +65,23 @@ public class TripController {
 				destStop,
 				bus,
 				agency);
-		return ResponseEntity.ok(tripRepository.save(trip));
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Adding Data", tripRepository.save(trip)));
+	}
+
+	@GetMapping("/bus/{id}")
+	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTripByFare(@Valid @RequestBody GetTripByFareRequest getTripByFareRequest) {
+
+		List<Trip> trip = tripRepository.findByFareBetween(getTripByFareRequest.getMinFare(),
+				getTripByFareRequest.getMaxFare());
+
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
 
 	@GetMapping("/bus/{id}")
 	@ApiOperation(value = "get trip by bus id", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByBus(@PathVariable(value = "id") Long id) {
 
 		Optional<Bus> bus = busRepository.findById(id);
@@ -79,19 +91,19 @@ public class TripController {
 		}
 		List<Trip> trip = tripRepository.findByBus(bus);
 
-		return ResponseEntity.ok(trip);
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
 
 	@PostMapping("/stop")
 	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
 
 		List<Trip> trip = tripRepository.findTripsByStops(
 				getTripByStopRequest.getSourceStopId(),
 				getTripByStopRequest.getDestStopId());
 
-		return ResponseEntity.ok(trip);
+		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
 
 }

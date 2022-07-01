@@ -12,7 +12,7 @@ INSERT INTO tb_role (id, name) VALUES
 (DEFAULT, 'ROLE_USER'),
 (DEFAULT, 'ROLE_ADMIN');
 
-insert into tb_stop values
+INSERT into tb_stop values
 (DEFAULT, '1-2', 'Teluk', 'Karang'),
 (DEFAULT, '1-8', 'Cimeng', 'Sukaraja 1-8'),
 (DEFAULT, '1-3', 'Raja BasaI', 'Kedaton 1-3'),

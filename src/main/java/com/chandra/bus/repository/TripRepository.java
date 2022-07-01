@@ -13,6 +13,8 @@ import com.chandra.bus.model.bus.Trip;
 public interface TripRepository extends JpaRepository<Trip, Long> {
 	List<Trip> findAllBySourceStopAndDestStop(Stop sourceStop, Stop destStop);
 
+	List<Trip> findByFareBetween(Integer minFare, Integer maxFare);
+
 	List<Trip> findByFare(Integer fare);
 
 	List<Trip> findByJourneyTime(String journeyTime);
