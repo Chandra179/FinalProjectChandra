@@ -128,7 +128,8 @@ public class TripController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
 
-		List<Trip> trip = tripRepository.findByStopBetween(getTripByStopRequest.getSourceStopId(),
+		List<Trip> trip = tripRepository.findTripsByStops(
+				getTripByStopRequest.getSourceStopId(),
 				getTripByStopRequest.getDestStopId());
 
 		if (trip.isEmpty()) {

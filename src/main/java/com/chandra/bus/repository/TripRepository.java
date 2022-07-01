@@ -15,8 +15,6 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	List<Trip> findByJourneyTimeBetween(Integer minJourneyTime, Integer maxJourneyTime);
 
-	List<Trip> findByStopBetween(Integer sourceStopId, Integer destStopId);
-
 	List<Trip> findByBus(Optional<Bus> bus);
 
 	List<Trip> findByDestStop(String destStop);
@@ -24,4 +22,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 	List<Trip> findBySourceStop(String sourceStop);
 
 	List<Trip> findByAgency(String agency);
+
+	@Query(value = "SELECT DISTINCT * FROM tb_trip WHERE source_stop_id = :sourceStopId AND dest_stop_id = :destStopId", nativeQuery = true)
+	List<Trip> findTripsByStops(Integer sourceStopId, Integer destStopId);
 }
