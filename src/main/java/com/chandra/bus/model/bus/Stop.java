@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @Entity
-@Table(name = "tb_stop")
+@Table(name = "tb_stop", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class Stop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

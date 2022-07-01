@@ -13,7 +13,8 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_trip_schedule")
+@Table(name = "tb_trip_schedule",  uniqueConstraints={
+		@UniqueConstraint(columnNames = { "trip_id" }) })
 public class TripSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

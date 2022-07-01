@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_bus")
+@Table(name = "tb_bus", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class Bus {
 
 	@Id

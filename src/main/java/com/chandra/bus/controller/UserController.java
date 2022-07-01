@@ -154,25 +154,6 @@ public class UserController {
 		return ResponseEntity.ok(updatedUser);
 	}
 
-
-
-	@PutMapping("/password/{id}")
-	@ApiOperation(value = "update user password", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> updateUserPassword(@PathVariable(value = "id") Long id,
-			@Valid @RequestBody UserPasswordRequest userPasswordRequest) {
-		User user = userRepository.findById(id).get();
-		if (user == null) {
-			return ResponseEntity.notFound().build();
-		}
-
-		user.setPassword(encoder.encode(userPasswordRequest.getPassword()));
-
-		User updatedUser = userRepository.save(user);
-
-		return ResponseEntity.ok(updatedUser);
-	}
-
 	
 	
 	@DeleteMapping("/{id}")

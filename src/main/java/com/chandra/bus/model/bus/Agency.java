@@ -1,6 +1,5 @@
 package com.chandra.bus.model.bus;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_agency")
+@Table(name = "tb_agency", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class Agency {
 
 	@Id
