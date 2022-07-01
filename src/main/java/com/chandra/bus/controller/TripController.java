@@ -68,7 +68,7 @@ public class TripController {
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Adding Data", tripRepository.save(trip)));
 	}
 
-	@GetMapping("/bus/{id}")
+	@GetMapping("/fare")
 	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByFare(@Valid @RequestBody GetTripByFareRequest getTripByFareRequest) {
@@ -94,16 +94,17 @@ public class TripController {
 		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
 
-	@PostMapping("/stop")
-	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
-
-		List<Trip> trip = tripRepository.findTripsByStops(
-				getTripByStopRequest.getSourceStopId(),
-				getTripByStopRequest.getDestStopId());
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
-	}
+//	@PostMapping("/stop")
+//	@ApiOperation(value = "get trip by stop", authorizations = { @Authorization(value = "apiKey") })
+//	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
+//
+//		List<Trip> trip = tripRepository
+//				.findByFareBetween(
+//				getTripByStopRequest.getSourceStopId(),
+//				getTripByStopRequest.getDestStopId());
+//
+//		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+//	}
 
 }

@@ -32,4 +32,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	@Query(value = "SELECT * FROM tb_trip WHERE agency_id = :id", nativeQuery = true)
 	List<Trip> findByAgencyId(Long id);
+	
+//	@Query(value = "SELECT * FROM tb_trip WHERE Price BETWEEN fare = :minFare AND fare = :maxFare", nativeQuery = true)
+//	List<Trip> findByFareBetween(Integer minFare, Integer maxFare);
 }
