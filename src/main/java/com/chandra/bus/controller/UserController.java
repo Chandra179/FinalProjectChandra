@@ -78,7 +78,7 @@ public class UserController {
 	@ApiOperation(value = "register new user")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest SignupRequest) {
 
-		String newUser = userService.registerNewUser(SignupRequest);
+		User newUser = userService.registerNewUser(SignupRequest);
 		return ResponseEntity.ok(newUser);
 	}
 

@@ -6,7 +6,7 @@ import com.chandra.bus.payload.request.UserRequest;
 
 public interface UserService {
 
-	String registerNewUser(SignupRequest SignupRequest);
+	User registerNewUser(SignupRequest SignupRequest);
 
 	User updatingUser(Long id, UserRequest userRequest);
 }

@@ -1,10 +1,13 @@
 package com.chandra.bus.service.ticket;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.TripSchedule;
@@ -26,41 +29,68 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	TripScheduleRepository tripScheduleRepository;
 
-	@Override
-	public TripSchedule bookingTicket(TicketRequest ticketRequest) {
-		User user = userRepository.findById(ticketRequest.getPassegerId()).get();
+	public Optional<User> checkIfUserPresent() {
+
+		// get logged in user
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String currentUser = auth.getName();
+
+		// get user from database
+		Optional<User> user = userRepository.findByUsername(currentUser);
+
+		if (!user.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
+		}
+		return user;
+	}
+
+	public Optional<TripSchedule> checkIfTripScheduleAvailable(TicketRequest ticketRequest) {
+
+		// find trip schedule by id
 		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(ticketRequest.getTripScheduleId());
 
 		String journeyDate = ticketRequest.getJourneyDate();
 
 		if (!tripSchedule.isPresent()) {
-			// new ResponseEntity<>("No trip shcedule found", HttpStatus.NO_CONTENT);
-			throw new NoSuchElementException("Trip schedule not found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip schedule not found");
+
+		} else if (tripSchedule.get().getAvailableSeats() == 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticked sold out");
+
+		} else if (!tripSchedule.get().getTripDate().equals(journeyDate)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trip found at date " + journeyDate);
 		}
+		return tripSchedule;
+	}
 
-		if (tripSchedule.get().getAvailableSeats() == 0) {
-			// return new ResponseEntity<>("Ticket sold out", HttpStatus.NOT_FOUND);
-			throw new NoSuchElementException("Ticked sold out");
+	@Override
+	public TripSchedule bookingTicket(TicketRequest ticketRequest) {
+
+		Optional<User> user = checkIfUserPresent();
+		Optional<TripSchedule> tripSchedule = checkIfTripScheduleAvailable(ticketRequest);
+		
+		try {
+			Ticket ticket = new Ticket()
+					// kursi passenger dimulai dari descending 30, 29, 28, .... 1
+					.setSeatNumber(tripSchedule.get().getTripDetail().getBus().getCapacity() - tripSchedule.get().getAvailableSeats())
+					.setCancellable(false)
+					.setJourneyDate(ticketRequest.getJourneyDate())
+					.setPassenger(user.get())
+					.setTripSchedule(tripSchedule.get());
+
+			ticketRepository.save(ticket);
+
+			// setiap (1) tiket yang dibeli akan mengurangi kursi sebanyak (1)
+			tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1);
+
+			// update trip schedule
+			TripSchedule savedTrip = tripScheduleRepository.save(tripSchedule.get());
+
+			return savedTrip;
+			
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
-
-		if (!tripSchedule.get().getTripDate().equals(journeyDate)) {
-			// return new ResponseEntity<>("No trip found at date " + journeyDate,
-			// HttpStatus.NOT_FOUND);
-			throw new NoSuchElementException("No trip found at given date");
-		}
-
-		Ticket ticket = new Ticket()
-				.setSeatNumber(tripSchedule.get().getTripDetail().getBus().getCapacity()
-						- tripSchedule.get().getAvailableSeats())
-				.setCancellable(false).setJourneyDate(ticketRequest.getJourneyDate()).setPassenger(user)
-				.setTripSchedule(tripSchedule.get());
-
-		ticketRepository.save(ticket);
-
-		tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1); // seat - 1
-		TripSchedule savedTrip = tripScheduleRepository.save(tripSchedule.get());// update schedule
-
-		return savedTrip;
 	}
 
 }

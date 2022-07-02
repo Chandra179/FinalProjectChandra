@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
@@ -27,28 +29,19 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	PasswordEncoder encoder;
 
-	@Override
-	public String registerNewUser(SignupRequest SignupRequest) {
+	public void checkIfUserAlreadyRegistered(SignupRequest SignupRequest) {
+
 		if (userRepository.existsByUsername(SignupRequest.getUsername())) {
-			return "Error: Username is already taken!";
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error: Username is already taken!");
 		}
-
 		if (userRepository.existsByEmail(SignupRequest.getEmail())) {
-			return "Error: Email is already in use!";
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error: Email is already in use!");
 		}
+	}
 
-		// create new user account
-		User user = new User(
-				SignupRequest.getUsername(),
-				SignupRequest.getEmail(),
-				encoder.encode(SignupRequest.getPassword()),
-				SignupRequest.getFirstName(),
-				SignupRequest.getLastName(),
-				SignupRequest.getMobileNumber());
+	public Set<Role> handleUserRole(Set<String> strRoles) {
 
-		Set<String> strRoles = SignupRequest.getRole();
 		Set<Role> roles = new HashSet<>();
-
 		// if user not add role, then assign it to ROLE_USER
 		if (strRoles.isEmpty()) {
 			Role userRole = roleRepository.findByName(UserRoles.ROLE_USER)
@@ -69,11 +62,30 @@ public class UserServiceImpl implements UserService {
 				}
 			});
 		}
+		return roles;
+	}
+
+	@Override
+	public User registerNewUser(SignupRequest SignupRequest) {
+
+		checkIfUserAlreadyRegistered(SignupRequest);
+
+		// create new user account
+		User user = new User(
+				SignupRequest.getUsername(),
+				SignupRequest.getEmail(),
+				encoder.encode(SignupRequest.getPassword()),
+				SignupRequest.getFirstName(),
+				SignupRequest.getLastName(),
+				SignupRequest.getMobileNumber());
+
+		Set<String> strRoles = SignupRequest.getRole();
+		Set<Role> roles = handleUserRole(strRoles);
 
 		user.setRoles(roles);
-		userRepository.save(user);
+		User savedUser = userRepository.save(user);
 
-		return "User registered succesfully!";
+		return savedUser;
 	}
 
 	@Override

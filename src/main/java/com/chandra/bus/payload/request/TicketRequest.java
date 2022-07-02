@@ -17,8 +17,5 @@ public class TicketRequest {
 	private String journeyDate;
 
 	@NotNull
-	private Long passegerId;
-
-	@NotNull
 	private Long tripScheduleId;
 }
