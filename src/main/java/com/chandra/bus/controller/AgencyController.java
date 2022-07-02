@@ -49,12 +49,8 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAll() {
 
-		List<AgencyRequest> dataArrResult = new ArrayList<>();
-		for (Agency dataArr : agencyRepository.findAll()) {
-			dataArrResult.add(new AgencyRequest(dataArr.getId(), dataArr.getCode(), dataArr.getName(),
-					dataArr.getDetails(), dataArr.getOwner().getId()));
-		}
-		return ResponseEntity.ok(new MessageResponse<AgencyRequest>(true, "Success Retrieving Data", dataArrResult));
+		List<Agency> agency = agencyRepository.findAll();
+		return ResponseEntity.ok(new MessageResponse<Agency>(true, "Success Retrieving Data", agency));
 	}
 
 	@GetMapping("/{id}")
