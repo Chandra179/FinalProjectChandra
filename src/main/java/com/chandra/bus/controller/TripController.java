@@ -1,7 +1,6 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -18,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
-import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.payload.request.LowerUpperValueRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.payload.response.MessageResponse;
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
@@ -72,9 +71,9 @@ public class TripController {
 		List<Trip> trip = tripRepository.findAll();
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>("No trip found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
 		}
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@PostMapping("/fare")
@@ -89,9 +88,9 @@ public class TripController {
 
 		if (trip.isEmpty()) {
 			String respFormat = String.format("Trip with fare %d - %d not found", minFare, maxFare);
-			return new ResponseEntity<>(respFormat, HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse(respFormat, HttpStatus.NOT_FOUND, trip);
 		}
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@PostMapping("/journeytime")
@@ -107,10 +106,9 @@ public class TripController {
 		if (trip.isEmpty()) {
 			String respFormat = String.format("Trip with journey time %d - %d not found", minJourneyTime,
 					maxJourneyTime);
-			return new ResponseEntity<>(respFormat, HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse(respFormat, HttpStatus.NOT_FOUND, trip);
 		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@PostMapping("/stop")
@@ -124,10 +122,9 @@ public class TripController {
 		List<Trip> trip = tripRepository.findTripsByStops(sourceStop, destStop);
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
 		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@GetMapping("/bus/{id}")
@@ -135,14 +132,14 @@ public class TripController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByBus(@PathVariable(value = "id") Long id) {
 
-		Optional<Bus> bus = busRepository.findById(id);
+		try {
+			Bus bus = busRepository.findById(id).get();
+			List<Trip> trip = tripRepository.findByBus(bus);
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 
-		if (!bus.isPresent()) {
-			return new ResponseEntity<>(new MessageResponse<>(false, "No trip found"), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination stop not found");
 		}
-
-		List<Trip> trip = tripRepository.findByBus(bus);
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
 	}
 
 	@PostMapping("/deststop")
@@ -153,10 +150,9 @@ public class TripController {
 		List<Trip> trip = tripRepository.findByDestStop(name);
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
 		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@PostMapping("/sourcestop")
@@ -167,10 +163,9 @@ public class TripController {
 		List<Trip> trip = tripRepository.findBySourceStop(name);
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Stop found"), HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
 		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 	@PostMapping("/agency")
@@ -181,10 +176,9 @@ public class TripController {
 		List<Trip> trip = tripRepository.findByAgency(name);
 
 		if (trip.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No Agency found"), HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
 		}
-
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Retrieving Data", trip));
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
 }

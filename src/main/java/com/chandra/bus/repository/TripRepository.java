@@ -1,8 +1,6 @@
 package com.chandra.bus.repository;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +13,7 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
 	List<Trip> findByJourneyTimeBetween(Integer minJourneyTime, Integer maxJourneyTime);
 
-	List<Trip> findByBus(Optional<Bus> bus);
+	List<Trip> findByBus(Bus bus);
 
 	@Query(value = "SELECT * FROM tb_trip t INNER JOIN tb_stop s on t.dest_stop_id = s.id WHERE LOWER(s.name) LIKE %:destStop%", nativeQuery = true)
 	List<Trip> findByDestStop(String destStop);
