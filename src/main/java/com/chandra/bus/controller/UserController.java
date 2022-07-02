@@ -126,23 +126,6 @@ public class UserController {
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
 	}
 
-	@PostMapping("/login")
-	@ApiOperation(value = "user login")
-	public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-		User user = userRepository.findByUsername(loginRequest.getUsername()).get();
-
-		if (user == null) {
-			return ResponseEntity.notFound().build();
-		}
-
-		if (encoder.matches(loginRequest.getPassword(), user.getPassword())) {
-			return ResponseEntity.ok(new MessageResponse<String>("User is logged in!"));
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
 	@PutMapping("/{id}")
 	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

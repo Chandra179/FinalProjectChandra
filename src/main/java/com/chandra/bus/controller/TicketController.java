@@ -1,6 +1,5 @@
 package com.chandra.bus.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -21,6 +20,7 @@ import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.TicketRequest;
+import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.payload.response.TicketResponse;
 import com.chandra.bus.repository.TicketRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
@@ -71,12 +71,18 @@ public class TicketController {
 		User user = userRepository.findById(ticketRequest.getPassegerId()).get();
 		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(ticketRequest.getTripScheduleId());
 
+		String journeyDate = ticketRequest.getJourneyDate();
+
 		if (!tripSchedule.isPresent()) {
 			return new ResponseEntity<>("No trip shcedule found", HttpStatus.NO_CONTENT);
 		}
 
 		if (tripSchedule.get().getAvailableSeats() == 0) {
 			return new ResponseEntity<>("Ticket sold out", HttpStatus.NOT_FOUND);
+		}
+
+		if (!tripSchedule.get().getTripDate().equals(journeyDate)) {
+			return new ResponseEntity<>("No trip found at date " + journeyDate, HttpStatus.NOT_FOUND);
 		}
 
 		Ticket ticket = new Ticket()
@@ -90,6 +96,13 @@ public class TicketController {
 		tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1); // seat - 1
 		tripScheduleRepository.save(tripSchedule.get());// update schedule
 
-		return ResponseEntity.ok("");
+		TicketResponse ticketResponse = new TicketResponse(ticket.getPassenger().getEmail(), ticket.getSeatNumber(),
+				ticket.getJourneyDate(), ticket.getTripSchedule().getTripDetail().getBus().getCode(),
+				ticket.getTripSchedule().getTripDetail().getFare(),
+				ticket.getTripSchedule().getTripDetail().getJourneyTime(),
+				ticket.getTripSchedule().getTripDetail().getSourceStop().getName(),
+				ticket.getTripSchedule().getTripDetail().getDestStop().getName());
+
+		return ResponseEntity.ok(new MessageResponse<>(true, "Success book ticket", ticketResponse));
 	}
 }
