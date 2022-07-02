@@ -2,7 +2,8 @@
 
 Untuk migrasi database diwajibkan export database schema (DDL) terlebih dahulu sebelum INSERT DATA
 	
-`pg_dump -U postgres -s db_bus > V1.0__ddl.sql`
+DEV : `pg_dump -U postgres -s db_bus > V1.0__ddl.sql` <br>
+PROD : `pg_dump --host=<host> --port=<port> --username=<username> --password --dbname=<database> > dump_file.sql`
 	
 1. dump database schema
 2. masukan file V1.0__ddl.sql kedalam "src/main/resources/db/migration"
