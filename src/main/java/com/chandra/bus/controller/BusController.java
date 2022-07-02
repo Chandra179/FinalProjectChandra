@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
-import com.chandra.bus.payload.request.BusCustomRequest;
+import com.chandra.bus.payload.request.BusRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
@@ -42,15 +42,15 @@ public class BusController {
 	@PostMapping("/")
 	@ApiOperation(value = "add new bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addBusByUserId(@Valid @RequestBody BusCustomRequest busCustomRequest) {
+	public ResponseEntity<?> addBusByUserId(@Valid @RequestBody BusRequest busRequest) {
 
 		// check apakah agency ada
-		Agency agency = agencyRepository.findById(busCustomRequest.getAgencyId()).get();
+		Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
 		if (agency == null) {
 			return new ResponseEntity<>("No Agency found", HttpStatus.NOT_FOUND);
 		}
 
-		Bus bus = new Bus(busCustomRequest.getCode(), busCustomRequest.getCapacity(), busCustomRequest.getMake(),
+		Bus bus = new Bus(busRequest.getCode(), busRequest.getCapacity(), busRequest.getMake(),
 				agency);
 		Bus savedBus = busRepository.save(bus);
 		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Adding Data", savedBus));
@@ -82,18 +82,18 @@ public class BusController {
 	@ApiOperation(value = "update bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateBus(@PathVariable(value = "id") Long id,
-			@Valid @RequestBody BusCustomRequest busCustomRequest) {
+			@Valid @RequestBody BusRequest busRequest) {
 
 		Bus bus = busRepository.findById(id).get();
 		if (bus == null) {
 			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
 		}
 
-		Agency agency = agencyRepository.findById(busCustomRequest.getAgencyId()).get();
+		Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
 
-		bus.setCode(busCustomRequest.getCode());
-		bus.setCapacity(busCustomRequest.getCapacity());
-		bus.setMake(busCustomRequest.getMake());
+		bus.setCode(busRequest.getCode());
+		bus.setCapacity(busRequest.getCapacity());
+		bus.setMake(busRequest.getMake());
 		bus.setAgency(agency);
 
 		Bus savedBus = busRepository.save(bus);

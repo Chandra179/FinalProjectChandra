@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
-public class UserCustomRequest {
+public class UserRequest {
 
 	@ApiModelProperty(hidden = true)
 	private Long id;

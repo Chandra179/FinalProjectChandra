@@ -13,25 +13,24 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_trip_schedule",  uniqueConstraints={
-		@UniqueConstraint(columnNames = { "trip_id" }) })
+@Table(name = "tb_trip_schedule")
 public class TripSchedule {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trip_id")
-    private Trip tripDetail;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trip_id")
+	private Trip tripDetail;
 
-    @OneToMany(mappedBy = "tripSchedule", cascade = CascadeType.ALL)
-    private Set<Ticket> ticketsSold;
+	@OneToMany(mappedBy = "tripSchedule", cascade = CascadeType.ALL)
+	private Set<Ticket> ticketsSold;
 
 	@NotBlank
-    private String tripDate;
+	private String tripDate;
 
 	@NotNull
-    private int availableSeats;
+	private int availableSeats;
 
 	public TripSchedule(String tripDate, int availableSeats, Trip tripDetail) {
 		this.tripDate = tripDate;
