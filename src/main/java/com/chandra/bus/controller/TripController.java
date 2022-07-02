@@ -1,7 +1,6 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -23,7 +22,6 @@ import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.payload.request.LowerUpperValueRequest;
 import com.chandra.bus.payload.request.TripRequest;
-import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;

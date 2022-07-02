@@ -54,11 +54,11 @@ public class TicketServiceImpl implements TicketService {
 		if (!tripSchedule.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip schedule not found");
 
-		} else if (tripSchedule.get().getAvailableSeats() == 0) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticked sold out");
-
 		} else if (!tripSchedule.get().getTripDate().equals(journeyDate)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trip found at date " + journeyDate);
+
+		} else if (tripSchedule.get().getAvailableSeats() == 0) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticked sold out");
 		}
 		return tripSchedule;
 	}
