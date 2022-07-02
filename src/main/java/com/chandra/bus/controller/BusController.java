@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusRequest;
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.service.bus.BusService;
@@ -47,7 +50,7 @@ public class BusController {
 	public ResponseEntity<?> addBus(@Valid @RequestBody BusRequest busRequest) {
 
 		Bus bus = busService.addNewBus(busRequest);
-		return ResponseEntity.ok(bus);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
 	}
 
 	@GetMapping("/")
@@ -57,18 +60,23 @@ public class BusController {
 
 		List<Bus> bus = busRepository.findAll();
 		if (bus.isEmpty()) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.OK, bus);
 		}
-		return ResponseEntity.ok(bus);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
 	}
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get bus by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getBusById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<?> getBus(@PathVariable(value = "id") Long id) {
 		
-		Bus bus = busRepository.findById(id).get();
-		return ResponseEntity.ok(bus);
+		try {
+			Bus bus = busRepository.findById(id).get();
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 
 	@PutMapping("/{id}")
@@ -86,9 +94,13 @@ public class BusController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteBus(@PathVariable(value = "id") Long id) {
 
-		busRepository.deleteById(id);
-		String result = "Success Delete Bus with Id: " + id;
-		return ResponseEntity.ok(result);
-	}
+		try {
+			busRepository.deleteById(id);
+			String result = "Success Delete Bus with Id: " + id;
+			return ResponseEntity.ok(result);
 
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
+	}
 }
