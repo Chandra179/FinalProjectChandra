@@ -1,6 +1,7 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -53,8 +54,8 @@ public class TripScheduleController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTrip(@PathVariable(value = "id") Long id) {
 
-		TripSchedule tripSchedule = tripScheduleRepository.findById(id).get();
-		if (tripSchedule == null) {
+		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(id);
+		if (!tripSchedule.isPresent()) {
 			return new ResponseEntity<>("No trip schedule found", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(tripSchedule);

@@ -1,6 +1,7 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
+import com.chandra.bus.service.trip.TripService;
 
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.ApiOperation;
@@ -50,19 +52,16 @@ public class TripController {
 	@Autowired
 	StopRepository stopRepository;
 
+	@Autowired
+	TripService tripService;
+
 	@PostMapping("/")
 	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
 
-		Agency agency = agencyRepository.findById(tripRequest.getAgencyId()).get();
-		Bus bus = busRepository.findById(tripRequest.getBusId()).get();
-		Stop sourceStop = stopRepository.findById(tripRequest.getSourceStopId()).get();
-		Stop destStop = stopRepository.findById(tripRequest.getDestStopId()).get();
-
-		Trip trip = new Trip(tripRequest.getFare(), tripRequest.getJourneyTime(), sourceStop, destStop, bus, agency);
-		Trip savedTrip = tripRepository.save(trip);
-		return ResponseEntity.ok(new MessageResponse<Trip>(true, "Success Adding Data", savedTrip));
+		Trip newTrip = tripService.addNewTrip(tripRequest);
+		return ResponseEntity.ok(newTrip);
 	}
 
 	@GetMapping("/")
