@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 
 import com.chandra.bus.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
