@@ -44,14 +44,18 @@ public class BusController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addBusByUserId(@Valid @RequestBody BusRequest busRequest) {
 
-		// check apakah agency ada
+		// cek apakah agency ada
 		Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
 		if (agency == null) {
-			return new ResponseEntity<>("No Agency found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 
-		Bus bus = new Bus(busRequest.getCode(), busRequest.getCapacity(), busRequest.getMake(),
+		Bus bus = new Bus(
+				busRequest.getCode(),
+				busRequest.getCapacity(),
+				busRequest.getMake(),
 				agency);
+
 		Bus savedBus = busRepository.save(bus);
 		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Adding Data", savedBus));
 	}
