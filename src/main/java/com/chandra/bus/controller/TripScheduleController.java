@@ -40,6 +40,7 @@ public class TripScheduleController {
 	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllTripSchedule() {
+
 		List<TripSchedule> trip = tripScheduleRepository.findAll();
 		return ResponseEntity.ok(trip);
 	}
@@ -48,6 +49,7 @@ public class TripScheduleController {
 	@ApiOperation(value = "get trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTrip(@PathVariable(value = "id") Long id) {
+
 		TripSchedule tripSchedule = tripScheduleRepository.findById(id).get();
 		if (tripSchedule == null) {
 			return new ResponseEntity<>("No trip schedule found", HttpStatus.NOT_FOUND);

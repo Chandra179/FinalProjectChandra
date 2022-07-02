@@ -23,10 +23,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.model.user.UserRoles;
-import com.chandra.bus.payload.request.LoginRequest;
 import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserRequest;
-import com.chandra.bus.payload.request.UserPasswordRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 
 import com.chandra.bus.repository.RoleRepository;
