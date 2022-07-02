@@ -21,6 +21,7 @@ import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.TicketRequest;
+import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.TicketRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 import com.chandra.bus.repository.UserRepository;
@@ -48,7 +49,7 @@ public class TicketController {
 	public ResponseEntity<?> getTicket() {
 
 		List<Ticket> ticket = ticketRepository.findAll();
-		return ResponseEntity.ok(ticket);
+		return ResponseEntity.ok(new MessageResponse<Ticket>(true, "success retrieving data", ticket));
 	}
 
 	@PostMapping("/")
@@ -59,12 +60,12 @@ public class TicketController {
 		User user = userRepository.findById(ticketRequest.getPassegerId()).get();
 		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(ticketRequest.getTripScheduleId());
 
-		if (tripSchedule.get().getAvailableSeats() == 0) {
-			return new ResponseEntity<>("Ticket sold out", HttpStatus.NOT_FOUND);
+		if (!tripSchedule.isPresent()) {
+			return new ResponseEntity<>("No trip shcedule found", HttpStatus.NO_CONTENT);
 		}
 
-		if (!tripSchedule.isPresent()) {
-			return new ResponseEntity<>("No trip shcedule found", HttpStatus.NOT_FOUND);
+		if (tripSchedule.get().getAvailableSeats() == 0) {
+			return new ResponseEntity<>("Ticket sold out", HttpStatus.NOT_FOUND);
 		}
 
 		Ticket ticket = new Ticket()
