@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusRequest;
-import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.service.BusService;
@@ -53,26 +52,23 @@ public class BusController {
 
 	@GetMapping("/")
 	@ApiOperation(value = "get all bus", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllBus() {
 
 		List<Bus> bus = busRepository.findAll();
 		if (bus == null) {
 			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
 		}
-		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Retrieving Data", bus));
+		return ResponseEntity.ok(bus);
 	}
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get bus by id", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getBusById(@PathVariable(value = "id") Long id) {
 		
 		Bus bus = busRepository.findById(id).get();
-		if (bus == null) {
-			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
-		}
-		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Retrieving Data", bus));
+		return ResponseEntity.ok(bus);
 	}
 
 	@PutMapping("/{id}")

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.StopRepository;
+import com.chandra.bus.service.StopService;
 
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.ApiOperation;
@@ -34,37 +36,52 @@ public class StopController {
 	@Autowired
 	StopRepository stopRepository;
 
+	@Autowired
+	StopService stopService;
+
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get all stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getAllStops() {
+
 		List<Stop> stop = stopRepository.findAll();
-		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
+		if (stop.isEmpty()) {
+			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(stop);
 	}
 
 	@GetMapping("/{name}")
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get stop by name", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getStopByName(@RequestParam(value = "name") String name) {
+
 		List<Stop> stop = stopRepository.findByName(name);
-		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
+		if (stop.isEmpty()) {
+			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(stop);
 	}
 
 	@GetMapping("/{code}")
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get stop by code", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getStopByCode(@RequestParam(value = "code") String code) {
+
 		List<Stop> stop = stopRepository.findByCode(code);
-		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
+		if (stop.isEmpty()) {
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(stop);
 	}
 
 	@PostMapping("/")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "add stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> addStop(@Valid @RequestBody StopRequest stopReq) {
-		Stop stop = new Stop(stopReq.getCode(), stopReq.getName(), stopReq.getDetail());
-		Stop savedStop = stopRepository.save(stop);
-		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Adding Data", savedStop));
+
+		Stop stop = stopService.addNewStop(stopReq);
+		return ResponseEntity.ok(stop);
 	}
 
 	@PutMapping("/{id}")
@@ -72,17 +89,8 @@ public class StopController {
 	@ApiOperation(value = "update stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> updateStop(@PathVariable(value = "id") Long id, @Valid @RequestBody StopRequest stopReq) {
 
-		Stop stop = stopRepository.findById(id).get();
-		if (stop == null) {
-			return ResponseEntity.notFound().build();
-		}
-
-		stop.setCode(stopReq.getCode());
-		stop.setName(stopReq.getName());
-		stop.setDetail(stopReq.getDetail());
-
-		Stop savedStop = stopRepository.save(stop);
-		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Updating Data", savedStop));
+		Stop stop = stopService.updatingStop(id, stopReq);
+		return ResponseEntity.ok(stop);
 	}
 
 	@DeleteMapping("/{id}")
@@ -90,12 +98,8 @@ public class StopController {
 	@ApiOperation(value = "delete stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> deleteStop(@PathVariable(value = "id") Long id) {
 
-		if (stopRepository.existsById(id)) {
-			stopRepository.deleteById(id);
-			return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Delete Data"));
-		} else {
-			return ResponseEntity.ok(new MessageResponse<Stop>(false, "ID is not found"));
-		}
-
+		stopRepository.deleteById(id);
+		String result = "Success Deleting Data with Id: " + id;
+		return ResponseEntity.ok(result);
 	}
 }
