@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.payload.request.AgencyRequest;
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.UserRepository;
@@ -52,9 +54,9 @@ public class AgencyController {
 
 		List<Agency> agency = agencyRepository.findAll();
 		if (agency.isEmpty()) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, agency);
 		}
-		return new ResponseEntity<>(agency, HttpStatus.OK);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, agency);
 	}
 
 	@GetMapping("/{id}")
@@ -62,8 +64,13 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAgency(@PathVariable(value = "id") Long id) {
 
-		Agency agency = agencyRepository.findById(id).get();
-		return new ResponseEntity<>(agency, HttpStatus.OK);
+		try {
+			Agency agency = agencyRepository.findById(id).get();
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, agency);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 
 	@PostMapping("/")
@@ -72,7 +79,7 @@ public class AgencyController {
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 
 		Agency agency = agencyService.addNewAgency(agencyRequest);
-		return new ResponseEntity<>(agency, HttpStatus.OK);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, agency);
 	}
 
 	@PutMapping("/{id}")
@@ -90,8 +97,13 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteAgency(@PathVariable(value = "id") Long id) {
 
-		agencyRepository.deleteById(id);
-		String result = "Success Delete Agency with Id: " + id;
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		try {
+			agencyRepository.deleteById(id);
+			String result = "Success Delete Agency with Id: " + id;
+			return new ResponseEntity<>(result, HttpStatus.OK);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 }
