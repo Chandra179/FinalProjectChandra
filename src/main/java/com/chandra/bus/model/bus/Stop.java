@@ -1,30 +1,28 @@
 package com.chandra.bus.model.bus;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_stop", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class Stop {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@NotBlank
-    private String code;
+	private String code;
 
 	@NotBlank
-    private String name;
+	private String name;
 
 	@NotBlank
-    private String detail;
+	private String detail;
 
 	public Stop(String code, String name, String detail) {
 		this.code = code;

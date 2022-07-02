@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Stop;
@@ -34,10 +35,26 @@ public class StopController {
 	StopRepository stopRepository;
 
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@ApiOperation(value = "get all stops", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "get all stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getAllStops() {
 		List<Stop> stop = stopRepository.findAll();
+		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
+	}
+
+	@GetMapping("/{name}")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "get stop by name", authorizations = { @Authorization(value = "apiKey") })
+	public ResponseEntity<?> getStopByName(@RequestParam(value = "name") String name) {
+		List<Stop> stop = stopRepository.findByName(name);
+		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
+	}
+
+	@GetMapping("/{code}")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@ApiOperation(value = "get stop by code", authorizations = { @Authorization(value = "apiKey") })
+	public ResponseEntity<?> getStopByCode(@RequestParam(value = "code") String code) {
+		List<Stop> stop = stopRepository.findByCode(code);
 		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Retrieving Data", stop));
 	}
 
@@ -45,11 +62,7 @@ public class StopController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "add stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> addStop(@Valid @RequestBody StopRequest stopReq) {
-		Stop stop = new Stop(
-				stopReq.getCode(),
-				stopReq.getName(),
-				stopReq.getDetail()
-				);
+		Stop stop = new Stop(stopReq.getCode(), stopReq.getName(), stopReq.getDetail());
 		Stop savedStop = stopRepository.save(stop);
 		return ResponseEntity.ok(new MessageResponse<Stop>(true, "Success Adding Data", savedStop));
 	}
@@ -83,6 +96,6 @@ public class StopController {
 		} else {
 			return ResponseEntity.ok(new MessageResponse<Stop>(false, "ID is not found"));
 		}
-		
+
 	}
 }
