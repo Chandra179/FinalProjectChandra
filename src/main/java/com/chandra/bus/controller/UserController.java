@@ -1,13 +1,12 @@
 package com.chandra.bus.controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
-import com.chandra.bus.model.user.UserRoles;
 import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserRequest;
-import com.chandra.bus.payload.response.MessageResponse;
 
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.security.jwt.JwtUtils;
+import com.chandra.bus.service.UserService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,21 +45,22 @@ public class UserController {
 	UserRepository userRepository;
 
 	@Autowired
+	UserService userService;
+
+	@Autowired
 	RoleRepository roleRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
 
-	@Autowired
-	JwtUtils jwtUtils;
-
 	@GetMapping("/")
 	@ApiOperation(value = "get all user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUser() {
+
 		List<User> user = userRepository.findAll();
 		if (user.isEmpty()) {
-			return ResponseEntity.badRequest().body(new MessageResponse<String>("No users found"));
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(user);
 	}
@@ -72,56 +69,17 @@ public class UserController {
 	@ApiOperation(value = "get user by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Long id) {
+
 		User user = userRepository.findById(id).get();
-		if (user == null) {
-			return ResponseEntity.badRequest().body(new MessageResponse<String>("User with ID " + id + " not found"));
-		}
 		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping("/signup")
 	@ApiOperation(value = "register new user")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest SignupRequest) {
-		if (userRepository.existsByUsername(SignupRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Username is already taken!"));
-		}
 
-		if (userRepository.existsByEmail(SignupRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse<String>("Error: Email is already in use!"));
-		}
-
-		// create new user account
-		User user = new User(SignupRequest.getUsername(), SignupRequest.getEmail(),
-				encoder.encode(SignupRequest.getPassword()), SignupRequest.getFirstName(), SignupRequest.getLastName(),
-				SignupRequest.getMobileNumber());
-
-		Set<String> strRoles = SignupRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(UserRoles.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "ROLE_ADMIN":
-					Role adminRole = roleRepository.findByName(UserRoles.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-					break;
-				default:
-					Role userRole = roleRepository.findByName(UserRoles.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
-		userRepository.save(user);
-
-		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
+		String newUser = userService.registerNewUser(SignupRequest);
+		return ResponseEntity.ok(newUser);
 	}
 
 	@PutMapping("/{id}")
@@ -129,28 +87,18 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateUser(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody UserRequest userRequest) {
-		User user = userRepository.findById(id).get();
-		if (user == null) {
-			return ResponseEntity.notFound().build();
-		}
-		user.setFirstName(userRequest.getFirstName());
-		user.setLastName(userRequest.getLastName());
-		user.setMobileNumber(userRequest.getMobileNumber());
 
-		User updatedUser = userRepository.save(user);
-
-		return ResponseEntity.ok(updatedUser);
+		User udpatedUser = userService.updatingUser(id, userRequest);
+		return ResponseEntity.ok(udpatedUser);
 	}
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "delete user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long id) {
-		User user = userRepository.findById(id).get();
-		if (user == null) {
-			return ResponseEntity.notFound().build();
-		}
+
 		userRepository.deleteById(id);
-		return ResponseEntity.ok(new MessageResponse<String>("Success delete user!"));
+		String result = "Success Delete User with Id: " + id;
+		return ResponseEntity.ok(result);
 	}
 }

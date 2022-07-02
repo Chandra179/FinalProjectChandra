@@ -87,7 +87,7 @@ public class BusController {
 	public ResponseEntity<?> deleteBus(@PathVariable(value = "id") Long id) {
 
 		busRepository.deleteById(id);
-		String result = "Success Deleting Data with Id: " + id;
+		String result = "Success Delete Bus with Id: " + id;
 		return ResponseEntity.ok(result);
 	}
 

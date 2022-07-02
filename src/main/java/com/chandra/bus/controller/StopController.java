@@ -99,7 +99,7 @@ public class StopController {
 	public ResponseEntity<?> deleteStop(@PathVariable(value = "id") Long id) {
 
 		stopRepository.deleteById(id);
-		String result = "Success Deleting Data with Id: " + id;
+		String result = "Success Delete Stop with Id: " + id;
 		return ResponseEntity.ok(result);
 	}
 }

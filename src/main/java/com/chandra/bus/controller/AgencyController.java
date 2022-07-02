@@ -91,7 +91,7 @@ public class AgencyController {
 	public ResponseEntity<?> deleteAgency(@PathVariable(value = "id") Long id) {
 
 		agencyRepository.deleteById(id);
-		String result = "Success Deleting Data with Id: " + id;
+		String result = "Success Delete Agency with Id: " + id;
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
