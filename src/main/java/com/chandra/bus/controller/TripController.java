@@ -22,9 +22,7 @@ import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
-import com.chandra.bus.payload.request.GetTripByFareRequest;
-import com.chandra.bus.payload.request.GetTripByJourneyTimeRequest;
-import com.chandra.bus.payload.request.GetTripByStopRequest;
+import com.chandra.bus.payload.request.LowerUpperValueRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
@@ -82,10 +80,10 @@ public class TripController {
 	@PostMapping("/fare")
 	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByFare(@Valid @RequestBody GetTripByFareRequest getTripByFareRequest) {
+	public ResponseEntity<?> getTripByFare(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
 
-		Integer minFare = getTripByFareRequest.getMinFare();
-		Integer maxFare = getTripByFareRequest.getMaxFare();
+		Integer minFare = lowerUpperValueRequest.getLowerValue();
+		Integer maxFare = lowerUpperValueRequest.getUpperValue();
 
 		List<Trip> trip = tripRepository.findByFareBetween(minFare, maxFare);
 
@@ -99,11 +97,10 @@ public class TripController {
 	@PostMapping("/journeytime")
 	@ApiOperation(value = "get trip by journey time", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getJourneyTimeBetween(
-			@Valid @RequestBody GetTripByJourneyTimeRequest getTripByJourneyRequest) {
+	public ResponseEntity<?> getJourneyTimeBetween(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
 
-		Integer minJourneyTime = getTripByJourneyRequest.getMinJourneyTime();
-		Integer maxJourneyTime = getTripByJourneyRequest.getMaxJourneyTime();
+		Integer minJourneyTime = lowerUpperValueRequest.getLowerValue();
+		Integer maxJourneyTime = lowerUpperValueRequest.getUpperValue();
 
 		List<Trip> trip = tripRepository.findByJourneyTimeBetween(minJourneyTime, maxJourneyTime);
 
@@ -119,10 +116,12 @@ public class TripController {
 	@PostMapping("/stop")
 	@ApiOperation(value = "get trip by source - dest stop", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByStop(@Valid @RequestBody GetTripByStopRequest getTripByStopRequest) {
+	public ResponseEntity<?> getTripByStop(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
 
-		List<Trip> trip = tripRepository.findTripsByStops(getTripByStopRequest.getSourceStopId(),
-				getTripByStopRequest.getDestStopId());
+		Integer sourceStop = lowerUpperValueRequest.getLowerValue();
+		Integer destStop = lowerUpperValueRequest.getUpperValue();
+
+		List<Trip> trip = tripRepository.findTripsByStops(sourceStop, destStop);
 
 		if (trip.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse<Trip>(false, "No trip found"), HttpStatus.NOT_FOUND);
