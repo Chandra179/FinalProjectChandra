@@ -46,7 +46,7 @@ public class StopController {
 
 		List<Stop> stop = stopRepository.findAll();
 		if (stop.isEmpty()) {
-			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(stop);
 	}
@@ -58,7 +58,7 @@ public class StopController {
 
 		List<Stop> stop = stopRepository.findByName(name);
 		if (stop.isEmpty()) {
-			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(stop);
 	}

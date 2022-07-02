@@ -51,9 +51,8 @@ public class AgencyController {
 	public ResponseEntity<?> getAllAgency() {
 
 		List<Agency> agency = agencyRepository.findAll();
-
-		if (agency == null) {
-			return ResponseEntity.notFound().build();
+		if (agency.isEmpty()) {
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(agency, HttpStatus.OK);
 	}
@@ -64,10 +63,6 @@ public class AgencyController {
 	public ResponseEntity<?> getAgency(@PathVariable(value = "id") Long id) {
 
 		Agency agency = agencyRepository.findById(id).get();
-
-		if (agency == null) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(agency, HttpStatus.OK);
 	}
 

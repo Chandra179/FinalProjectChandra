@@ -56,8 +56,8 @@ public class BusController {
 	public ResponseEntity<?> getAllBus() {
 
 		List<Bus> bus = busRepository.findAll();
-		if (bus == null) {
-			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
+		if (bus.isEmpty()) {
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(bus);
 	}
