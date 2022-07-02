@@ -23,7 +23,7 @@ import com.chandra.bus.payload.request.AgencyRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.service.BusReservationService;
+import com.chandra.bus.service.AgencyService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -43,7 +43,7 @@ public class AgencyController {
 	BusRepository busRepository;
 
 	@Autowired
-	BusReservationService busReservationService;
+	AgencyService agencyService;
 
 	@GetMapping("/")
 	@ApiOperation(value = "get all agency", authorizations = { @Authorization(value = "apiKey") })
@@ -76,7 +76,7 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 
-		Agency agency = busReservationService.addNewAgency(agencyRequest);
+		Agency agency = agencyService.addNewAgency(agencyRequest);
 		return new ResponseEntity<>(agency, HttpStatus.OK);
 	}
 
@@ -86,7 +86,7 @@ public class AgencyController {
 	public ResponseEntity<?> updateAgency(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody AgencyRequest agencyRequest) {
 
-		Agency agency = busReservationService.updatingAgency(id, agencyRequest);
+		Agency agency = agencyService.updatingAgency(id, agencyRequest);
 		return new ResponseEntity<>(agency, HttpStatus.OK);
 	}
 
@@ -97,7 +97,6 @@ public class AgencyController {
 
 		agencyRepository.deleteById(id);
 		String result = "Success Deleting Data with Id: " + id;
-
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

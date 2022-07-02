@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
+import com.chandra.bus.service.BusService;
 
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.ApiOperation;
@@ -39,31 +39,23 @@ public class BusController {
 	@Autowired
 	AgencyRepository agencyRepository;
 
+	@Autowired
+	BusService busService;
+
 	@PostMapping("/")
 	@ApiOperation(value = "add new bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addBusByUserId(@Valid @RequestBody BusRequest busRequest) {
+	public ResponseEntity<?> addBus(@Valid @RequestBody BusRequest busRequest) {
 
-		// cek apakah agency ada
-		Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
-		if (agency == null) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
-		}
-
-		Bus bus = new Bus(
-				busRequest.getCode(),
-				busRequest.getCapacity(),
-				busRequest.getMake(),
-				agency);
-
-		Bus savedBus = busRepository.save(bus);
-		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Adding Data", savedBus));
+		Bus bus = busService.addNewBus(busRequest);
+		return ResponseEntity.ok(bus);
 	}
 
 	@GetMapping("/")
 	@ApiOperation(value = "get all bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllBus() {
+
 		List<Bus> bus = busRepository.findAll();
 		if (bus == null) {
 			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
@@ -75,6 +67,7 @@ public class BusController {
 	@ApiOperation(value = "get bus by id", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getBusById(@PathVariable(value = "id") Long id) {
+		
 		Bus bus = busRepository.findById(id).get();
 		if (bus == null) {
 			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
@@ -88,20 +81,8 @@ public class BusController {
 	public ResponseEntity<?> updateBus(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody BusRequest busRequest) {
 
-		Bus bus = busRepository.findById(id).get();
-		if (bus == null) {
-			return new ResponseEntity<>("No Bus found", HttpStatus.NOT_FOUND);
-		}
-
-		Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
-
-		bus.setCode(busRequest.getCode());
-		bus.setCapacity(busRequest.getCapacity());
-		bus.setMake(busRequest.getMake());
-		bus.setAgency(agency);
-
-		Bus savedBus = busRepository.save(bus);
-		return ResponseEntity.ok(new MessageResponse<Bus>(true, "Success Updating Data", savedBus));
+		Bus bus = busService.updatingBus(id, busRequest);
+		return ResponseEntity.ok(bus);
 	}
 
 	@DeleteMapping("/{id}")
@@ -109,12 +90,9 @@ public class BusController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteBus(@PathVariable(value = "id") Long id) {
 
-		Bus bus = busRepository.findById(id).get();
-		if (bus == null) {
-			return ResponseEntity.notFound().build();
-		}
 		busRepository.deleteById(id);
-		return ResponseEntity.ok(new MessageResponse<String>("Success Delete Bus"));
+		String result = "Success Deleting Data with Id: " + id;
+		return ResponseEntity.ok(result);
 	}
 
 }

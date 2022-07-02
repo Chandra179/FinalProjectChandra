@@ -10,7 +10,7 @@ import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.UserRepository;
 
 @Component
-public class BusReservationServiceImpl implements BusReservationService {
+public class AgencyServiceImpl implements AgencyService {
 
 	@Autowired
 	private AgencyRepository agencyRepository;
