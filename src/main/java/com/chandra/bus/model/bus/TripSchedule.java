@@ -1,7 +1,10 @@
 package com.chandra.bus.model.bus;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,8 +13,10 @@ import com.sun.istack.NotNull;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@Accessors(chain = true)
 @Entity
 @Table(name = "tb_trip_schedule")
 public class TripSchedule {

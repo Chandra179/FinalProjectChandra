@@ -13,12 +13,6 @@ public class TicketRequest {
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
-	@NotNull
-	private int seatNumber;
-
-	@NotNull
-	private Boolean cancellable;
-
 	@NotBlank
 	private String journeyDate;
 

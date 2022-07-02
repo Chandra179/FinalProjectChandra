@@ -1,34 +1,39 @@
 package com.chandra.bus.model.bus;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
 import com.chandra.bus.model.user.User;
 
-@Data
+@Getter
+@Setter
+@Accessors(chain = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_ticket")
 public class Ticket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private int seatNumber;
+	private Integer seatNumber;
 
-    private Boolean cancellable;
+	private Boolean cancellable;
 
-    private String journeyDate;
+	private String journeyDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "trip_schedule_id")
-    private TripSchedule tripSchedule;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "trip_schedule_id")
+	private TripSchedule tripSchedule;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User passenger;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User passenger;
 
 	public Ticket(int seatNumber, Boolean cancellable, String journeyDate, User passenger, TripSchedule tripSchedule) {
 		this.seatNumber = seatNumber;

@@ -12,18 +12,18 @@ import javax.persistence.*;
 public class Bus {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String code;
+	private String code;
 
-    private int capacity;
+	private Integer capacity;
 
-    private String make;
+	private String make;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agency_id")
-    private Agency agency;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "agency_id")
+	private Agency agency;
 
 	public Bus(String code, int capacity, String make, Agency agency) {
 		this.code = code;
