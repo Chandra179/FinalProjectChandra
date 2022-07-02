@@ -49,7 +49,7 @@ public class AgencyController {
 
 	@GetMapping("/")
 	@ApiOperation(value = "get all agency", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllAgency() {
 
 		List<Agency> agency = agencyRepository.findAll();
@@ -61,7 +61,7 @@ public class AgencyController {
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get agency", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAgency(@PathVariable(value = "id") Long id) {
 
 		try {
@@ -75,7 +75,7 @@ public class AgencyController {
 
 	@PostMapping("/")
 	@ApiOperation(value = "add new agency", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 
 		Agency agency = agencyService.addNewAgency(agencyRequest);
@@ -94,7 +94,7 @@ public class AgencyController {
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "delete agency", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteAgency(@PathVariable(value = "id") Long id) {
 
 		try {

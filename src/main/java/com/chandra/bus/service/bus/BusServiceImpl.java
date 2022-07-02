@@ -37,7 +37,7 @@ public class BusServiceImpl implements BusService {
 			return savedBus;
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 
@@ -58,7 +58,7 @@ public class BusServiceImpl implements BusService {
 			return savedBus;
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 }

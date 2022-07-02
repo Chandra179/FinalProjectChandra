@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "tb_stop", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
+@Table(name = "tb_stop")
 public class Stop {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

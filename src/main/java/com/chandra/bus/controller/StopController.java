@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.service.stop.StopService;
 
@@ -45,9 +47,9 @@ public class StopController {
 
 		List<Stop> stop = stopRepository.findAll();
 		if (stop.isEmpty()) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("success", HttpStatus.NOT_FOUND, stop);
 		}
-		return ResponseEntity.ok(stop);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
 	@GetMapping("/{name}")
@@ -57,9 +59,9 @@ public class StopController {
 
 		List<Stop> stop = stopRepository.findByName(name);
 		if (stop.isEmpty()) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("success", HttpStatus.NOT_FOUND, stop);
 		}
-		return ResponseEntity.ok(stop);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
 	@GetMapping("/{code}")
@@ -69,9 +71,9 @@ public class StopController {
 
 		List<Stop> stop = stopRepository.findByCode(code);
 		if (stop.isEmpty()) {
-			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+			return ResponseHandler.generateResponse("success", HttpStatus.NOT_FOUND, stop);
 		}
-		return ResponseEntity.ok(stop);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
 	@PostMapping("/")
@@ -80,7 +82,7 @@ public class StopController {
 	public ResponseEntity<?> addStop(@Valid @RequestBody StopRequest stopReq) {
 
 		Stop stop = stopService.addNewStop(stopReq);
-		return ResponseEntity.ok(stop);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
 	@PutMapping("/{id}")
@@ -89,7 +91,7 @@ public class StopController {
 	public ResponseEntity<?> updateStop(@PathVariable(value = "id") Long id, @Valid @RequestBody StopRequest stopReq) {
 
 		Stop stop = stopService.updatingStop(id, stopReq);
-		return ResponseEntity.ok(stop);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
 	@DeleteMapping("/{id}")
@@ -97,8 +99,13 @@ public class StopController {
 	@ApiOperation(value = "delete stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> deleteStop(@PathVariable(value = "id") Long id) {
 
-		stopRepository.deleteById(id);
-		String result = "Success Delete Stop with Id: " + id;
-		return ResponseEntity.ok(result);
+		try {
+			stopRepository.deleteById(id);
+			String result = "Success Delete Stop with Id: " + id;
+			return ResponseEntity.ok(result);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 }
