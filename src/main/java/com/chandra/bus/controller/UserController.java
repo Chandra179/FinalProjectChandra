@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.model.user.UserRoles;
+import com.chandra.bus.payload.request.LoginRequest;
 import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserRequest;
 import com.chandra.bus.payload.request.UserPasswordRequest;
@@ -123,6 +124,23 @@ public class UserController {
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse<String>("User registered successfully!"));
+	}
+
+	@PostMapping("/login")
+	@ApiOperation(value = "user login")
+	public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
+
+		User user = userRepository.findByUsername(loginRequest.getUsername()).get();
+
+		if (user == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		if (encoder.matches(loginRequest.getPassword(), user.getPassword())) {
+			return ResponseEntity.ok(new MessageResponse<String>("User is logged in!"));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PutMapping("/{id}")
