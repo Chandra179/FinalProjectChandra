@@ -1,10 +1,12 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.AgencyRequest;
-import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.UserRepository;
@@ -48,24 +49,24 @@ public class AgencyController {
 	public ResponseEntity<?> getAll() {
 
 		List<Agency> agency = agencyRepository.findAll();
-		return ResponseEntity.ok(new MessageResponse<Agency>(true, "Success Retrieving Data", agency));
-	}
-
-	@GetMapping("/{id}")
-	@ApiOperation(value = "get agency by id", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> getAgencyById(@PathVariable(value = "id") Long id) {
-
-		Agency agency = agencyRepository.findById(id).get();
 
 		if (agency == null) {
 			return ResponseEntity.notFound().build();
 		}
+		return new ResponseEntity<>(agency, HttpStatus.OK);
+	}
 
-		AgencyRequest dataResult = new AgencyRequest(agency.getId(), agency.getCode(), agency.getName(),
-				agency.getDetails(), agency.getOwner().getId());
+	@GetMapping("/{id}")
+	@ApiOperation(value = "get agency", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getAgency(@PathVariable(value = "id") Long id) {
 
-		return ResponseEntity.ok(new MessageResponse<AgencyRequest>(true, "Success Retrieving Data", dataResult));
+		Agency agency = agencyRepository.findById(id).get();
+
+		if (agency == null) {
+			return new ResponseEntity<>("No data found", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(agency, HttpStatus.OK);
 	}
 
 	@PostMapping("/")
@@ -74,12 +75,15 @@ public class AgencyController {
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
 
 		User user = userRepository.findById(agencyRequest.getOwner()).get();
-		Agency agency = new Agency(agencyRequest.getCode(), agencyRequest.getDetails(), agencyRequest.getName(), user);
-		agencyRepository.save(agency);
+		Agency agency = new Agency(
+				agencyRequest.getCode(),
+				agencyRequest.getDetails(),
+				agencyRequest.getName(),
+				user);
 
-		return ResponseEntity
-				.ok(new MessageResponse<Agency>(true, "Success Adding Data", agencyRepository.save(agency)));
+		Agency savedAgency = agencyRepository.save(agency);
 
+		return new ResponseEntity<>(savedAgency, HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -91,7 +95,7 @@ public class AgencyController {
 		Agency agency = agencyRepository.findById(id).get();
 		User user = userRepository.findById(agencyDetail.getOwner()).get();
 
-		if (agency == null) {
+		if (agency == null || user == null) {
 			return ResponseEntity.notFound().build();
 		}
 
@@ -101,7 +105,7 @@ public class AgencyController {
 		agency.setOwner(user);
 
 		Agency updatedAgency = agencyRepository.save(agency);
-		return ResponseEntity.ok(new MessageResponse<Agency>(true, "Success Updating Data", updatedAgency));
+		return new ResponseEntity<>(updatedAgency, HttpStatus.OK);
 
 	}
 
@@ -110,14 +114,10 @@ public class AgencyController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteAgency(@PathVariable(value = "id") Long id) {
 
-		String result = "";
-
-		agencyRepository.findById(id).get();
-
-		result = "Success Deleting Data with Id: " + id;
+		String result = "Success Deleting Data with Id: " + id;
 		agencyRepository.deleteById(id);
 
-		return ResponseEntity.ok(new MessageResponse<Agency>(true, result));
+		return new ResponseEntity<>(result, HttpStatus.OK);
 
 	}
 }

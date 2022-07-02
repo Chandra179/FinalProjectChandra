@@ -1,18 +1,24 @@
 package com.chandra.bus.model.bus;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 import com.chandra.bus.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Set;
 
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "tb_agency", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
 public class Agency {
-
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +29,14 @@ public class Agency {
 
     private String details;
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_user_id")
     private User owner;
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "agency", cascade = CascadeType.ALL)
     private Set<Bus> buses;
 
@@ -34,46 +44,6 @@ public class Agency {
 		this.code = code;
 		this.name = name;
 		this.details = details;
-		this.owner = owner;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 }
