@@ -112,7 +112,8 @@ public class TripController {
 	}
 
 	@PostMapping("/stop")
-	@ApiOperation(value = "get trip by source - dest stop", authorizations = { @Authorization(value = "apiKey") })
+	@ApiOperation(value = "get trip by source - destination stop", authorizations = {
+			@Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByStop(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
 

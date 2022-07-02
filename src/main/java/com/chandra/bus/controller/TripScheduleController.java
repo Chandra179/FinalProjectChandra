@@ -1,7 +1,6 @@
 package com.chandra.bus.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.TripScheduleRequest;
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 
@@ -42,11 +43,12 @@ public class TripScheduleController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllTripSchedule() {
 
-		List<TripSchedule> trip = tripScheduleRepository.findAll();
-		if (trip.isEmpty()) {
-			return new ResponseEntity<>("No trip schedule found", HttpStatus.NOT_FOUND);
+		List<TripSchedule> tripSchedule = tripScheduleRepository.findAll();
+
+		if (tripSchedule.isEmpty()) {
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, tripSchedule);
 		}
-		return ResponseEntity.ok(trip);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 	}
 
 	@GetMapping("/{id}")
@@ -54,11 +56,13 @@ public class TripScheduleController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTrip(@PathVariable(value = "id") Long id) {
 
-		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(id);
-		if (!tripSchedule.isPresent()) {
-			return new ResponseEntity<>("No trip schedule found", HttpStatus.NOT_FOUND);
+		try {
+			TripSchedule tripSchedule = tripScheduleRepository.findById(id).get();
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
 		}
-		return ResponseEntity.ok(tripSchedule);
 	}
 
 	@PostMapping("/")
@@ -66,13 +70,17 @@ public class TripScheduleController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripScheduleRequest tripScheduleRequest) {
 
-		Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
+		try {
+			Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
 
-		TripSchedule tripSchedule = new TripSchedule(
-				tripScheduleRequest.getTripDate(),
-				tripScheduleRequest.getAvailableSeats(),
-				trip);
+			TripSchedule tripSchedule = new TripSchedule(
+					tripScheduleRequest.getTripDate(),
+					tripScheduleRequest.getAvailableSeats(),
+					trip);
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 
-		return ResponseEntity.ok(tripSchedule);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 }
