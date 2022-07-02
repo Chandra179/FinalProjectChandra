@@ -1,14 +1,18 @@
 package com.chandra.bus.payload.request;
 
 import javax.validation.constraints.NotBlank;
-
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BusRequest {
+
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
@@ -21,6 +25,6 @@ public class BusRequest {
 	@NotBlank
 	private String make;
 
-	@ApiModelProperty(hidden = true)
-	private long agencyId;
+	@NotNull
+	private Long agencyId;
 }

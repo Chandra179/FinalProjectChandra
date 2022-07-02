@@ -24,7 +24,7 @@ import com.chandra.bus.model.user.Role;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.model.user.UserRoles;
 import com.chandra.bus.payload.request.SignupRequest;
-import com.chandra.bus.payload.request.UserCustomRequest;
+import com.chandra.bus.payload.request.UserRequest;
 import com.chandra.bus.payload.request.UserPasswordRequest;
 import com.chandra.bus.payload.response.MessageResponse;
 
@@ -129,14 +129,14 @@ public class UserController {
 	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateUser(@PathVariable(value = "id") Long id,
-			@Valid @RequestBody UserCustomRequest userCustomRequest) {
+			@Valid @RequestBody UserRequest userRequest) {
 		User user = userRepository.findById(id).get();
 		if (user == null) {
 			return ResponseEntity.notFound().build();
 		}
-		user.setFirstName(userCustomRequest.getFirstName());
-		user.setLastName(userCustomRequest.getLastName());
-		user.setMobileNumber(userCustomRequest.getMobileNumber());
+		user.setFirstName(userRequest.getFirstName());
+		user.setLastName(userRequest.getLastName());
+		user.setMobileNumber(userRequest.getMobileNumber());
 
 		User updatedUser = userRepository.save(user);
 

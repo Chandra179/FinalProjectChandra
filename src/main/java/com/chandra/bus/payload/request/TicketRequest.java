@@ -5,21 +5,13 @@ import javax.validation.constraints.NotBlank;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class TicketRequest {
 
 	@ApiModelProperty(hidden = true)
 	private Long id;
-
-	@NotNull
-	private int seatNumber;
-
-	@NotNull
-	private Boolean cancellable;
 
 	@NotBlank
 	private String journeyDate;
