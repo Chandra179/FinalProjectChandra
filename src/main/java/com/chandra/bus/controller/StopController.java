@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;
-import com.chandra.bus.payload.response.MessageResponse;
 import com.chandra.bus.repository.StopRepository;
-import com.chandra.bus.service.StopService;
+import com.chandra.bus.service.stop.StopService;
 
 import io.swagger.annotations.Authorization;
 import io.swagger.annotations.ApiOperation;

@@ -23,7 +23,7 @@ import com.chandra.bus.payload.request.AgencyRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.service.AgencyService;
+import com.chandra.bus.service.agency.AgencyService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;

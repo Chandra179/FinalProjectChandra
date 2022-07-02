@@ -37,6 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/v1/trip")
 public class TripController {
+
 	@Autowired
 	TripRepository tripRepository;
 
@@ -138,7 +139,7 @@ public class TripController {
 		Optional<Bus> bus = busRepository.findById(id);
 
 		if (!bus.isPresent()) {
-			return new ResponseEntity<>(new MessageResponse<Bus>(false, "No trip found"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new MessageResponse<>(false, "No trip found"), HttpStatus.NOT_FOUND);
 		}
 
 		List<Trip> trip = tripRepository.findByBus(bus);

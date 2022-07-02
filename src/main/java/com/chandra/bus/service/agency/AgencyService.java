@@ -1,4 +1,4 @@
-package com.chandra.bus.service;
+package com.chandra.bus.service.agency;
 
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.payload.request.AgencyRequest;

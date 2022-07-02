@@ -1,4 +1,4 @@
-package com.chandra.bus.service;
+package com.chandra.bus.service.user;
 
 import java.util.HashSet;
 import java.util.Set;

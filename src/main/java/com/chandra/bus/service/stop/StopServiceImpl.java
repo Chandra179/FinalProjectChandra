@@ -1,4 +1,4 @@
-package com.chandra.bus.service;
+package com.chandra.bus.service.stop;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.chandra.bus.service;
+package com.chandra.bus.service.stop;
 
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;

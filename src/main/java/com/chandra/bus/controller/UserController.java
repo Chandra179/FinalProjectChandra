@@ -25,7 +25,7 @@ import com.chandra.bus.payload.request.UserRequest;
 
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.service.UserService;
+import com.chandra.bus.service.user.UserService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

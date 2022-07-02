@@ -42,6 +42,9 @@ public class TripScheduleController {
 	public ResponseEntity<?> getAllTripSchedule() {
 
 		List<TripSchedule> trip = tripScheduleRepository.findAll();
+		if (trip.isEmpty()) {
+			return new ResponseEntity<>("No trip schedule found", HttpStatus.NOT_FOUND);
+		}
 		return ResponseEntity.ok(trip);
 	}
 
@@ -64,8 +67,10 @@ public class TripScheduleController {
 
 		Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
 
-		TripSchedule tripSchedule = new TripSchedule(tripScheduleRequest.getTripDate(),
-				tripScheduleRequest.getAvailableSeats(), trip);
+		TripSchedule tripSchedule = new TripSchedule(
+				tripScheduleRequest.getTripDate(),
+				tripScheduleRequest.getAvailableSeats(),
+				trip);
 
 		return ResponseEntity.ok(tripSchedule);
 	}
