@@ -10,29 +10,29 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_trip")
 public class Trip {
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private Long id;
 
-    private int fare;
+	private int fare;
 
-    private int journeyTime;
+	private int journeyTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "source_stop_id")
-    private Stop sourceStop;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "source_stop_id")
+	private Stop sourceStop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dest_stop_id")
-    private Stop destStop;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dest_stop_id")
+	private Stop destStop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bus_id")
-    private Bus bus;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bus_id")
+	private Bus bus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agency_id")
-    private Agency agency;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "agency_id")
+	private Agency agency;
 
 	public Trip(int fare, int journeyTime, Stop sourceStop, Stop destStop, Bus bus, Agency agency) {
 		this.fare = fare;
