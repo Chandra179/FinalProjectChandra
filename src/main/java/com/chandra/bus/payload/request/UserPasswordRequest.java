@@ -9,8 +9,4 @@ public class UserPasswordRequest {
 	private Long id;
 
 	private String password;
-
-	public UserPasswordRequest(String password) {
-		this.password = password;
-	}
 }
