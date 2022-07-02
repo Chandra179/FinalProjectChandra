@@ -9,7 +9,7 @@ public class GetTripByJourneyTimeRequest {
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
-	private int minJourneyTime;
+	private Integer minJourneyTime;
 
-	private int maxJourneyTime;
+	private Integer maxJourneyTime;
 }
