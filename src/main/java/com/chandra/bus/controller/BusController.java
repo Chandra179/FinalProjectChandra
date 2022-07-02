@@ -43,7 +43,7 @@ public class BusController {
 	@Autowired
 	BusService busService;
 
-	@PostMapping("/")
+	@PostMapping("")
 	@ApiOperation(value = "add new bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addBus(@Valid @RequestBody BusRequest busRequest) {
@@ -52,7 +52,7 @@ public class BusController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	@ApiOperation(value = "get all bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllBus() {
@@ -99,7 +99,7 @@ public class BusController {
 			return ResponseEntity.ok(result);
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 }

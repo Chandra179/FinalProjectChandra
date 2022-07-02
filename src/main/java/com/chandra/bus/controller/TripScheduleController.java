@@ -38,7 +38,7 @@ public class TripScheduleController {
 	@Autowired
 	TripRepository tripRepository;
 
-	@GetMapping("/")
+	@GetMapping("")
 	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllTripSchedule() {
@@ -65,7 +65,7 @@ public class TripScheduleController {
 		}
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	@ApiOperation(value = "add trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripScheduleRequest tripScheduleRequest) {
@@ -77,10 +77,11 @@ public class TripScheduleController {
 					tripScheduleRequest.getTripDate(),
 					tripScheduleRequest.getAvailableSeats(),
 					trip);
+			tripScheduleRepository.save(tripSchedule);
 			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 }

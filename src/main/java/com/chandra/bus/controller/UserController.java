@@ -53,7 +53,7 @@ public class UserController {
 	@Autowired
 	PasswordEncoder encoder;
 
-	@GetMapping("/")
+	@GetMapping("")
 	@ApiOperation(value = "get all user", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUser() {

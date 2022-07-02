@@ -47,7 +47,7 @@ public class AgencyController {
 	@Autowired
 	AgencyService agencyService;
 
-	@GetMapping("/")
+	@GetMapping("")
 	@ApiOperation(value = "get all agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllAgency() {
@@ -73,7 +73,7 @@ public class AgencyController {
 		}
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	@ApiOperation(value = "add new agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addAgency(@Valid @RequestBody AgencyRequest agencyRequest) {
@@ -103,7 +103,7 @@ public class AgencyController {
 			return new ResponseEntity<>(result, HttpStatus.OK);
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 }

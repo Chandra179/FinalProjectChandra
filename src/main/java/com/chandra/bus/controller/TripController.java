@@ -52,7 +52,7 @@ public class TripController {
 	@Autowired
 	TripService tripService;
 
-	@PostMapping("/")
+	@PostMapping("")
 	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
@@ -61,7 +61,7 @@ public class TripController {
 		return ResponseEntity.ok(newTrip);
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	@ApiOperation(value = "get all trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllTrip() {

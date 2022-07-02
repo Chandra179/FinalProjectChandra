@@ -40,7 +40,7 @@ public class StopController {
 	@Autowired
 	StopService stopService;
 
-	@GetMapping("/")
+	@GetMapping("")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get all stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getAllStops() {
@@ -76,7 +76,7 @@ public class StopController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "add stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> addStop(@Valid @RequestBody StopRequest stopReq) {

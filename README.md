@@ -1,6 +1,6 @@
 ## Database Migration (FLyWay) (PostgreSQL)
 
-Untuk migrasi database diwajibkan export database schema (DDL) terlebih dahulu
+Untuk migrasi database diwajibkan export database schema (DDL) terlebih dahulu sebelum INSERT DATA
 	
 `pg_dump -U postgres -s db_bus > V1.0__ddl.sql`
 	
