@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,12 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 	@Override
 	public TripSchedule addNewTrip(TripScheduleRequest tripScheduleRequest) throws ParseException {
 		
-		Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
+		Optional<Trip> trip = tripRepository.findById(tripScheduleRequest.getTripDetail());
+
+		if (!trip.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip with Id " + trip.get().getId() + "not found");
+		}
+
 		String requestDate = tripScheduleRequest.getTripDate();
 		
 		String validDate = checkIfDateIsValid(requestDate);
@@ -64,14 +70,14 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 			TripSchedule tripSchedule = new TripSchedule(
 					checkedDate,
 					tripScheduleRequest.getAvailableSeats(),
-					trip);
+					trip.get());
 
 			TripSchedule newTrip = tripScheduleRepository.save(tripSchedule);
 
 			return newTrip;
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 
