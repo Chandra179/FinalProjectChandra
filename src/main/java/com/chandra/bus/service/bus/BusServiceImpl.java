@@ -1,5 +1,7 @@
 package com.chandra.bus.service.bus;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,14 +26,18 @@ public class BusServiceImpl implements BusService {
 	@Override
 	public Bus addNewBus(BusRequest busRequest) {
 
-		try {
-			Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
+		Optional<Agency> agency = agencyRepository.findById(busRequest.getAgencyId());
 
+		if (!agency.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data found");
+		}
+
+		try {
 			Bus bus = new Bus(
 					busRequest.getCode(),
 					busRequest.getCapacity(),
 					busRequest.getMake(), 
-					agency);
+					agency.get());
 
 			Bus savedBus = busRepository.save(bus);
 			return savedBus;
@@ -44,17 +50,24 @@ public class BusServiceImpl implements BusService {
 	@Override
 	public Bus updatingBus(Long id, BusRequest busRequest) {
 
+		Optional<Agency> agency = agencyRepository.findById(busRequest.getAgencyId());
+		Optional<Bus> bus = busRepository.findById(id);
+
+		if (!agency.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agency found");
+		}
+
+		if (!bus.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No bus found");
+		}
+
 		try {
-			Bus bus = busRepository.findById(id).get();
+			bus.get().setCode(busRequest.getCode());
+			bus.get().setCapacity(busRequest.getCapacity());
+			bus.get().setMake(busRequest.getMake());
+			bus.get().setAgency(agency.get());
 
-			Agency agency = agencyRepository.findById(busRequest.getAgencyId()).get();
-
-			bus.setCode(busRequest.getCode());
-			bus.setCapacity(busRequest.getCapacity());
-			bus.setMake(busRequest.getMake());
-			bus.setAgency(agency);
-
-			Bus savedBus = busRepository.save(bus);
+			Bus savedBus = busRepository.save(bus.get());
 			return savedBus;
 
 		} catch (Exception e) {
