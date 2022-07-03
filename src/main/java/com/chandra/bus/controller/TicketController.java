@@ -57,13 +57,4 @@ public class TicketController {
 		}
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, userTicket);
 	}
-
-	@PostMapping("/bookticket")
-	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) throws ParseException {
-
-		TripSchedule tripSchedule = ticketService.bookingTicket(ticketRequest);
-		return ResponseEntity.ok(tripSchedule);
-	}
 }

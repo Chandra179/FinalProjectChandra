@@ -42,19 +42,6 @@ public class TripScheduleController {
 	@Autowired
 	TripScheduleService tripScheduleService;
 
-	@GetMapping("")
-	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getAllTripSchedule() {
-
-		List<TripSchedule> tripSchedule = tripScheduleRepository.findAll();
-
-		if (tripSchedule.isEmpty()) {
-			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, tripSchedule);
-		}
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
-	}
-
 	@GetMapping("/{id}")
 	@ApiOperation(value = "get trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
