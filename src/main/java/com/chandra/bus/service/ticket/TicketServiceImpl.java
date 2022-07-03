@@ -17,23 +17,22 @@ import com.chandra.bus.repository.TicketRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 import com.chandra.bus.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Component
 public class TicketServiceImpl implements TicketService {
 
 	@Autowired
-	TicketRepository ticketRepository;
+	private TicketRepository ticketRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	TripScheduleRepository tripScheduleRepository;
+	private TripScheduleRepository tripScheduleRepository;
 
-	public Optional<User> checkIfUserPresent() {
-
-		// get logged in user
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String currentUser = auth.getName();
+	public Optional<User> checkIfUserPresent(String currentUser) {
 
 		// get user from database
 		Optional<User> user = userRepository.findByUsername(currentUser);
@@ -66,7 +65,11 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public TripSchedule bookingTicket(TicketRequest ticketRequest) {
 
-		Optional<User> user = checkIfUserPresent();
+		// get logged in user
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String currentUser = auth.getName();
+
+		Optional<User> user = checkIfUserPresent(currentUser);
 		Optional<TripSchedule> tripSchedule = checkIfTripScheduleAvailable(ticketRequest);
 		
 		try {

@@ -1,6 +1,7 @@
 package com.chandra.bus.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,6 @@ public interface StopRepository extends JpaRepository<Stop, Long> {
 	List<Stop> findByName(String name);
 
 	List<Stop> findByCode(String code);
+
+	Optional<Stop> findById(int sourceStopId);
 }
