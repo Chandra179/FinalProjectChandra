@@ -34,7 +34,7 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 
 		// check if requested date is less than today
 		if (myDate.before(today)) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Tanggal input harus lebih besar dari " + today.toString());
 		} else {
 			return myDate.toString();
