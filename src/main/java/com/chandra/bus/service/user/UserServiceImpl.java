@@ -1,6 +1,7 @@
 package com.chandra.bus.service.user;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,13 +91,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updatingUser(Long id, UserRequest userRequest) {
-		User user = userRepository.findById(id).get();
+		Optional<User> user = userRepository.findById(id);
 
-		user.setFirstName(userRequest.getFirstName());
-		user.setLastName(userRequest.getLastName());
-		user.setMobileNumber(userRequest.getMobileNumber());
+		if (!user.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		}
 
-		User updatedUser = userRepository.save(user);
+		user.get().setFirstName(userRequest.getFirstName());
+		user.get().setLastName(userRequest.getLastName());
+		user.get().setMobileNumber(userRequest.getMobileNumber());
+
+		User updatedUser = userRepository.save(user.get());
 		return updatedUser;
 	}
 

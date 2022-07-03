@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserRequest;
-
+import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.service.user.UserService;
@@ -70,8 +71,12 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Long id) {
 
-		User user = userRepository.findById(id).get();
-		return ResponseEntity.ok(user);
+		try {
+			User user = userRepository.findById(id).get();
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, user);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 
 	@PostMapping("/signup")
@@ -97,8 +102,12 @@ public class UserController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long id) {
 
-		userRepository.deleteById(id);
-		String result = "Success Delete User with Id: " + id;
-		return ResponseEntity.ok(result);
+		try {
+			userRepository.deleteById(id);
+			String result = "Success Delete User with Id: " + id;
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
+		}
 	}
 }
