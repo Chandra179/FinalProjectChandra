@@ -72,7 +72,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public TripSchedule bookingTicket(TicketRequest ticketRequest) {
+	public TripSchedule bookingTicket(TicketRequest ticketRequest) throws ParseException {
 
 		// get logged in user
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

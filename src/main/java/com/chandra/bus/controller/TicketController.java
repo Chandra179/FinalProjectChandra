@@ -1,5 +1,6 @@
 package com.chandra.bus.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -60,7 +61,7 @@ public class TicketController {
 	@PostMapping("/bookticket")
 	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) {
+	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) throws ParseException {
 
 		TripSchedule tripSchedule = ticketService.bookingTicket(ticketRequest);
 		return ResponseEntity.ok(tripSchedule);
