@@ -13,7 +13,7 @@ import com.chandra.bus.model.bus.Trip;
 @SpringBootTest
 public class TestObjectFactory {
 
-	public static Trip createStop() {
+	public static Stop createStop() {
 		final Stop stop = new Stop();
 		stop.setCode(null);
 		stop.setName(null);
