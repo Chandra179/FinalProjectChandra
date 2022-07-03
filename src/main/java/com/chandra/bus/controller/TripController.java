@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Trip;
-import com.chandra.bus.payload.request.LowerUpperValueRequest;
 import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
@@ -67,58 +66,6 @@ public class TripController {
 	public ResponseEntity<?> getAllTrip() {
 
 		List<Trip> trip = tripRepository.findAll();
-
-		if (trip.isEmpty()) {
-			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
-		}
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
-	}
-
-	@PostMapping("/fare")
-	@ApiOperation(value = "get trip by fare", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByFare(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
-
-		Integer minFare = lowerUpperValueRequest.getLowerValue();
-		Integer maxFare = lowerUpperValueRequest.getUpperValue();
-
-		List<Trip> trip = tripRepository.findByFareBetween(minFare, maxFare);
-
-		if (trip.isEmpty()) {
-			String respFormat = String.format("Trip with fare %d - %d not found", minFare, maxFare);
-			return ResponseHandler.generateResponse(respFormat, HttpStatus.NOT_FOUND, trip);
-		}
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
-	}
-
-	@PostMapping("/journeytime")
-	@ApiOperation(value = "get trip by journey time", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getJourneyTimeBetween(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
-
-		Integer minJourneyTime = lowerUpperValueRequest.getLowerValue();
-		Integer maxJourneyTime = lowerUpperValueRequest.getUpperValue();
-
-		List<Trip> trip = tripRepository.findByJourneyTimeBetween(minJourneyTime, maxJourneyTime);
-
-		if (trip.isEmpty()) {
-			String respFormat = String.format("Trip with journey time %d - %d not found", minJourneyTime,
-					maxJourneyTime);
-			return ResponseHandler.generateResponse(respFormat, HttpStatus.NOT_FOUND, trip);
-		}
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
-	}
-
-	@PostMapping("/stop")
-	@ApiOperation(value = "get trip by source - destination stop", authorizations = {
-			@Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getTripByStop(@Valid @RequestBody LowerUpperValueRequest lowerUpperValueRequest) {
-
-		Integer sourceStop = lowerUpperValueRequest.getLowerValue();
-		Integer destStop = lowerUpperValueRequest.getUpperValue();
-
-		List<Trip> trip = tripRepository.findTripsByStops(sourceStop, destStop);
 
 		if (trip.isEmpty()) {
 			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);

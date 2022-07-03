@@ -1,5 +1,6 @@
 package com.chandra.bus.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -55,14 +56,5 @@ public class TicketController {
 			return ResponseHandler.generateResponse("No ticket found", HttpStatus.NOT_FOUND, userTicket);
 		}
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, userTicket);
-	}
-
-	@PostMapping("/bookticket")
-	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) {
-
-		TripSchedule tripSchedule = ticketService.bookingTicket(ticketRequest);
-		return ResponseEntity.ok(tripSchedule);
 	}
 }

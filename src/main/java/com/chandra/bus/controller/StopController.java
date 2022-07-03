@@ -41,7 +41,7 @@ public class StopController {
 	StopService stopService;
 
 	@GetMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get all stop", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getAllStops() {
 
@@ -53,7 +53,7 @@ public class StopController {
 	}
 
 	@GetMapping("/{name}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get stop by name", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getStopByName(@RequestParam(value = "name") String name) {
 
@@ -65,13 +65,13 @@ public class StopController {
 	}
 
 	@GetMapping("/{code}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "get stop by code", authorizations = { @Authorization(value = "apiKey") })
 	public ResponseEntity<?> getStopByCode(@RequestParam(value = "code") String code) {
 
 		List<Stop> stop = stopRepository.findByCode(code);
 		if (stop.isEmpty()) {
-			return ResponseHandler.generateResponse("success", HttpStatus.NOT_FOUND, stop);
+			return ResponseHandler.generateResponse("Not found", HttpStatus.NOT_FOUND, stop);
 		}
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, stop);
 	}

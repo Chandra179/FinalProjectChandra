@@ -1,5 +1,8 @@
 package com.chandra.bus.service.ticket;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +46,22 @@ public class TicketServiceImpl implements TicketService {
 		return user;
 	}
 
-	public Optional<TripSchedule> checkIfTripScheduleAvailable(TicketRequest ticketRequest) {
+	public Optional<TripSchedule> checkIfTripScheduleAvailable(TicketRequest ticketRequest) throws ParseException {
 
 		// find trip schedule by id
 		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(ticketRequest.getTripScheduleId());
 
 		String journeyDate = ticketRequest.getJourneyDate();
+		String requestedDate = tripSchedule.get().getTripDate();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date myDate = sdf.parse(requestedDate);
+		Date tripDate = sdf.parse(journeyDate);
 
 		if (!tripSchedule.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip schedule not found");
 
-		} else if (!tripSchedule.get().getTripDate().equals(journeyDate)) {
+		} else if (!myDate.equals(tripDate)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trip found at date " + journeyDate);
 
 		} else if (tripSchedule.get().getAvailableSeats() == 0) {
@@ -63,7 +71,7 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public TripSchedule bookingTicket(TicketRequest ticketRequest) {
+	public TripSchedule bookingTicket(TicketRequest ticketRequest) throws ParseException {
 
 		// get logged in user
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

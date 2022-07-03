@@ -8,5 +8,5 @@ public interface UserService {
 
 	User registerNewUser(SignupRequest SignupRequest);
 
-	User updatingUser(Long id, UserRequest userRequest);
+	User updatingUser(UserRequest userRequest);
 }

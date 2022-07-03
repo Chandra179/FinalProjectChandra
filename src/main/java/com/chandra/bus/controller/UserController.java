@@ -87,13 +87,12 @@ public class UserController {
 		return ResponseEntity.ok(newUser);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("")
 	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> updateUser(@PathVariable(value = "id") Long id,
-			@Valid @RequestBody UserRequest userRequest) {
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	public ResponseEntity<?> updateUser(@Valid @RequestBody UserRequest userRequest) {
 
-		User udpatedUser = userService.updatingUser(id, userRequest);
+		User udpatedUser = userService.updatingUser(userRequest);
 		return ResponseEntity.ok(udpatedUser);
 	}
 
