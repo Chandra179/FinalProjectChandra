@@ -87,9 +87,9 @@ public class UserController {
 		return ResponseEntity.ok(newUser);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("")
 	@ApiOperation(value = "udpate user", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> updateUser(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody UserRequest userRequest) {
 

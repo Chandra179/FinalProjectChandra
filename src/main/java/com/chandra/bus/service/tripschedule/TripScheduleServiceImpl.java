@@ -1,0 +1,78 @@
+package com.chandra.bus.service.tripschedule;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.chandra.bus.model.bus.Trip;
+import com.chandra.bus.model.bus.TripSchedule;
+import com.chandra.bus.payload.request.TripScheduleRequest;
+import com.chandra.bus.repository.TripRepository;
+import com.chandra.bus.repository.TripScheduleRepository;
+
+public class TripScheduleServiceImpl implements TripScheduleService {
+
+	@Autowired
+	TripScheduleRepository tripScheduleRepository;
+
+	@Autowired
+	TripRepository tripRepository;
+
+	private DateTimeFormatter dateFormatter;
+	
+	public String checkIfDateIsValid(String requestDate) {
+		try {
+			dateFormatter.parse(requestDate);
+
+        } catch (DateTimeParseException e) {
+        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+        }
+		return requestDate;
+	}
+	
+	public String checkIfDateIsGreaterThanToday(String requestedDate) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date myDate = sdf.parse(requestedDate);
+		Date today = sdf.parse(Calendar.getInstance().toString());
+
+		// check if requested date is less than today
+		if (myDate.before(today)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+					"Tanggal input harus lebih besar dari " + today.toString());
+		} else {
+			return myDate.toString();
+		}
+	}
+
+	@Override
+	public TripSchedule addNewTrip(TripScheduleRequest tripScheduleRequest) throws ParseException {
+		
+		Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
+		String requestDate = tripScheduleRequest.getTripDate();
+		
+		String validDate = checkIfDateIsValid(requestDate);
+		String checkedDate = checkIfDateIsGreaterThanToday(validDate);
+		
+		try {
+			TripSchedule tripSchedule = new TripSchedule(
+					checkedDate,
+					tripScheduleRequest.getAvailableSeats(),
+					trip);
+
+			TripSchedule newTrip = tripScheduleRepository.save(tripSchedule);
+
+			return newTrip;
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
+	}
+
+}

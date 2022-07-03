@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -84,17 +86,29 @@ public class UserServiceImpl implements UserService {
 		Set<Role> roles = handleUserRole(strRoles);
 
 		user.setRoles(roles);
-		User savedUser = userRepository.save(user);
 
-		return savedUser;
+		try {
+			User savedUser = userRepository.save(user);
+			return savedUser;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
+		}
+
 	}
 
 	@Override
-	public User updatingUser(Long id, UserRequest userRequest) {
-		Optional<User> user = userRepository.findById(id);
+	public User updatingUser(UserRequest userRequest) {
 
+		// get logged in user
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String currentUser = auth.getName();
+
+		// get user from database
+		Optional<User> user = userRepository.findByUsername(currentUser);
+
+		// if user not present
 		if (!user.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
 		}
 
 		user.get().setFirstName(userRequest.getFirstName());

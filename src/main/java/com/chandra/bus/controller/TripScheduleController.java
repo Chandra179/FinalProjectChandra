@@ -1,5 +1,6 @@
 package com.chandra.bus.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import com.chandra.bus.payload.request.TripScheduleRequest;
 import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
+import com.chandra.bus.service.tripschedule.TripScheduleService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -37,6 +39,9 @@ public class TripScheduleController {
 
 	@Autowired
 	TripRepository tripRepository;
+
+	@Autowired
+	TripScheduleService tripScheduleService;
 
 	@GetMapping("")
 	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
@@ -68,20 +73,10 @@ public class TripScheduleController {
 	@PostMapping("")
 	@ApiOperation(value = "add trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addTrip(@Valid @RequestBody TripScheduleRequest tripScheduleRequest) {
+	public ResponseEntity<?> addTrip(@Valid @RequestBody TripScheduleRequest tripScheduleRequest)
+			throws ParseException {
 
-		try {
-			Trip trip = tripRepository.findById(tripScheduleRequest.getTripDetail()).get();
-
-			TripSchedule tripSchedule = new TripSchedule(
-					tripScheduleRequest.getTripDate(),
-					tripScheduleRequest.getAvailableSeats(),
-					trip);
-			tripScheduleRepository.save(tripSchedule);
-			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
-		}
+		TripSchedule tripSchedule = tripScheduleService.addNewTrip(tripScheduleRequest);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 	}
 }
