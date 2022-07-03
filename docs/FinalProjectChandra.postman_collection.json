@@ -879,47 +879,6 @@
 			"name": "TripSchedule",
 			"item": [
 				{
-					"name": "get all trip schedules",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
-								"type": "default"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules",
-							"protocol": "https",
-							"host": [
-								"bus-alexandria",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"api",
-								"v1",
-								"tripschedules"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "add new trip schedules",
 					"request": {
 						"method": "POST",
@@ -1214,96 +1173,6 @@
 					"response": []
 				},
 				{
-					"name": "get trip by fare",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
-								"type": "default"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 10000\r\n}"
-						},
-						"url": {
-							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/fare",
-							"protocol": "https",
-							"host": [
-								"bus-alexandria",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"api",
-								"v1",
-								"trip",
-								"fare"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "kedat",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get trip by journey time",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
-								"type": "default"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 100\r\n}"
-						},
-						"url": {
-							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/journeytime",
-							"protocol": "https",
-							"host": [
-								"bus-alexandria",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"api",
-								"v1",
-								"trip",
-								"journeytime"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "kedat",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "get trip by source stop",
 					"request": {
 						"method": "POST",
@@ -1342,51 +1211,6 @@
 								{
 									"key": "name",
 									"value": "puri"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get trip by source stop - dest stop",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
-								"type": "default"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"lowerValue\": 2,\r\n  \"upperValue\": 5\r\n}"
-						},
-						"url": {
-							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/stop",
-							"protocol": "https",
-							"host": [
-								"bus-alexandria",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"api",
-								"v1",
-								"trip",
-								"stop"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "kedat",
-									"disabled": true
 								}
 							]
 						}
@@ -1438,7 +1262,12 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Reservation",
+			"item": [
 				{
 					"name": "book new ticket",
 					"request": {
@@ -1460,7 +1289,7 @@
 							"raw": "{\r\n  \"journeyDate\": \"25-01-2023\",\r\n  \"tripScheduleId\": 1\r\n}"
 						},
 						"url": {
-							"raw": "https://bus-alexandria.herokuapp.com/api/v1/ticket/bookticket",
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/reservation/bookticket",
 							"protocol": "https",
 							"host": [
 								"bus-alexandria",
@@ -1470,8 +1299,185 @@
 							"path": [
 								"api",
 								"v1",
-								"ticket",
+								"reservation",
 								"bookticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all trip schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/reservation/tripschedules",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservation",
+								"tripschedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by fare",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 10000\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/reservation/fare",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservation",
+								"fare"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by journey time",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 100\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/reservation/journeytime",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservation",
+								"journeytime"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by source stop - dest stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 2,\r\n  \"upperValue\": 5\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/reservation/stop",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reservation",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
 							]
 						}
 					},

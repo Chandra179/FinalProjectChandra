@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.LowerUpperValueRequest;
@@ -56,7 +55,7 @@ public class ReservationController {
 		return ResponseEntity.ok(tripSchedule);
 	}
 
-	@GetMapping("")
+	@GetMapping("/tripschedules")
 	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllTripSchedule() {
