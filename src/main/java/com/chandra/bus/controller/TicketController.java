@@ -41,7 +41,7 @@ public class TicketController {
 	@GetMapping("")
 	@ApiOperation(value = "get current user ticket", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> getAllTicket() {
+	public ResponseEntity<?> getCurrentUserTicket() {
 
 		// get logged in user
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
