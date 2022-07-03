@@ -16,32 +16,17 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
 
 ## Api endpoint
 
-ROLE_ADMIN <br>
-- mempunyai semua akses ke semua api endpoints <br><br>
+1. agency-controller
+2. auth-controller
+3. bus-controller
+4. home-controller
+5. reservation-controller `untuk pemesanan tiket`
+6. stop-controller
+7. ticket-controller
+8. trip-controller
+9. trip-schedule-controller
+10. user-controller `pendaftaran user baru`
 
-ROLE_USER <br>
-    
-    User controller
-    	signup 
-
-    Auth controller
-		get current user ticket 
-		book new ticket 
-
-	Trip Controller
-		get all trip 
-		get trip by fare 
-		get trip by journey time 
-		get trip by stop (source - destination)
-		get trip by bus id 
-		get trip by destination stop 
-		get trip by source stop 
-		get trip by agency 
-
-	TripSchedule Controller
-		get all trip schedule
-		get trip schedule by id
-	
 	
 <br>
 
