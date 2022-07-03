@@ -1,18 +1,20 @@
-### Informasi
+## Informasi
 Chandra <br>
 Kode peserta : `JVSB001ONL010` <br>
-Github : `https://github.com/Chandra179/FinalProjectChandra`
+Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
 
 
+<br>
 
 
-### Link aplikasi
+## Link aplikasi
 [Demo aplikasi heroku](https://bus-alexandria.herokuapp.com/swagger-ui.html)
 
 
+<br>
 
 
-### Akses Api endpoint
+## Akses Api endpoint
 
 ROLE_ADMIN <br>
 - mempunyai semua akses ke semua api endpoints <br><br>
@@ -41,26 +43,41 @@ ROLE_USER <br>
 		get trip schedule by id
 	
 	
+<br>
 
 
 
+## Konfigurasi database postgres (HEROKU)
+1. tambah `heroku postgres` addons pada heroku
+2. navigate ke `https://data.heroku.com/datastores` > settings > view credentials
+3. update application properties sesuai dengan credentials
 
-### Database Migration (FLyWay) (PostgreSQL)
+> spring.datasource.url=jdbc:postgresql://[ host ]:5432/[ database ] <br>
+spring.datasource.username=[ user ] <br>
+spring.datasource.password=[ password ] <br>
 
-Untuk migrasi database diwajibkan export database schema (DDL) terlebih dahulu sebelum INSERT DATA
-	
-DEV  : `pg_dump -U postgres -s db_bus > V1.0__ddl.sql` <br>
-PROD : `pg_dump --host=<host> --port=<port> --username=<username> --password --dbname=<database> > dump_file.sql`
-	
-1. dump database schema
-2. masukan file V1.0__ddl.sql kedalam "src/main/resources/db/migration"
-3. Insert data
-4. buat file V1.1__data.sql
-5. isi file dengan INSERT(data)
 
-### Production
-1. database `heroku postgres`
-  
-### Development
-1. database `local database`
+<br>
+
+
+## Generate schema database (HIBERNATE)
+1. untuk pembuatan schema pertama kali, set `spring.jpa.hibernate.ddl-auto=update`
+2. setelah selesai, ubah `spring.jpa.hibernate.ddl-auto=validate`, untuk melakukan validasi spring JPA dengan database schema
+
+
+<br>
+
+
+## Database Migration (FLyWay) (PostgreSQL)
+1. export database schema dari database 
+2. PROD `pg_dump --host=<host> --port=<port> --username=<username> --password --dbname=<database> > V1.0__ddl.sql`
+3. masukan file `V1.0__ddl.sql` kedalam `src/main/resources/db/migration`
+
+
+<br>
+
+
+## Dependencies
+> java 8, spring JPA, spring Security, spring Web, spring Devtools, PostgreSQL, Swagger, Flyway, Lombok, JWT
+
 
