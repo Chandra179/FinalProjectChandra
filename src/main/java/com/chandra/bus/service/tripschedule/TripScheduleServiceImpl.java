@@ -3,9 +3,6 @@ package com.chandra.bus.service.tripschedule;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -28,18 +25,6 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 
 	@Autowired
 	TripRepository tripRepository;
-
-	private DateTimeFormatter dateFormatter;
-	
-	public String checkIfDateIsValid(String requestDate) {
-		try {
-			dateFormatter.parse(requestDate);
-
-        } catch (DateTimeParseException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-        }
-		return requestDate;
-	}
 	
 	public String checkIfDateIsGreaterThanToday(String requestedDate) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -65,9 +50,7 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 		}
 
 		String requestDate = tripScheduleRequest.getTripDate();
-		
-		String validDate = checkIfDateIsValid(requestDate);
-		String checkedDate = checkIfDateIsGreaterThanToday(validDate);
+		String checkedDate = checkIfDateIsGreaterThanToday(requestDate);
 		
 		try {
 			TripSchedule tripSchedule = new TripSchedule(
