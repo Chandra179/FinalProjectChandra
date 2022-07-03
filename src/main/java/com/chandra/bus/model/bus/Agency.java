@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_agency", uniqueConstraints = { @UniqueConstraint(columnNames = { "code" }) })
+@Table(name = "tb_agency")
 public class Agency {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
