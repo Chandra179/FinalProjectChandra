@@ -90,7 +90,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"jack@gmail.com\",\r\n  \"firstName\": \"jackie\",\r\n  \"lastName\": \"chan\",\r\n  \"mobileNumber\": \"14962347\",\r\n  \"password\": \"chan123\",\r\n  \"role\": [\r\n    \"ROLE_USER\"\r\n  ],\r\n  \"username\": \"chn3\"\r\n}"
+							"raw": "{\r\n  \"email\": \"lam@gmail.com\",\r\n  \"firstName\": \"jackie\",\r\n  \"lastName\": \"chan\",\r\n  \"mobileNumber\": \"14962347\",\r\n  \"password\": \"chan123\",\r\n  \"role\": [\r\n    \"ROLE_USER\"\r\n  ],\r\n  \"username\": \"chan4\"\r\n}"
 						},
 						"url": {
 							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user/signup",
@@ -877,7 +877,128 @@
 		},
 		{
 			"name": "TripSchedule",
-			"item": []
+			"item": [
+				{
+					"name": "get all trip schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new trip schedules",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"availableSeats\": 10,\r\n  \"tripDate\": \"26-01-2023\",\r\n  \"tripDetail\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip schedules by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Trip",
@@ -1138,7 +1259,7 @@
 					"response": []
 				},
 				{
-					"name": "get trip by fare Copy",
+					"name": "get trip by journey time",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1267,6 +1388,90 @@
 									"value": "kedat",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "get current user ticket",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgyMDYxNiwiZXhwIjoxNjU2OTA3MDE2fQ.eNGFEJAyzYpB_nY5EtPfc3DMVGOGMe2qFtQptrSvc14RiKMyAD2fiNPE4SYMFhr230EewYNqWrCNHr6zrnnY_Q",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/ticket",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book new ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"journeyDate\": \"25-01-2023\",\r\n  \"tripScheduleId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/ticket/bookticket",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"bookticket"
 							]
 						}
 					},

@@ -1,5 +1,7 @@
 package com.chandra.bus.service.agency;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,13 +26,18 @@ public class AgencyServiceImpl implements AgencyService {
 	@Override
 	public Agency addNewAgency(AgencyRequest agencyRequest) {
 		
+		Optional<User> user = userRepository.findById(agencyRequest.getOwner());
+
+		if (!user.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		}
+
 		try {
-			User user = userRepository.findById(agencyRequest.getOwner()).get();
 			Agency agency = new Agency(
 					agencyRequest.getCode(),
 					agencyRequest.getDetails(),
 					agencyRequest.getName(),
-					user);
+					user.get());
 
 			Agency savedAgency = agencyRepository.save(agency);
 			return savedAgency;
@@ -43,16 +50,24 @@ public class AgencyServiceImpl implements AgencyService {
 	@Override
 	public Agency updatingAgency(Long id, AgencyRequest agencyDetail) {
 
+		Optional<Agency> agency = agencyRepository.findById(id);
+		Optional<User> user = userRepository.findById(agencyDetail.getOwner());
+
+		if (!user.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+		}
+
+		if (!agency.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Agency not found");
+		}
+
 		try {
-			Agency agency = agencyRepository.findById(id).get();
-			User user = userRepository.findById(agencyDetail.getOwner()).get();
+			agency.get().setCode(agencyDetail.getCode());
+			agency.get().setDetails(agencyDetail.getDetails());
+			agency.get().setName(agencyDetail.getName());
+			agency.get().setOwner(user.get());
 
-			agency.setCode(agencyDetail.getCode());
-			agency.setDetails(agencyDetail.getDetails());
-			agency.setName(agencyDetail.getName());
-			agency.setOwner(user);
-
-			Agency updatedAgency = agencyRepository.save(agency);
+			Agency updatedAgency = agencyRepository.save(agency.get());
 			return updatedAgency;
 
 		} catch (Exception e) {
