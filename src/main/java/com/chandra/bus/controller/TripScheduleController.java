@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.TripScheduleRequest;
 import com.chandra.bus.payload.response.ResponseHandler;
