@@ -4,11 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.repository.StopRepository;
@@ -35,8 +33,9 @@ public class StopServiceImpl implements StopService {
 	public Stop updatingStop(Long id, StopRequest stopReq) {
 
 		Optional<Stop> stop = stopRepository.findById(id);
+
 		if (!stop.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No stop found");
 		}
 
 		try {

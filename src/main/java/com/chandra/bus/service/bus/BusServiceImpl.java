@@ -29,7 +29,7 @@ public class BusServiceImpl implements BusService {
 		Optional<Agency> agency = agencyRepository.findById(busRequest.getAgencyId());
 
 		if (!agency.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data found");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agency found");
 		}
 
 		try {

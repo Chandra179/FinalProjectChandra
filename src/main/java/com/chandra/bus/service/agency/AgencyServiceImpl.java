@@ -10,7 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.AgencyRequest;
-import com.chandra.bus.payload.response.ResponseHandler;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.UserRepository;
 
