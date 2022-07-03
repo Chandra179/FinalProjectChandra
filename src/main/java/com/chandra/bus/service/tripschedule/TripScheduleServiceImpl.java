@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.chandra.bus.model.bus.Trip;
@@ -18,6 +19,7 @@ import com.chandra.bus.payload.request.TripScheduleRequest;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 
+@Component
 public class TripScheduleServiceImpl implements TripScheduleService {
 
 	@Autowired
@@ -33,7 +35,7 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 			dateFormatter.parse(requestDate);
 
         } catch (DateTimeParseException e) {
-        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
         }
 		return requestDate;
 	}
