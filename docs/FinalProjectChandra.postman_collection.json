@@ -1,0 +1,1483 @@
+{
+	"info": {
+		"_postman_id": "5d4687e4-d36f-497c-960d-01a0e93b8c95",
+		"name": "FinalProjectChandra",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "user authentication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"chan123\",\r\n  \"username\": \"chan2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/auth",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "get all user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"lam@gmail.com\",\r\n  \"firstName\": \"jackie\",\r\n  \"lastName\": \"chan\",\r\n  \"mobileNumber\": \"14962347\",\r\n  \"password\": \"chan123\",\r\n  \"role\": [\r\n    \"ROLE_USER\"\r\n  ],\r\n  \"username\": \"chan4\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user/signup",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user/3",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"leonardo\",\r\n  \"lastName\": \"davinci\",\r\n  \"mobileNumber\": \"239482342\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/user/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agency",
+			"item": [
+				{
+					"name": "get all agency",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/agency",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new agency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNzU0NiwiZXhwIjoxNjU2OTAzOTQ2fQ.hR9lDrJLd2CSa6k2_X1cr9S6pRxy6cSZLJa0dBsqYouT0lzvQ22131oZEz_ME3wDrpMYAcikZRGCzI43yhBbkw",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"LKO\",\r\n  \"details\": \"PT Gagak aja\",\r\n  \"name\": \"Angkot kareng\",\r\n  \"owner\": 2\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/agency",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete agency",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNzU0NiwiZXhwIjoxNjU2OTAzOTQ2fQ.hR9lDrJLd2CSa6k2_X1cr9S6pRxy6cSZLJa0dBsqYouT0lzvQ22131oZEz_ME3wDrpMYAcikZRGCzI43yhBbkw",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"LKO\",\r\n  \"details\": \"PT Gagak aja\",\r\n  \"name\": \"Angkot kareng\",\r\n  \"owner\": 2\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/agency/4",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agency",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get agency by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNzU0NiwiZXhwIjoxNjU2OTAzOTQ2fQ.hR9lDrJLd2CSa6k2_X1cr9S6pRxy6cSZLJa0dBsqYouT0lzvQ22131oZEz_ME3wDrpMYAcikZRGCzI43yhBbkw",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"LKO\",\r\n  \"details\": \"PT Gagak aja\",\r\n  \"name\": \"Angkot kareng\",\r\n  \"owner\": 2\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/agency/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agency",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update agency",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNzU0NiwiZXhwIjoxNjU2OTAzOTQ2fQ.hR9lDrJLd2CSa6k2_X1cr9S6pRxy6cSZLJa0dBsqYouT0lzvQ22131oZEz_ME3wDrpMYAcikZRGCzI43yhBbkw",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"MMO\",\r\n  \"details\": \"PT Merpati aja\",\r\n  \"name\": \"Angkot kaleng\",\r\n  \"owner\": 2\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/agency/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"agency",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bus",
+			"item": [
+				{
+					"name": "get all bus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/bus",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new bus",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 20,\r\n  \"code\": \"BLK99\",\r\n  \"make\": \"10\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/bus",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete bus",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 20,\r\n  \"code\": \"BLK99\",\r\n  \"make\": \"10\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/bus/3",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bus",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bus by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 20,\r\n  \"code\": \"BLK99\",\r\n  \"make\": \"10\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/bus/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update bus",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 30,\r\n  \"code\": \"BLK79\",\r\n  \"make\": \"20\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/bus/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stop",
+			"item": [
+				{
+					"name": "update stop",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 30,\r\n  \"code\": \"BLK79\",\r\n  \"make\": \"20\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"1-9\",\r\n  \"detail\": \"Cikarang 1-9\",\r\n  \"name\": \"Angkasa Pura\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all stop",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 3,\r\n  \"capacity\": 30,\r\n  \"code\": \"BLK79\",\r\n  \"make\": \"20\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get stop by code",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop?code=1-8",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "1-8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete stop",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop/6",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update stop",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"8-9\",\r\n  \"detail\": \"Bangkasa 1-9\",\r\n  \"name\": \"Puri putra\"\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get stop by name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/stop?name=sukarame",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "sukarame"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TripSchedule",
+			"item": [
+				{
+					"name": "get all trip schedules",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new trip schedules",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"availableSeats\": 10,\r\n  \"tripDate\": \"26-01-2023\",\r\n  \"tripDetail\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip schedules by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/tripschedules/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tripschedules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trip",
+			"item": [
+				{
+					"name": "get all trip",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new trip",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"agencyId\": 1,\r\n  \"busId\": 2,\r\n  \"destStopId\": 4,\r\n  \"fare\": 10000,\r\n  \"journeyTime\": 4000,\r\n  \"sourceStopId\": 2\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by agency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/agency?name=becak",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"agency"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "becak"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by bus id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/bus/1",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"bus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by destination stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/deststop?name=kedat",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"deststop"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by fare",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 10000\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/fare",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"fare"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by journey time",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 10,\r\n  \"upperValue\": 100\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/journeytime",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"journeytime"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by source stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/sourcestop?name=puri",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"sourcestop"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "puri"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get trip by source stop - dest stop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxODE2NSwiZXhwIjoxNjU2OTA0NTY1fQ.J5droCrolBeNerJhSXo5tnfPwWJV9LAv8dqUJCiC_JQLjMVwxqHAE0SQGopyZZXSGYP4JIvgWyJKh8NW6aFWIQ",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"lowerValue\": 2,\r\n  \"upperValue\": 5\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/trip/stop",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trip",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "kedat",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "get current user ticket",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgyMDYxNiwiZXhwIjoxNjU2OTA3MDE2fQ.eNGFEJAyzYpB_nY5EtPfc3DMVGOGMe2qFtQptrSvc14RiKMyAD2fiNPE4SYMFhr230EewYNqWrCNHr6zrnnY_Q",
+								"type": "default"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/ticket",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "book new ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFuMiIsImlhdCI6MTY1NjgxNjgzNSwiZXhwIjoxNjU2OTAzMjM1fQ.A3anuS2OUWyraz3AXXWj0vUJJN-9tS6pD6Bm9TH7A04zWIeTuqjBof-y8e3tItPfK3Arm5fVSqOjy9BosQt8Cg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"journeyDate\": \"25-01-2023\",\r\n  \"tripScheduleId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://bus-alexandria.herokuapp.com/api/v1/ticket/bookticket",
+							"protocol": "https",
+							"host": [
+								"bus-alexandria",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"bookticket"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
