@@ -93,13 +93,16 @@ public class TestObjectFactory {
 		return result;
 	}
 
-	@Test
-	public void testCreateProduct() {
-		createTripList(5);
+	public static List<User> createUserList(final int size) {
+		final List<User> result = new ArrayList<>();
+		for (int i = 0; i < size; i++) {
+			result.add(createUser());
+		}
+		return result;
 	}
 
 	@Test
-	public void testCreateTripRequest() {
-		createTripRequest();
+	public void testCreateProduct() {
+		createTripList(5);
 	}
 }
