@@ -7,4 +7,6 @@ import com.chandra.bus.payload.request.TripScheduleRequest;
 
 public interface TripScheduleService {
 	TripSchedule addNewTrip(TripScheduleRequest tripScheduleRequest) throws ParseException;
+
+	TripSchedule updatingTrip(Long id, TripScheduleRequest tripScheduleRequest) throws ParseException;
 }

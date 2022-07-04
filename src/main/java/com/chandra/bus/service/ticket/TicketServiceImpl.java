@@ -60,18 +60,18 @@ public class TicketServiceImpl implements TicketService {
 
 		if (!tripSchedule.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip schedule not found");
-
-		} else if (!myDate.equals(tripDate)) {
+		}
+		if (!myDate.equals(tripDate)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trip found at date " + journeyDate);
-
-		} else if (tripSchedule.get().getAvailableSeats() == 0) {
+		}
+		if (tripSchedule.get().getAvailableSeats() == 0) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticked sold out");
 		}
 		return tripSchedule;
 	}
 
 	@Override
-	public TripSchedule bookingTicket(TicketRequest ticketRequest) throws ParseException {
+	public Ticket bookingTicket(TicketRequest ticketRequest) throws ParseException {
 
 		// get logged in user
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -95,13 +95,32 @@ public class TicketServiceImpl implements TicketService {
 			tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1);
 
 			// update trip schedule
-			TripSchedule savedTrip = tripScheduleRepository.save(tripSchedule.get());
+			tripScheduleRepository.save(tripSchedule.get());
 
-			return savedTrip;
+			return ticket;
 			
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
+	}
+
+	@Override
+	public Ticket updatingTicket(Long id, TicketRequest ticketRequest) throws ParseException {
+
+		Optional<Ticket> ticket = ticketRepository.findById(id);
+		
+		if (!ticket.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ticket not found");
+		}
+
+		Optional<TripSchedule> tripSchedule = checkIfTripScheduleAvailable(ticketRequest);
+		
+		ticket.get().setJourneyDate(ticketRequest.getJourneyDate());
+		ticket.get().setTripSchedule(tripSchedule.get());
+
+		Ticket savedTicket = ticketRepository.save(ticket.get());
+
+		return savedTicket;
 	}
 
 }
