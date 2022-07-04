@@ -14,5 +14,5 @@ public class TripScheduleRequest {
 	@NotNull
 	private int availableSeats;
 
-	private Long tripDetail;
+	private int tripDetail;
 }
