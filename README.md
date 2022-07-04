@@ -27,9 +27,42 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
 9. trip-schedule-controller
 10. user-controller `pendaftaran user baru`
 
-	
+
 <br>
 
+
+## Format input API endpoint
+
+1.  POST `/api/v1/reservation/bookticket`
+   `journeyDate : 12/01/2023` wajib pakai slash
+   `tripScheduleId : Id TripSchedule` ID trip schedule <br><br>
+    Input tidak valid jika TripSchedule tidak mempunyai Tanggal keberangkatan yang sama dengan `journeyDate` <br><br>
+
+2.  POST `/api/v1/reservation/fare`
+   `lowerValue : 20000` maskimal harga tiket
+   `upperValue : 1000` minimal harga tiket <br><br>
+   Pembelian tiket dengan menentukan harga minimal-maksimal <br><br>
+
+3.  POST `/api/v1/reservation/journeytime`
+   `lowerValue : 600` maskimal waktu perjalanan dalam menit
+   `upperValue : 10` minimal waktu perjalanan dalam menit <br><br>
+   
+4.  POST `/api/v1/reservation/stop`
+   `lowerValue : 2` Id sourceStop/pemberangkatan halte
+   `upperValue : 5` Id destStop/pemberhentian halte <br><br>
+   
+5.  POST `/api/v1/trip`
+   `agencyId : 1` Id agency
+   `busId : 1` Id bus
+   `destStopId : 1` Id destStop/pemberhentian
+   `fare : 100000` Biaya trip
+   `journeyTime : 300` Waktu trip dalam menit
+   `sourceStopId : 2` Id sourceStop/pemberangkatan <br><br>
+
+6.  POST `/api/v1/tripschedules`
+   `availableSeats : 10` jumlah kursi bus
+   `tripDate : 25/01/2023` wajib pakai slash, dan tanggal input harus lebih besar dari hari ini
+   `tripDetail : 1` Id trip <br><br>
 
 
 ## Konfigurasi database postgres (HEROKU) 
