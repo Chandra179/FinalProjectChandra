@@ -23,14 +23,14 @@ public class TripRequest {
 	private int journeyTime;
 
 	@NotNull
-	private int sourceStopId;
+	private Long sourceStopId;
 
 	@NotNull
-	private int destStopId;
+	private Long destStopId;
 
 	@NotNull
-	private int busId;
+	private Long busId;
 
 	@NotNull
-	private int agencyId;
+	private Long agencyId;
 }
