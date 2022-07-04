@@ -65,6 +65,14 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
    `tripDetail : 1` Id trip <br><br>
 
 
+## Instalasi lombok (Eclipse)
+[Instalasi Lombok](https://www.youtube.com/watch?v=8DZub6SybKE&t=616s)
+
+
+<br>
+
+
+
 ## Konfigurasi database postgres (HEROKU) 
 1. tambah `heroku postgres` addons pada heroku
 2. navigate ke `https://data.heroku.com/datastores` > settings > view credentials
