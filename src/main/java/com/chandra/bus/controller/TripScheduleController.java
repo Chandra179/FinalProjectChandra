@@ -77,7 +77,7 @@ public class TripScheduleController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 	}
 
-	@DeleteMapping("")
+	@DeleteMapping("/{id}")
 	@ApiOperation(value = "delete ticket", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteTicket(@PathVariable(value = "id") Long id) throws ParseException {
