@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.chandra.bus.model.bus.Bus;
-import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.service.trip.TripService;
