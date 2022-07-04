@@ -146,7 +146,7 @@ public class TripController {
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "delete trip", authorizations = { @Authorization(value = "apiKey") })
-	public ResponseEntity<?> deleteStop(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<?> deleteTrip(@PathVariable(value = "id") Long id) {
 
 		try {
 			tripRepository.deleteById(id);
