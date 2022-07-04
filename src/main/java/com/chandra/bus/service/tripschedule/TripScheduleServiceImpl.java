@@ -43,11 +43,7 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 	@Override
 	public TripSchedule addNewTrip(TripScheduleRequest tripScheduleRequest) throws ParseException {
 		
-<<<<<<< HEAD
 		Optional<Trip> trip = tripRepository.findById((long) tripScheduleRequest.getTripDetail());
-=======
-		Optional<Trip> trip = tripRepository.findById(tripScheduleRequest.getTripDetail());
->>>>>>> 558cdcd710bfaa8c6d5cb54bd36670650907f27d
 
 		if (!trip.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip with Id " + trip.get().getId() + "not found");
