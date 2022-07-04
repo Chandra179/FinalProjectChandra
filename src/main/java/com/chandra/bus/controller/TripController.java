@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,6 +119,20 @@ public class TripController {
 	@ApiOperation(value = "get trip by agency", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getTripByAgency(@RequestParam(value = "name") String name) {
+
+		List<Trip> trip = tripRepository.findByAgency(name);
+
+		if (trip.isEmpty()) {
+			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
+		}
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
+	}
+
+	@PutMapping("")
+	@ApiOperation(value = "update trip", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,
+			@RequestParam(value = "name") String name) {
 
 		List<Trip> trip = tripRepository.findByAgency(name);
 
