@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,18 +67,28 @@ public class TripScheduleController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 	}
 
-	@PostMapping("")
+	@PutMapping("")
 	@ApiOperation(value = "update trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,
 			@Valid @RequestBody TripScheduleRequest tripScheduleRequest) throws ParseException {
 
+		TripSchedule tripSchedule = tripScheduleService.updatingTrip(id, tripScheduleRequest);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+	}
+
+	@DeleteMapping("")
+	@ApiOperation(value = "delete ticket", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> deleteTicket(@PathVariable(value = "id") Long id) throws ParseException {
+
 		try {
-			TripSchedule tripSchedule = tripScheduleRepository.findById(id).get();
-			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+			tripScheduleRepository.deleteById(id);
+			String result = "Success Delete TripSchedule with Id: " + id;
+			return ResponseEntity.ok(result);
 
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
 	}
 }
