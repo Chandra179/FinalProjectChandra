@@ -93,7 +93,6 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
 		}
-
 	}
 
 	@Override

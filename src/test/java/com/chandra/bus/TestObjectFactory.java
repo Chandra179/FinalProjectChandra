@@ -64,12 +64,12 @@ public class TestObjectFactory {
 	public static TripRequest createTripRequest() {
 		final TripRequest trip = new TripRequest();
 		trip.setId(new Random().nextLong());
-		trip.setAgencyId(1);
-		trip.setBusId(2);
+		trip.setAgencyId(1L);
+		trip.setBusId(2L);
 		trip.setFare(20000);
-		trip.setDestStopId(2);
+		trip.setDestStopId(2L);
 		trip.setJourneyTime(200);
-		trip.setSourceStopId(1);
+		trip.setSourceStopId(1L);
 		return trip;
 	}
 
