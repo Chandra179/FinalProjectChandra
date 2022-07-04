@@ -67,7 +67,7 @@ public class TripScheduleController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
 	}
 
-	@PutMapping("")
+	@PutMapping("/{id}")
 	@ApiOperation(value = "update trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,

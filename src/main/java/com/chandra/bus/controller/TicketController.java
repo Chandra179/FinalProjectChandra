@@ -60,7 +60,7 @@ public class TicketController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, userTicket);
 	}
 
-	@PutMapping("")
+	@PutMapping("/{id}")
 	@ApiOperation(value = "update ticket", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateTicket(@PathVariable(value = "id") Long id,
