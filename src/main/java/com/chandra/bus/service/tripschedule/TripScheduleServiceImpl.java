@@ -67,4 +67,37 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 		}
 	}
 
+	@Override
+	public TripSchedule updatingTrip(Long id, TripScheduleRequest tripScheduleRequest) throws ParseException {
+
+		Optional<Trip> trip = tripRepository.findById(tripScheduleRequest.getTripDetail());
+
+		Optional<TripSchedule> tripSchedule = tripScheduleRepository.findById(id);
+
+		if (!tripSchedule.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tripschedule with Id " + tripSchedule.get().getId() + "not found");
+		}
+
+		if (!trip.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip with Id " + trip.get().getId() + "not found");
+		}
+
+		String requestDate = tripScheduleRequest.getTripDate();
+		String checkedDate = checkIfDateIsGreaterThanToday(requestDate);
+		
+		try {
+			TripSchedule updatedTrip = new TripSchedule(
+					checkedDate,
+					tripScheduleRequest.getAvailableSeats(),
+					trip.get());
+
+			TripSchedule savedTrip = tripScheduleRepository.save(updatedTrip);
+
+			return savedTrip;
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
+		}
+	}
+
 }

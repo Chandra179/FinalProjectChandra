@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.LowerUpperValueRequest;
@@ -51,8 +52,8 @@ public class ReservationController {
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) throws ParseException {
 
-		TripSchedule tripSchedule = ticketService.bookingTicket(ticketRequest);
-		return ResponseEntity.ok(tripSchedule);
+		Ticket ticket = ticketService.bookingTicket(ticketRequest);
+		return ResponseEntity.ok(ticket);
 	}
 
 	@GetMapping("/tripschedules")

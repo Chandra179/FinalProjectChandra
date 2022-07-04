@@ -1,7 +1,6 @@
 package com.chandra.bus.controller;
 
 import java.text.ParseException;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -64,5 +63,20 @@ public class TripScheduleController {
 
 		TripSchedule tripSchedule = tripScheduleService.addNewTrip(tripScheduleRequest);
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+	}
+
+	@PostMapping("")
+	@ApiOperation(value = "update trip schedule", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,
+			@Valid @RequestBody TripScheduleRequest tripScheduleRequest) throws ParseException {
+
+		try {
+			TripSchedule tripSchedule = tripScheduleRepository.findById(id).get();
+			return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
+		}
 	}
 }
