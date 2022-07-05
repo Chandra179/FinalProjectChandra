@@ -13,6 +13,11 @@ import com.chandra.bus.payload.request.BusRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 
+/**
+ * Class untuk handling Bus
+ * 
+ * @since 1.0
+ */
 @Component
 public class BusServiceImpl implements BusService {
 
@@ -22,6 +27,12 @@ public class BusServiceImpl implements BusService {
 	@Autowired
 	private BusRepository busRepository;
 
+	/**
+	 * Method untuk menambahkan Bus
+	 * 
+	 * @param busRequest payload BusRequest
+	 * @return model Bus
+	 */
 	@Override
 	public Bus addNewBus(BusRequest busRequest) {
 
@@ -46,6 +57,12 @@ public class BusServiceImpl implements BusService {
 		}
 	}
 
+	/**
+	 * Method untuk update Bus
+	 * 
+	 * @param busRequest payload BusRequest
+	 * @return model Bus
+	 */
 	@Override
 	public Bus updatingBus(Long id, BusRequest busRequest) {
 

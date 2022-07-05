@@ -11,12 +11,23 @@ import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.payload.request.StopRequest;
 import com.chandra.bus.repository.StopRepository;
 
+/**
+ * Class untuk handling Bus Stop
+ * 
+ * @since 1.0
+ */
 @Component
 public class StopServiceImpl implements StopService {
 
 	@Autowired
 	StopRepository stopRepository;
 
+	/**
+	 * Method untuk melakukan pembuatan Bus Stop
+	 * 
+	 * @param stopReq payload StopRequest
+	 * @return model Stop
+	 */
 	@Override
 	public Stop addNewStop(StopRequest stopReq) {
 		try {
@@ -29,6 +40,13 @@ public class StopServiceImpl implements StopService {
 		}
 	}
 
+	/**
+	 * Method untuk melakukan updating Bus Stop
+	 * 
+	 * @param id ID stop
+	 * @param stopReq payload StopRequest
+	 * @return model Stop
+	 */
 	@Override
 	public Stop updatingStop(Long id, StopRequest stopReq) {
 

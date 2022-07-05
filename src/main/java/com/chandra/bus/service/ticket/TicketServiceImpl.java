@@ -22,6 +22,11 @@ import com.chandra.bus.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Class untuk handling Ticket
+ * 
+ * @since 1.0
+ */
 @AllArgsConstructor
 @Component
 public class TicketServiceImpl implements TicketService {
@@ -35,6 +40,12 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private TripScheduleRepository tripScheduleRepository;
 
+	/**
+	 * Method untuk mengecak apakah user ada dalam database
+	 * 
+	 * @param currentUser user yang login
+	 * @return model User
+	 */
 	public Optional<User> checkIfUserPresent(String currentUser) {
 
 		// get user from database
@@ -46,6 +57,12 @@ public class TicketServiceImpl implements TicketService {
 		return user;
 	}
 
+	/**
+	 * Method untuk mengecak apakah trip schedule tersedia
+	 * 
+	 * @param ticketRequest payload ticketRequest
+	 * @return model TripSchedule
+	 */
 	public Optional<TripSchedule> checkIfTripScheduleAvailable(TicketRequest ticketRequest) throws ParseException {
 
 		// find trip schedule by id
@@ -70,6 +87,12 @@ public class TicketServiceImpl implements TicketService {
 		return tripSchedule;
 	}
 
+	/**
+	 * Method untuk melakukan booking ticket
+	 * 
+	 * @param ticketRequest payload ticketRequest
+	 * @return model Ticket
+	 */
 	@Override
 	public Ticket bookingTicket(TicketRequest ticketRequest) throws ParseException {
 
@@ -104,6 +127,13 @@ public class TicketServiceImpl implements TicketService {
 		}
 	}
 
+	/**
+	 * Method untuk melakukan update ticket
+	 * 
+	 * @param id ID ticket yang mau di update
+	 * @param ticketRequest payload ticketRequest
+	 * @return model Ticket
+	 */
 	@Override
 	public Ticket updatingTicket(Long id, TicketRequest ticketRequest) throws ParseException {
 

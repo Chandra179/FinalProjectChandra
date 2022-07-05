@@ -13,6 +13,11 @@ import com.chandra.bus.payload.request.AgencyRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.UserRepository;
 
+/**
+ * Class untuk handling Agency
+ * 
+ * @since 1.0
+ */
 @Component
 public class AgencyServiceImpl implements AgencyService {
 
@@ -22,6 +27,12 @@ public class AgencyServiceImpl implements AgencyService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * Method untuk menambahakan Agency
+	 * 
+	 * @param agencyRequest payload AgencyRequest
+	 * @return model Agency
+	 */
 	@Override
 	public Agency addNewAgency(AgencyRequest agencyRequest) {
 		
@@ -46,11 +57,18 @@ public class AgencyServiceImpl implements AgencyService {
 		}
 	}
 
+	/**
+	 * Method untuk update Agency
+	 * 
+	 * @param id ID agency
+	 * @param agencyRequest payload AgencyRequest
+	 * @return model Agency
+	 */
 	@Override
-	public Agency updatingAgency(Long id, AgencyRequest agencyDetail) {
+	public Agency updatingAgency(Long id, AgencyRequest agencyRequest) {
 
 		Optional<Agency> agency = agencyRepository.findById(id);
-		Optional<User> user = userRepository.findById(agencyDetail.getOwner());
+		Optional<User> user = userRepository.findById(agencyRequest.getOwner());
 
 		if (!user.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
@@ -61,9 +79,9 @@ public class AgencyServiceImpl implements AgencyService {
 		}
 
 		try {
-			agency.get().setCode(agencyDetail.getCode());
-			agency.get().setDetails(agencyDetail.getDetails());
-			agency.get().setName(agencyDetail.getName());
+			agency.get().setCode(agencyRequest.getCode());
+			agency.get().setDetails(agencyRequest.getDetails());
+			agency.get().setName(agencyRequest.getName());
 			agency.get().setOwner(user.get());
 
 			Agency updatedAgency = agencyRepository.save(agency.get());

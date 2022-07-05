@@ -20,6 +20,12 @@ import com.chandra.bus.payload.request.UserRequest;
 import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 
+/**
+ * Class untuk handle User
+ *
+ * @author Chandra
+ * @since 1.0
+ */
 @Component
 public class UserServiceImpl implements UserService {
 
@@ -32,6 +38,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	PasswordEncoder encoder;
 
+	/**
+	 * Method untuk mengecek apakah user ada didalam database
+	 * 
+	 * @param SignupRequest payload request (SignupRequest)
+	 */
 	public void checkIfUserAlreadyRegistered(SignupRequest SignupRequest) {
 
 		if (userRepository.existsByUsername(SignupRequest.getUsername())) {
@@ -42,6 +53,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * Method untuk handling user role
+	 * 
+	 * @param strRoles set of user roles
+	 * @return set of roles
+	 */
 	public Set<Role> handleUserRole(Set<String> strRoles) {
 
 		Set<Role> roles = new HashSet<>();
@@ -68,6 +85,12 @@ public class UserServiceImpl implements UserService {
 		return roles;
 	}
 
+	/**
+	 * Method untuk handling user registration
+	 * 
+	 * @param SignupRequest payload request (SignupRequest)
+	 * @return model User
+	 */
 	@Override
 	public User registerNewUser(SignupRequest SignupRequest) {
 
@@ -95,6 +118,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * Method untuk handling user update
+	 * 
+	 * @param userRequest payload request (SignupRequest)
+	 * @return model User
+	 */
 	@Override
 	public User updatingUser(UserRequest userRequest) {
 
