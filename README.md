@@ -39,11 +39,11 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
    `lastName : chandra` <br>
    `mobileNumber : chandra` <br>
    `password : chandra123` <br>
-   `role : [ROLE_ADMIN]` role hanya ada 2 `ROLE_USER / ROLE_ADMIN` jika ingin mengakses ke semua endpoint pakai `ROLE_ADMIN` pastikan `huruf kapital semua` <br>
+   `role : [ROLE_ADMIN]` role hanya ada 2 `ROLE_USER / ROLE_ADMIN` jika ingin mengakses ke semua endpoint pakai `ROLE_ADMIN` pastikan `huruf kapital semua` <br><br>
    `username : chandra` username untuk login/autentikasi <br><br>
    
 2.  POST `/api/auth` untuk autentikasi user/login <br>
-   `username : chandra` <br> username untuk login/autentikasi <br><br>
+   `username : chandra` username untuk login/autentikasi <br>
    `password : chandra123` <br><br>
     
 3.  POST `/api/v1/reservation/bookticket` <br>
