@@ -129,7 +129,7 @@ public class TripController {
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
 	}
 
-	@PutMapping("")
+	@PutMapping("/{id}")
 	@ApiOperation(value = "update trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,

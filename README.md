@@ -113,6 +113,7 @@ spring.datasource.password=[ password ] <br>
 3. masukan file `V1.0__ddl.sql` kedalam `src/main/resources/db/migration`
 
 
+
 <br>
 
 
