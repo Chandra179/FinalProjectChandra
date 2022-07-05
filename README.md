@@ -33,25 +33,38 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
 
 ## Format input API endpoint
 
-1.  POST `/api/v1/reservation/bookticket` <br>
+1.  POST `/api/v1/user/signup` <br>
+   `email : chandra@gmail.com` <br>
+   `firstName : chandra` <br>
+   `lastName : chandra` <br>
+   `mobileNumber : chandra` <br>
+   `password : chandra123` <br>
+   `role : [ROLE_ADMIN]` role hanya ada 2 `ROLE_USER / ROLE_ADMIN` jika ingin mengakses ke semua endpoint pakai `ROLE_ADMIN` pastikan `huruf kapital semua` <br>
+   `username : chandra` username untuk login/autentikasi <br><br>
+   
+2.  POST `/api/auth` untuk autentikasi user/login <br>
+   `username : chandra` <br> username untuk login/autentikasi <br><br>
+   `password : chandra123` <br><br>
+    
+3.  POST `/api/v1/reservation/bookticket` <br>
    `journeyDate : 12/01/2023` wajib pakai slash <br>
    `tripScheduleId : Id TripSchedule` ID trip schedule <br><br>
     Input tidak valid jika TripSchedule tidak mempunyai Tanggal keberangkatan yang sama dengan `journeyDate` <br><br>
 
-2.  POST `/api/v1/reservation/fare` <br>
+4.  POST `/api/v1/reservation/fare` <br>
    `lowerValue : 20000` maskimal harga tiket <br>
    `upperValue : 1000` minimal harga tiket <br><br>
    Pembelian tiket dengan menentukan harga minimal-maksimal <br><br>
 
-3.  POST `/api/v1/reservation/journeytime` <br>
+5.  POST `/api/v1/reservation/journeytime` <br>
    `lowerValue : 600` maskimal waktu perjalanan dalam menit <br>
    `upperValue : 10` minimal waktu perjalanan dalam menit <br><br>
    
-4.  POST `/api/v1/reservation/stop` <br>
+6.  POST `/api/v1/reservation/stop` <br>
    `lowerValue : 2` Id sourceStop/pemberangkatan halte <br>
    `upperValue : 5` Id destStop/pemberhentian halte <br><br>
    
-5.  POST `/api/v1/trip` <br>
+7.  POST `/api/v1/trip` <br>
    `agencyId : 1` Id agency <br>
    `busId : 1` Id bus <br>
    `destStopId : 1` Id destStop/pemberhentian <br>
@@ -59,7 +72,7 @@ Github : `https://github.com/Chandra179/FinalProjectChandra` <br>
    `journeyTime : 300` Waktu trip dalam menit <br>
    `sourceStopId : 2` Id sourceStop/pemberangkatan <br><br>
 
-6.  POST `/api/v1/tripschedules` <br>
+8.  POST `/api/v1/tripschedules` <br>
    `availableSeats : 10` jumlah kursi bus <br>
    `tripDate : 25/01/2023` wajib pakai slash, dan tanggal input harus lebih besar dari hari ini <br>
    `tripDetail : 1` Id trip <br><br>
