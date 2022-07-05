@@ -9,4 +9,6 @@ import com.chandra.bus.payload.request.TripRequest;
 public interface TripService {
 
 	Trip addNewTrip(TripRequest tripRequest);
+
+	Trip updatingTrip(Long id, TripRequest tripRequest);
 }

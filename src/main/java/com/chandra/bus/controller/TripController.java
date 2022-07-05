@@ -87,7 +87,7 @@ public class TripController {
 	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
 
 		Trip newTrip = tripService.addNewTrip(tripRequest);
-		return ResponseEntity.ok(newTrip);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, newTrip);
 	}
 
 	@PostMapping("/deststop")
@@ -133,14 +133,10 @@ public class TripController {
 	@ApiOperation(value = "update trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateTrip(@PathVariable(value = "id") Long id,
-			@RequestParam(value = "name") String name) {
+			@Valid @RequestBody TripRequest tripRequest) {
 
-		List<Trip> trip = tripRepository.findByAgency(name);
-
-		if (trip.isEmpty()) {
-			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, trip);
-		}
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, trip);
+		Trip updatedTrip = tripService.updatingTrip(id, tripRequest);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, updatedTrip);
 	}
 
 	@DeleteMapping("/{id}")
