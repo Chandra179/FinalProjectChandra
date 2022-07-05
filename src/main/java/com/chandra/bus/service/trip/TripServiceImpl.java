@@ -17,6 +17,11 @@ import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
 
+/**
+ * Class untuk handling Trip
+ * 
+ * @since 1.0
+ */
 @Component
 public class TripServiceImpl implements TripService {
 
@@ -32,6 +37,12 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	StopRepository stopRepository;
 
+	/**
+	 * Method untuk membuat Trip baru
+	 * 
+	 * @param tripRequest payload TripRequest
+	 * @return model Trip
+	 */
 	@Override
 	public Trip addNewTrip(TripRequest tripRequest) {
 		// TODO Auto-generated method stub

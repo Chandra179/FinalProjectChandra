@@ -8,6 +8,9 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 
 import java.util.Set;
@@ -27,6 +30,8 @@ public class TripSchedule {
 	@JoinColumn(name = "trip_id")
 	private Trip tripDetail;
 
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "tripSchedule", cascade = CascadeType.ALL)
 	private Set<Ticket> ticketsSold;
 

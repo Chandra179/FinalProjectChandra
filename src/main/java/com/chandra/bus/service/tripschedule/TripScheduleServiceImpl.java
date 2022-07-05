@@ -17,6 +17,11 @@ import com.chandra.bus.payload.request.TripScheduleRequest;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 
+/**
+ * Class untuk handling Trip Schedule
+ * 
+ * @since 1.0
+ */
 @Component
 public class TripScheduleServiceImpl implements TripScheduleService {
 
@@ -26,6 +31,12 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 	@Autowired
 	TripRepository tripRepository;
 	
+	/**
+	 * Method untuk mengecek apakah input date lebih besar dari tanggal hari ini
+	 * 
+	 * @param requestedDate tanggal dalam bentuk string
+	 * @return tanggal dalam bentuk String
+	 */
 	public String checkIfDateIsGreaterThanToday(String requestedDate) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date myDate = sdf.parse(requestedDate);
@@ -40,6 +51,12 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 		}
 	}
 
+	/**
+	 * Method untuk membuat trip baru
+	 * 
+	 * @param tripScheduleRequest payload request (TripScheduleRequest)
+	 * @return model TripSchedule
+	 */
 	@Override
 	public TripSchedule addNewTrip(TripScheduleRequest tripScheduleRequest) throws ParseException {
 		
@@ -67,6 +84,13 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 		}
 	}
 
+	/**
+	 * Method untuk membuat udpate trip
+	 * 
+	 * @param id ID trip yang ingin di update
+	 * @param tripScheduleRequest payload request (TripScheduleRequest)
+	 * @return model TripSchedule
+	 */
 	@Override
 	public TripSchedule updatingTrip(Long id, TripScheduleRequest tripScheduleRequest) throws ParseException {
 
