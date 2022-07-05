@@ -43,15 +43,6 @@ public class BusController {
 	@Autowired
 	BusService busService;
 
-	@PostMapping("")
-	@ApiOperation(value = "add new bus", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addBus(@Valid @RequestBody BusRequest busRequest) {
-
-		Bus bus = busService.addNewBus(busRequest);
-		return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
-	}
-
 	@GetMapping("")
 	@ApiOperation(value = "get all bus", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -76,6 +67,15 @@ public class BusController {
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e.getCause());
 		}
+	}
+
+	@PostMapping("")
+	@ApiOperation(value = "add new bus", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> addBus(@Valid @RequestBody BusRequest busRequest) {
+
+		Bus bus = busService.addNewBus(busRequest);
+		return ResponseHandler.generateResponse("success", HttpStatus.OK, bus);
 	}
 
 	@PutMapping("/{id}")

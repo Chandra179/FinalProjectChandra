@@ -6,15 +6,14 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.chandra.bus.model.user.User;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Getter
 @Setter
-@Accessors(chain = true)
+@Accessors(chain = true) // bisa chaining setter
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_ticket")
@@ -23,10 +22,12 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	private Integer seatNumber;
 
 	private Boolean cancellable;
 
+	@NotBlank
 	private String journeyDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)

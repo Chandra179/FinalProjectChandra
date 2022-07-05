@@ -5,9 +5,15 @@ import javax.validation.constraints.NotBlank;
 import com.sun.istack.NotNull;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+
+import lombok.Setter;
+
 @Getter
+@Setter
+@AllArgsConstructor
 public class TicketRequest {
 
 	@ApiModelProperty(hidden = true)

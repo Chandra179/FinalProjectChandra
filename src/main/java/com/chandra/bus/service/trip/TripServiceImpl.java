@@ -17,6 +17,9 @@ import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Class untuk handling Trip
  * 
@@ -37,17 +40,21 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	StopRepository stopRepository;
 
-	/**
-	 * Method untuk membuat Trip baru
-	 * 
-	 * @param tripRequest payload TripRequest
-	 * @return model Trip
-	 */
-	@Override
-	public Trip addNewTrip(TripRequest tripRequest) {
-		// TODO Auto-generated method stub
+	@Getter
+	@Setter
+	final class CollectionOfId {
+		public Bus bus;
+		public Stop sourceStop;
+		public Stop destStop;
 
-		Optional<Agency> agency = agencyRepository.findById(tripRequest.getAgencyId());
+		public CollectionOfId(Optional<Bus> bus, Optional<Stop> sourceStop, Optional<Stop> destStop) {
+			this.bus = bus.get();
+			this.sourceStop = sourceStop.get();
+			this.destStop = destStop.get();
+		}
+	}
+
+	public CollectionOfId checkingIfIdExist(Optional<Agency> agency, TripRequest tripRequest) {
 		if (!agency.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Agency not found");
 		}
@@ -66,18 +73,62 @@ public class TripServiceImpl implements TripService {
 		if (!destStop.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination stop not found");
 		}
+		
+		return new CollectionOfId(bus, sourceStop, destStop);
+	}
+
+	/**
+	 * Method untuk membuat Trip baru
+	 * 
+	 * @param tripRequest payload TripRequest
+	 * @return model Trip
+	 */
+	@Override
+	public Trip addNewTrip(TripRequest tripRequest) {
+		// TODO Auto-generated method stub
+
+		Optional<Agency> agency = agencyRepository.findById(tripRequest.getAgencyId());
+		CollectionOfId collectionOfId = checkingIfIdExist(agency, tripRequest);
 
 		try {
 			Trip trip = new Trip(
 					tripRequest.getFare(),
 					tripRequest.getJourneyTime(),
-					sourceStop.get(),
-					destStop.get(),
-					bus.get(),
+					collectionOfId.getSourceStop(),
+					collectionOfId.getDestStop(),
+					collectionOfId.getBus(),
 					agency.get());
 
 			Trip savedTrip = tripRepository.save(trip);
 			return savedTrip;
+
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
+		}
+	}
+
+	@Override
+	public Trip updatingTrip(Long id, TripRequest tripRequest) {
+
+		Optional<Trip> trip = tripRepository.findById(id);
+
+		if (!trip.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Trip not found");
+		}
+
+		Optional<Agency> agency = agencyRepository.findById(tripRequest.getAgencyId());
+		CollectionOfId collectionOfId = checkingIfIdExist(agency, tripRequest);
+
+		try {
+			trip.get().setFare(tripRequest.getFare());
+			trip.get().setJourneyTime(tripRequest.getJourneyTime());
+			trip.get().setSourceStop(collectionOfId.getSourceStop());
+			trip.get().setDestStop(collectionOfId.getDestStop());
+			trip.get().setBus(collectionOfId.getBus());
+			trip.get().setAgency(agency.get());
+
+			Trip updatedTrip = tripRepository.save(trip.get());
+			return updatedTrip;
 
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
