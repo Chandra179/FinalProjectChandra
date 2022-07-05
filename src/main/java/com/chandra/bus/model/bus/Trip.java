@@ -1,15 +1,18 @@
 package com.chandra.bus.model.bus;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_trip")
@@ -18,9 +21,11 @@ public class Trip {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private int fare;
+	@NotNull
+	private Integer fare;
 
-	private int journeyTime;
+	@NotNull
+	private Integer journeyTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source_stop_id")

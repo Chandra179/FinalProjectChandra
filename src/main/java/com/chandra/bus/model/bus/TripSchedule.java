@@ -17,8 +17,8 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true) // bisa chaining setter
 @NoArgsConstructor
-@Accessors(chain = true)
 @Entity
 @Table(name = "tb_trip_schedule")
 public class TripSchedule {
@@ -39,7 +39,7 @@ public class TripSchedule {
 	private String tripDate;
 
 	@NotNull
-	private int availableSeats;
+	private Integer availableSeats;
 
 	public TripSchedule(String tripDate, int availableSeats, Trip tripDetail) {
 		this.tripDate = tripDate;

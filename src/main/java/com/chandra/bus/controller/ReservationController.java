@@ -47,15 +47,6 @@ public class ReservationController {
 	@Autowired
 	TripScheduleRepository tripScheduleRepository;
 
-	@PostMapping("/bookticket")
-	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) throws ParseException {
-
-		Ticket ticket = ticketService.bookingTicket(ticketRequest);
-		return ResponseEntity.ok(ticket);
-	}
-
 	@GetMapping("/tripschedules")
 	@ApiOperation(value = "get all trip schedule", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -67,6 +58,15 @@ public class ReservationController {
 			return ResponseHandler.generateResponse("No data found", HttpStatus.NOT_FOUND, tripSchedule);
 		}
 		return ResponseHandler.generateResponse("success", HttpStatus.OK, tripSchedule);
+	}
+
+	@PostMapping("/bookticket")
+	@ApiOperation(value = "book new ticket", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> bookTicket(@Valid @RequestBody TicketRequest ticketRequest) throws ParseException {
+
+		Ticket ticket = ticketService.bookingTicket(ticketRequest);
+		return ResponseEntity.ok(ticket);
 	}
 
 	@PostMapping("/fare")

@@ -53,15 +53,6 @@ public class TripController {
 	@Autowired
 	TripService tripService;
 
-	@PostMapping("")
-	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
-
-		Trip newTrip = tripService.addNewTrip(tripRequest);
-		return ResponseEntity.ok(newTrip);
-	}
-
 	@GetMapping("")
 	@ApiOperation(value = "get all trip", authorizations = { @Authorization(value = "apiKey") })
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -88,6 +79,15 @@ public class TripController {
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination stop not found");
 		}
+	}
+
+	@PostMapping("")
+	@ApiOperation(value = "add trip", authorizations = { @Authorization(value = "apiKey") })
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> addTrip(@Valid @RequestBody TripRequest tripRequest) {
+
+		Trip newTrip = tripService.addNewTrip(tripRequest);
+		return ResponseEntity.ok(newTrip);
 	}
 
 	@PostMapping("/deststop")

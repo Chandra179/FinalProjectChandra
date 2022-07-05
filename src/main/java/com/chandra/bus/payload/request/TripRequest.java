@@ -5,22 +5,20 @@ import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class TripRequest {
 	@ApiModelProperty(hidden = true)
 	private Long id;
 
 	@NotNull
-	private int fare;
+	private Integer fare;
 
 	@NotNull
-	private int journeyTime;
+	private Integer journeyTime;
 
 	@NotNull
 	private Long sourceStopId;
