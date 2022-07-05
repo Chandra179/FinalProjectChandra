@@ -36,7 +36,7 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					"Tanggal input harus lebih besar dari " + today.toString());
 		} else {
-			return myDate.toString();
+			return sdf.format(today);
 		}
 	}
 

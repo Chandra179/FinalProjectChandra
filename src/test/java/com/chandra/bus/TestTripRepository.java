@@ -2,9 +2,11 @@ package com.chandra.bus;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Trip;
+import com.chandra.bus.payload.request.TripRequest;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.service.trip.TripService;
 import com.chandra.bus.service.trip.TripServiceImpl;
@@ -27,19 +30,12 @@ class TripTest {
 	@Mock
 	TripRepository tripRepository;
 
-//	@Test
-//	public void addTrip() {
-//
-//		TripRequest datas = TestObjectFactory.createTripRequest();
-//		Mockito.when(tripService.addNewTrip(datas)).then(true);
-//		Trip newTrip = tripService.addNewTrip(datas);
-//
-//		final List<Trip> datas = TestObjectFactory.createTripList(10);
-//		Mockito.when(tripRepository.findAll()).thenReturn(datas);
-//
-//		final List<Trip> actual = tripRepository.findAll();
-//		MatcherAssert.assertThat(actual.size(), Matchers.equalTo(datas.size()));
-//	}
+	@Test
+	void delete() throws Exception {
+		Trip expected = TestObjectFactory.createTrip();
+		tripRepository.deleteById(expected.getId());
+		Mockito.verify(tripRepository, Mockito.times(1)).delete(expected);
+	}
 
 	@Test
 	public void getAllTrip() {
