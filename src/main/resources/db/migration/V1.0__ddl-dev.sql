@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.4 (Ubuntu 14.4-1.pgdg20.04+1)
+-- Dumped from database version 14.3
 -- Dumped by pg_dump version 14.3
 
 SET statement_timeout = 0;
@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.flyway_schema_history (
@@ -38,10 +38,10 @@ CREATE TABLE public.flyway_schema_history (
 );
 
 
-ALTER TABLE public.flyway_schema_history OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.flyway_schema_history OWNER TO postgres;
 
 --
--- Name: tb_agency; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_agency (
@@ -53,10 +53,10 @@ CREATE TABLE public.tb_agency (
 );
 
 
-ALTER TABLE public.tb_agency OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_agency OWNER TO postgres;
 
 --
--- Name: tb_agency_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_agency_id_seq
@@ -67,17 +67,17 @@ CREATE SEQUENCE public.tb_agency_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_agency_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_agency_id_seq OWNER TO postgres;
 
 --
--- Name: tb_agency_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_agency_id_seq OWNED BY public.tb_agency.id;
 
 
 --
--- Name: tb_bus; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_bus (
@@ -89,10 +89,10 @@ CREATE TABLE public.tb_bus (
 );
 
 
-ALTER TABLE public.tb_bus OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_bus OWNER TO postgres;
 
 --
--- Name: tb_bus_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_bus_id_seq
@@ -103,17 +103,17 @@ CREATE SEQUENCE public.tb_bus_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_bus_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_bus_id_seq OWNER TO postgres;
 
 --
--- Name: tb_bus_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_bus_id_seq OWNED BY public.tb_bus.id;
 
 
 --
--- Name: tb_role; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_role (
@@ -122,10 +122,10 @@ CREATE TABLE public.tb_role (
 );
 
 
-ALTER TABLE public.tb_role OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_role OWNER TO postgres;
 
 --
--- Name: tb_role_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_role_id_seq
@@ -136,17 +136,17 @@ CREATE SEQUENCE public.tb_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_role_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_role_id_seq OWNER TO postgres;
 
 --
--- Name: tb_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_role_id_seq OWNED BY public.tb_role.id;
 
 
 --
--- Name: tb_stop; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_stop (
@@ -157,10 +157,10 @@ CREATE TABLE public.tb_stop (
 );
 
 
-ALTER TABLE public.tb_stop OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_stop OWNER TO postgres;
 
 --
--- Name: tb_stop_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_stop_id_seq
@@ -171,17 +171,17 @@ CREATE SEQUENCE public.tb_stop_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_stop_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_stop_id_seq OWNER TO postgres;
 
 --
--- Name: tb_stop_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_stop_id_seq OWNED BY public.tb_stop.id;
 
 
 --
--- Name: tb_ticket; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_ticket (
@@ -194,10 +194,10 @@ CREATE TABLE public.tb_ticket (
 );
 
 
-ALTER TABLE public.tb_ticket OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_ticket OWNER TO postgres;
 
 --
--- Name: tb_ticket_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_ticket_id_seq
@@ -208,17 +208,17 @@ CREATE SEQUENCE public.tb_ticket_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_ticket_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_ticket_id_seq OWNER TO postgres;
 
 --
--- Name: tb_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_ticket_id_seq OWNED BY public.tb_ticket.id;
 
 
 --
--- Name: tb_trip; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_trip (
@@ -232,10 +232,10 @@ CREATE TABLE public.tb_trip (
 );
 
 
-ALTER TABLE public.tb_trip OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_trip OWNER TO postgres;
 
 --
--- Name: tb_trip_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_trip_id_seq
@@ -246,17 +246,17 @@ CREATE SEQUENCE public.tb_trip_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_trip_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_trip_id_seq OWNER TO postgres;
 
 --
--- Name: tb_trip_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_trip_id_seq OWNED BY public.tb_trip.id;
 
 
 --
--- Name: tb_trip_schedule; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_trip_schedule (
@@ -267,10 +267,10 @@ CREATE TABLE public.tb_trip_schedule (
 );
 
 
-ALTER TABLE public.tb_trip_schedule OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_trip_schedule OWNER TO postgres;
 
 --
--- Name: tb_trip_schedule_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_trip_schedule_id_seq
@@ -281,17 +281,17 @@ CREATE SEQUENCE public.tb_trip_schedule_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_trip_schedule_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_trip_schedule_id_seq OWNER TO postgres;
 
 --
--- Name: tb_trip_schedule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_trip_schedule_id_seq OWNED BY public.tb_trip_schedule.id;
 
 
 --
--- Name: tb_user; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_user (
@@ -305,10 +305,10 @@ CREATE TABLE public.tb_user (
 );
 
 
-ALTER TABLE public.tb_user OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_user OWNER TO postgres;
 
 --
--- Name: tb_user_id_seq; Type: SEQUENCE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.tb_user_id_seq
@@ -319,17 +319,17 @@ CREATE SEQUENCE public.tb_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tb_user_id_seq OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_user_id_seq OWNER TO postgres;
 
 --
--- Name: tb_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tb_user_id_seq OWNED BY public.tb_user.id;
 
 
 --
--- Name: tb_user_roles; Type: TABLE; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_roles; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.tb_user_roles (
@@ -338,75 +338,75 @@ CREATE TABLE public.tb_user_roles (
 );
 
 
-ALTER TABLE public.tb_user_roles OWNER TO gtiovkmgzlaytp;
+ALTER TABLE public.tb_user_roles OWNER TO postgres;
 
 --
--- Name: tb_agency id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_agency ALTER COLUMN id SET DEFAULT nextval('public.tb_agency_id_seq'::regclass);
 
 
 --
--- Name: tb_bus id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_bus ALTER COLUMN id SET DEFAULT nextval('public.tb_bus_id_seq'::regclass);
 
 
 --
--- Name: tb_role id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_role ALTER COLUMN id SET DEFAULT nextval('public.tb_role_id_seq'::regclass);
 
 
 --
--- Name: tb_stop id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_stop ALTER COLUMN id SET DEFAULT nextval('public.tb_stop_id_seq'::regclass);
 
 
 --
--- Name: tb_ticket id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_ticket ALTER COLUMN id SET DEFAULT nextval('public.tb_ticket_id_seq'::regclass);
 
 
 --
--- Name: tb_trip id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip ALTER COLUMN id SET DEFAULT nextval('public.tb_trip_id_seq'::regclass);
 
 
 --
--- Name: tb_trip_schedule id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip_schedule ALTER COLUMN id SET DEFAULT nextval('public.tb_trip_schedule_id_seq'::regclass);
 
 
 --
--- Name: tb_user id; Type: DEFAULT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user ALTER COLUMN id SET DEFAULT nextval('public.tb_user_id_seq'::regclass);
 
 
 --
--- Data for Name: flyway_schema_history; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: flyway_schema_history; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
-1	1	<< Flyway Baseline >>	BASELINE	<< Flyway Baseline >>	\N	null	2022-07-05 14:38:35.167841	0	t
+1	1	<< Flyway Baseline >>	BASELINE	<< Flyway Baseline >>	\N	null	2022-07-15 17:41:11.222069	0	t
 \.
 
 
 --
--- Data for Name: tb_agency; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_agency; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_agency (id, code, details, name, owner_user_id) FROM stdin;
@@ -414,7 +414,7 @@ COPY public.tb_agency (id, code, details, name, owner_user_id) FROM stdin;
 
 
 --
--- Data for Name: tb_bus; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_bus; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_bus (id, capacity, code, make, agency_id) FROM stdin;
@@ -422,7 +422,7 @@ COPY public.tb_bus (id, capacity, code, make, agency_id) FROM stdin;
 
 
 --
--- Data for Name: tb_role; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_role; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_role (id, name) FROM stdin;
@@ -430,7 +430,7 @@ COPY public.tb_role (id, name) FROM stdin;
 
 
 --
--- Data for Name: tb_stop; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_stop; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_stop (id, code, detail, name) FROM stdin;
@@ -438,7 +438,7 @@ COPY public.tb_stop (id, code, detail, name) FROM stdin;
 
 
 --
--- Data for Name: tb_ticket; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_ticket; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_ticket (id, cancellable, journey_date, seat_number, user_id, trip_schedule_id) FROM stdin;
@@ -446,7 +446,7 @@ COPY public.tb_ticket (id, cancellable, journey_date, seat_number, user_id, trip
 
 
 --
--- Data for Name: tb_trip; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_trip; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_trip (id, fare, journey_time, agency_id, bus_id, dest_stop_id, source_stop_id) FROM stdin;
@@ -454,7 +454,7 @@ COPY public.tb_trip (id, fare, journey_time, agency_id, bus_id, dest_stop_id, so
 
 
 --
--- Data for Name: tb_trip_schedule; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_trip_schedule; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_trip_schedule (id, available_seats, trip_date, trip_id) FROM stdin;
@@ -462,7 +462,7 @@ COPY public.tb_trip_schedule (id, available_seats, trip_date, trip_id) FROM stdi
 
 
 --
--- Data for Name: tb_user; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_user (id, email, first_name, last_name, mobile_number, password, username) FROM stdin;
@@ -470,7 +470,7 @@ COPY public.tb_user (id, email, first_name, last_name, mobile_number, password, 
 
 
 --
--- Data for Name: tb_user_roles; Type: TABLE DATA; Schema: public; Owner: gtiovkmgzlaytp
+-- Data for Name: tb_user_roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.tb_user_roles (user_id, role_id) FROM stdin;
@@ -478,63 +478,63 @@ COPY public.tb_user_roles (user_id, role_id) FROM stdin;
 
 
 --
--- Name: tb_agency_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_agency_id_seq', 1, false);
 
 
 --
--- Name: tb_bus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_bus_id_seq', 1, false);
 
 
 --
--- Name: tb_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_role_id_seq', 1, false);
 
 
 --
--- Name: tb_stop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_stop_id_seq', 1, false);
 
 
 --
--- Name: tb_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_ticket_id_seq', 1, false);
 
 
 --
--- Name: tb_trip_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_trip_id_seq', 1, false);
 
 
 --
--- Name: tb_trip_schedule_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_trip_schedule_id_seq', 1, false);
 
 
 --
--- Name: tb_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.tb_user_id_seq', 1, false);
 
 
 --
--- Name: flyway_schema_history flyway_schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: flyway_schema_history flyway_schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.flyway_schema_history
@@ -542,7 +542,7 @@ ALTER TABLE ONLY public.flyway_schema_history
 
 
 --
--- Name: tb_agency tb_agency_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency tb_agency_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_agency
@@ -550,7 +550,7 @@ ALTER TABLE ONLY public.tb_agency
 
 
 --
--- Name: tb_bus tb_bus_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus tb_bus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_bus
@@ -558,7 +558,7 @@ ALTER TABLE ONLY public.tb_bus
 
 
 --
--- Name: tb_role tb_role_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_role tb_role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_role
@@ -566,7 +566,7 @@ ALTER TABLE ONLY public.tb_role
 
 
 --
--- Name: tb_stop tb_stop_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_stop tb_stop_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_stop
@@ -574,7 +574,7 @@ ALTER TABLE ONLY public.tb_stop
 
 
 --
--- Name: tb_ticket tb_ticket_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket tb_ticket_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_ticket
@@ -582,7 +582,7 @@ ALTER TABLE ONLY public.tb_ticket
 
 
 --
--- Name: tb_trip tb_trip_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip tb_trip_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip
@@ -590,7 +590,7 @@ ALTER TABLE ONLY public.tb_trip
 
 
 --
--- Name: tb_trip_schedule tb_trip_schedule_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule tb_trip_schedule_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip_schedule
@@ -598,7 +598,7 @@ ALTER TABLE ONLY public.tb_trip_schedule
 
 
 --
--- Name: tb_user tb_user_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user tb_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user
@@ -606,7 +606,7 @@ ALTER TABLE ONLY public.tb_user
 
 
 --
--- Name: tb_user_roles tb_user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_roles tb_user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user_roles
@@ -614,7 +614,7 @@ ALTER TABLE ONLY public.tb_user_roles
 
 
 --
--- Name: tb_bus uk2x8q9txwx59cij0fu8f4bbgww; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus uk2x8q9txwx59cij0fu8f4bbgww; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_bus
@@ -622,7 +622,7 @@ ALTER TABLE ONLY public.tb_bus
 
 
 --
--- Name: tb_user uk4vih17mube9j7cqyjlfbcrk4m; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user uk4vih17mube9j7cqyjlfbcrk4m; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user
@@ -630,7 +630,7 @@ ALTER TABLE ONLY public.tb_user
 
 
 --
--- Name: tb_user uk4wv83hfajry5tdoamn8wsqa6x; Type: CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user uk4wv83hfajry5tdoamn8wsqa6x; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user
@@ -638,14 +638,14 @@ ALTER TABLE ONLY public.tb_user
 
 
 --
--- Name: flyway_schema_history_s_idx; Type: INDEX; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: flyway_schema_history_s_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success);
 
 
 --
--- Name: tb_user_roles fk19t64ocsol5x06fy2cytp7gey; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_roles fk19t64ocsol5x06fy2cytp7gey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user_roles
@@ -653,7 +653,7 @@ ALTER TABLE ONLY public.tb_user_roles
 
 
 --
--- Name: tb_bus fk5u7ho69v708db1wfmwyxy7ada; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_bus fk5u7ho69v708db1wfmwyxy7ada; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_bus
@@ -661,7 +661,7 @@ ALTER TABLE ONLY public.tb_bus
 
 
 --
--- Name: tb_ticket fk97lwd2e4myiak0iv8liqy6m73; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket fk97lwd2e4myiak0iv8liqy6m73; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_ticket
@@ -669,7 +669,7 @@ ALTER TABLE ONLY public.tb_ticket
 
 
 --
--- Name: tb_agency fkaf52n3hv8gkrwutflsx3dsu0a; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_agency fkaf52n3hv8gkrwutflsx3dsu0a; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_agency
@@ -677,7 +677,7 @@ ALTER TABLE ONLY public.tb_agency
 
 
 --
--- Name: tb_trip fkb9ya2jdoqp7e561bcffkfcg0w; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip fkb9ya2jdoqp7e561bcffkfcg0w; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip
@@ -685,7 +685,7 @@ ALTER TABLE ONLY public.tb_trip
 
 
 --
--- Name: tb_user_roles fkft1jmfcluls775jqp5142wvl8; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_user_roles fkft1jmfcluls775jqp5142wvl8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_user_roles
@@ -693,7 +693,7 @@ ALTER TABLE ONLY public.tb_user_roles
 
 
 --
--- Name: tb_trip_schedule fkh8m8v7xrx1gxk97wmqcgdwkpd; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip_schedule fkh8m8v7xrx1gxk97wmqcgdwkpd; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip_schedule
@@ -701,7 +701,7 @@ ALTER TABLE ONLY public.tb_trip_schedule
 
 
 --
--- Name: tb_trip fklxk3n3ls1rxdlrt0mly1utso; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip fklxk3n3ls1rxdlrt0mly1utso; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip
@@ -709,7 +709,7 @@ ALTER TABLE ONLY public.tb_trip
 
 
 --
--- Name: tb_trip fkmm1rg49eegmxrqb6l0rmds4xf; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip fkmm1rg49eegmxrqb6l0rmds4xf; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip
@@ -717,7 +717,7 @@ ALTER TABLE ONLY public.tb_trip
 
 
 --
--- Name: tb_trip fkn2846c608hiibwh4rfl73ebtl; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_trip fkn2846c608hiibwh4rfl73ebtl; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_trip
@@ -725,28 +725,11 @@ ALTER TABLE ONLY public.tb_trip
 
 
 --
--- Name: tb_ticket fkoa6dths1eu8gnrlchutafn97o; Type: FK CONSTRAINT; Schema: public; Owner: gtiovkmgzlaytp
+-- Name: tb_ticket fkoa6dths1eu8gnrlchutafn97o; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tb_ticket
     ADD CONSTRAINT fkoa6dths1eu8gnrlchutafn97o FOREIGN KEY (user_id) REFERENCES public.tb_user(id);
-
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: gtiovkmgzlaytp
---
-
-REVOKE ALL ON SCHEMA public FROM postgres;
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-GRANT ALL ON SCHEMA public TO gtiovkmgzlaytp;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- Name: LANGUAGE plpgsql; Type: ACL; Schema: -; Owner: postgres
---
-
-GRANT ALL ON LANGUAGE plpgsql TO gtiovkmgzlaytp;
 
 
 --

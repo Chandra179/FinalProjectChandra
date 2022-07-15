@@ -82,7 +82,7 @@ ALTER SEQUENCE public.tb_agency_id_seq OWNED BY public.tb_agency.id;
 
 CREATE TABLE public.tb_bus (
     id bigint NOT NULL,
-    capacity integer,
+    capacity integer NOT NULL,
     code character varying(255),
     make character varying(255),
     agency_id bigint
@@ -188,7 +188,7 @@ CREATE TABLE public.tb_ticket (
     id bigint NOT NULL,
     cancellable boolean,
     journey_date character varying(255),
-    seat_number integer,
+    seat_number integer NOT NULL,
     user_id bigint,
     trip_schedule_id bigint
 );
@@ -261,7 +261,7 @@ ALTER SEQUENCE public.tb_trip_id_seq OWNED BY public.tb_trip.id;
 
 CREATE TABLE public.tb_trip_schedule (
     id bigint NOT NULL,
-    available_seats integer NOT NULL,
+    available_seats integer,
     trip_date character varying(255),
     trip_id bigint
 );
@@ -394,6 +394,143 @@ ALTER TABLE ONLY public.tb_trip_schedule ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.tb_user ALTER COLUMN id SET DEFAULT nextval('public.tb_user_id_seq'::regclass);
+
+
+--
+-- Data for Name: flyway_schema_history; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
+1	1	<< Flyway Baseline >>	BASELINE	<< Flyway Baseline >>	\N	null	2022-07-15 17:41:11.222069	0	t
+\.
+
+
+--
+-- Data for Name: tb_agency; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_agency (id, code, details, name, owner_user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_bus; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_bus (id, capacity, code, make, agency_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_role (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_stop; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_stop (id, code, detail, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_ticket; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_ticket (id, cancellable, journey_date, seat_number, user_id, trip_schedule_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_trip; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_trip (id, fare, journey_time, agency_id, bus_id, dest_stop_id, source_stop_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_trip_schedule; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_trip_schedule (id, available_seats, trip_date, trip_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_user (id, email, first_name, last_name, mobile_number, password, username) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tb_user_roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tb_user_roles (user_id, role_id) FROM stdin;
+\.
+
+
+--
+-- Name: tb_agency_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_agency_id_seq', 1, false);
+
+
+--
+-- Name: tb_bus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_bus_id_seq', 1, false);
+
+
+--
+-- Name: tb_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_role_id_seq', 1, false);
+
+
+--
+-- Name: tb_stop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_stop_id_seq', 1, false);
+
+
+--
+-- Name: tb_ticket_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_ticket_id_seq', 1, false);
+
+
+--
+-- Name: tb_trip_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_trip_id_seq', 1, false);
+
+
+--
+-- Name: tb_trip_schedule_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_trip_schedule_id_seq', 1, false);
+
+
+--
+-- Name: tb_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tb_user_id_seq', 1, false);
 
 
 --

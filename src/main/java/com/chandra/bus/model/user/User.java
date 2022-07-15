@@ -1,5 +1,7 @@
 package com.chandra.bus.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,14 +10,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_user", uniqueConstraints = {
@@ -60,7 +60,7 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 
 	public User(String username, @Email String email, String password, String firstName,
-			String lastName, String mobileNumber) {
+				String lastName, String mobileNumber) {
 		this.username = username;
 		this.email = email;
 		this.password = password;

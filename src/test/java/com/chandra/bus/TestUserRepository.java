@@ -1,22 +1,26 @@
 package com.chandra.bus;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.chandra.bus.model.user.Role;
+import com.chandra.bus.model.user.User;
+import com.chandra.bus.model.user.UserRoles;
+import com.chandra.bus.payload.request.SignupRequest;
+import com.chandra.bus.repository.RoleRepository;
+import com.chandra.bus.repository.UserRepository;
+import com.chandra.bus.service.user.UserService;
+import com.chandra.bus.service.user.UserServiceImpl;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.chandra.bus.model.user.User;
-import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.service.user.UserService;
-import com.chandra.bus.service.user.UserServiceImpl;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class UserTest {
@@ -26,6 +30,12 @@ class UserTest {
 
 	@Mock
 	UserRepository userRepository;
+
+	@Mock
+	PasswordEncoder passwordEncoder;
+
+	@Mock
+	RoleRepository roleRepository;
 
 	@Test
 	public void getAllUser() {
@@ -48,15 +58,33 @@ class UserTest {
 		MatcherAssert.assertThat(actual.get().getUsername(), Matchers.equalTo(datas.get().getUsername()));
 	}
 
+
 	@Test
-	@Disabled
 	public void registerNewUser() {
 
-		final User datas = TestObjectFactory.createUser();
-		Mockito.when(userRepository.save(datas)).thenReturn(datas);
+		// Role userRole = new Role(UserRoles.ROLE_USER);
+		Role adminRole = new Role(UserRoles.ROLE_ADMIN);
 
-		final Optional<User> actual = userRepository.findByUsername(datas.getUsername());
-		MatcherAssert.assertThat(actual.get().getUsername(), Matchers.equalTo(datas.getUsername()));
-		MatcherAssert.assertThat(actual.get().getEmail(), Matchers.equalTo(datas.getEmail()));
+		// List<Role> userRoles = Arrays.asList(userRole, adminRole);
+		Mockito.when(roleRepository.findByName(UserRoles.ROLE_ADMIN)).thenReturn(Optional.of(adminRole));
+
+		User regisUser = new User(
+				"chandra",
+				"chan@gmail.com",
+				"chan12345",
+				"chandra",
+				"aja",
+				"25254324");
+
+		final SignupRequest signupRequest = new SignupRequest(
+				"chandra",
+				"chan@gmail.com",
+				"chandra",
+				"aja",
+				"25254324",
+				Collections.singleton("ROLE_ADMIN"),
+				passwordEncoder.encode("chan12345"));
+
+		Mockito.when(userService.registerNewUser(signupRequest)).thenAnswer(t -> t.getMock());
 	}
 }
