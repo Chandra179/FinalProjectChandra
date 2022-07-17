@@ -1,42 +1,30 @@
 package com.chandra.bus.controller;
 
-import java.text.ParseException;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.LowerUpperValueRequest;
 import com.chandra.bus.payload.request.TicketRequest;
 import com.chandra.bus.payload.response.ResponseHandler;
-import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 import com.chandra.bus.service.ticket.TicketService;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/reservation")
 public class ReservationController {
-
-	@Autowired
-	StopRepository stopRepository;
 
 	@Autowired
 	TripRepository tripRepository;

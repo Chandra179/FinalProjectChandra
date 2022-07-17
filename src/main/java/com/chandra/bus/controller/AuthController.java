@@ -1,29 +1,20 @@
 package com.chandra.bus.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
+import com.chandra.bus.payload.request.LoginRequest;
+import com.chandra.bus.payload.response.JwtResponse;
+import com.chandra.bus.security.jwt.JwtUtils;
+import com.chandra.bus.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.chandra.bus.payload.request.LoginRequest;
-import com.chandra.bus.payload.response.JwtResponse;
-import com.chandra.bus.repository.RoleRepository;
-import com.chandra.bus.repository.UserRepository;
-import com.chandra.bus.security.jwt.JwtUtils;
-import com.chandra.bus.security.services.UserDetailsImpl;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -32,15 +23,6 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	PasswordEncoder encoder;
 
 	@Autowired
 	JwtUtils jwtUtils;

@@ -1,38 +1,22 @@
 package com.chandra.bus.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.SignupRequest;
 import com.chandra.bus.payload.request.UserRequest;
 import com.chandra.bus.payload.response.ResponseHandler;
-import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.service.user.UserService;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600, methods = { RequestMethod.PUT, RequestMethod.POST, RequestMethod.GET })
 @RestController
@@ -40,19 +24,10 @@ import io.swagger.annotations.Authorization;
 public class UserController {
 
 	@Autowired
-	AuthenticationManager authenticationManager;
-
-	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	UserService userService;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	PasswordEncoder encoder;
 
 	@GetMapping("")
 	@ApiOperation(value = "get all user", authorizations = { @Authorization(value = "apiKey") })
