@@ -1,33 +1,28 @@
 package com.chandra.bus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.TripRequest;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Random;
 
 @SpringBootTest
 public class TestObjectFactory {
 
 	public static User createUser() {
-		final User user = new User();
-		user.setUsername("1-8");
-		user.setEmail("sukarang");
-		user.setPassword("Cemahi");
-		user.setFirstName("Cemahi");
-		user.setLastName("Cemahi");
-		user.setMobileNumber("Cemahi");
+		User user = new User(
+				"chandraaa",
+				"chan@gmail.com",
+				"chan12345",
+				"chandra",
+				"aja",
+				"25254324");
 		return user;
 	}
-
 	public static Stop createSourceStop() {
 		final Stop stop = new Stop();
 		stop.setCode("1-7");
@@ -76,26 +71,5 @@ public class TestObjectFactory {
 		trip.setJourneyTime(200);
 		trip.setSourceStop(createSourceStop());
 		return trip;
-	}
-
-	public static List<Trip> createTripList(final int size) {
-		final List<Trip> result = new ArrayList<>();
-		for (int i = 0; i < size; i++) {
-			result.add(createTrip());
-		}
-		return result;
-	}
-
-	public static List<User> createUserList(final int size) {
-		final List<User> result = new ArrayList<>();
-		for (int i = 0; i < size; i++) {
-			result.add(createUser());
-		}
-		return result;
-	}
-
-	@Test
-	public void testCreateProduct() {
-		createTripList(5);
 	}
 }

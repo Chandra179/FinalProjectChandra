@@ -13,22 +13,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class UserTest {
 
 	@InjectMocks
@@ -46,7 +44,12 @@ class UserTest {
 	@Test
 	public void getAllUser() {
 
-		final List<User> datas = TestObjectFactory.createUserList(10);
+		final List<User> userList = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			userList.add(TestObjectFactory.createUser());
+		}
+
+		final List<User> datas = userList;
 		when(userRepository.findAll()).thenReturn(datas);
 
 		final List<User> actual = userRepository.findAll();
@@ -56,12 +59,20 @@ class UserTest {
 	@Test
 	public void getUserById() {
 
-		final Optional<User> datas = Optional.ofNullable(TestObjectFactory.createUser());
-		Long userId = TestObjectFactory.createUser().getId();
-		when(userRepository.findById(userId)).thenReturn(datas);
+		User user = new User(
+				"chandraaa",
+				"chan@gmail.com",
+				passwordEncoder.encode("chan12345"),
+				"chandra",
+				"aja",
+				"25254324");
 
-		final Optional<User> actual = userRepository.findById(userId);
-		assertThat(actual.get().getUsername()).isEqualTo(datas.get().getUsername());
+		final User datas = user;
+		Long userId = user.getId();
+		when(userRepository.findById(userId)).thenReturn(Optional.of(datas));
+
+		final User actual = userRepository.findById(userId).get();
+		assertThat(actual.getUsername()).isEqualTo(datas.getUsername());
 	}
 
 	@Test
