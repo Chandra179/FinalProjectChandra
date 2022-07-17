@@ -8,21 +8,27 @@ import com.chandra.bus.repository.RoleRepository;
 import com.chandra.bus.repository.UserRepository;
 import com.chandra.bus.service.user.UserService;
 import com.chandra.bus.service.user.UserServiceImpl;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class UserTest {
 
 	@InjectMocks
@@ -41,10 +47,10 @@ class UserTest {
 	public void getAllUser() {
 
 		final List<User> datas = TestObjectFactory.createUserList(10);
-		Mockito.when(userRepository.findAll()).thenReturn(datas);
+		when(userRepository.findAll()).thenReturn(datas);
 
 		final List<User> actual = userRepository.findAll();
-		MatcherAssert.assertThat(actual.size(), Matchers.equalTo(datas.size()));
+		assertThat(actual.size()).isEqualTo(datas.size());
 	}
 
 	@Test
@@ -52,39 +58,39 @@ class UserTest {
 
 		final Optional<User> datas = Optional.ofNullable(TestObjectFactory.createUser());
 		Long userId = TestObjectFactory.createUser().getId();
-		Mockito.when(userRepository.findById(userId)).thenReturn(datas);
+		when(userRepository.findById(userId)).thenReturn(datas);
 
 		final Optional<User> actual = userRepository.findById(userId);
-		MatcherAssert.assertThat(actual.get().getUsername(), Matchers.equalTo(datas.get().getUsername()));
+		assertThat(actual.get().getUsername()).isEqualTo(datas.get().getUsername());
 	}
-
 
 	@Test
 	public void registerNewUser() {
 
-		// Role userRole = new Role(UserRoles.ROLE_USER);
 		Role adminRole = new Role(UserRoles.ROLE_ADMIN);
-
-		// List<Role> userRoles = Arrays.asList(userRole, adminRole);
-		Mockito.when(roleRepository.findByName(UserRoles.ROLE_ADMIN)).thenReturn(Optional.of(adminRole));
+		when(roleRepository.findByName(UserRoles.ROLE_ADMIN)).thenReturn(Optional.of(adminRole));
 
 		User regisUser = new User(
-				"chandra",
+				"chandraaa",
 				"chan@gmail.com",
-				"chan12345",
+				passwordEncoder.encode("chan12345"),
 				"chandra",
 				"aja",
 				"25254324");
 
 		final SignupRequest signupRequest = new SignupRequest(
-				"chandra",
-				"chan@gmail.com",
+				"dsadsadasd",
+				"chaasdasdasn12312@gmail.com",
 				"chandra",
 				"aja",
 				"25254324",
 				Collections.singleton("ROLE_ADMIN"),
 				passwordEncoder.encode("chan12345"));
 
-		Mockito.when(userService.registerNewUser(signupRequest)).thenAnswer(t -> t.getMock());
+		doReturn(regisUser).when(userRepository).save(any());
+
+		User savedUser = userService.registerNewUser(signupRequest);
+		assertNotNull(savedUser);
+		assertThat(regisUser.getUsername()).isEqualTo(savedUser.getUsername());
 	}
 }

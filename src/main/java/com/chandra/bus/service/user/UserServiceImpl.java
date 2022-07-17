@@ -1,9 +1,12 @@
 package com.chandra.bus.service.user;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
+import com.chandra.bus.model.user.Role;
+import com.chandra.bus.model.user.User;
+import com.chandra.bus.model.user.UserRoles;
+import com.chandra.bus.payload.request.SignupRequest;
+import com.chandra.bus.payload.request.UserRequest;
+import com.chandra.bus.repository.RoleRepository;
+import com.chandra.bus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -12,13 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.chandra.bus.model.user.Role;
-import com.chandra.bus.model.user.User;
-import com.chandra.bus.model.user.UserRoles;
-import com.chandra.bus.payload.request.SignupRequest;
-import com.chandra.bus.payload.request.UserRequest;
-import com.chandra.bus.repository.RoleRepository;
-import com.chandra.bus.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Class untuk handle User
