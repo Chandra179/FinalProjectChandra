@@ -1,12 +1,5 @@
 package com.chandra.bus.service.trip;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.model.bus.Stop;
@@ -16,9 +9,14 @@ import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
 import com.chandra.bus.repository.StopRepository;
 import com.chandra.bus.repository.TripRepository;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 /**
  * Class untuk handling Trip
@@ -54,7 +52,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
-	public CollectionOfId checkingIfIdExist(Optional<Agency> agency, TripRequest tripRequest) {
+	public CollectionOfId checkIfIdExist(Optional<Agency> agency, TripRequest tripRequest) {
 		if (!agency.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Agency not found");
 		}
@@ -88,23 +86,18 @@ public class TripServiceImpl implements TripService {
 		// TODO Auto-generated method stub
 
 		Optional<Agency> agency = agencyRepository.findById(tripRequest.getAgencyId());
-		CollectionOfId collectionOfId = checkingIfIdExist(agency, tripRequest);
+		CollectionOfId collectionOfId = checkIfIdExist(agency, tripRequest);
 
-		try {
-			Trip trip = new Trip(
-					tripRequest.getFare(),
-					tripRequest.getJourneyTime(),
-					collectionOfId.getSourceStop(),
-					collectionOfId.getDestStop(),
-					collectionOfId.getBus(),
-					agency.get());
+		Trip trip = new Trip(
+				tripRequest.getFare(),
+				tripRequest.getJourneyTime(),
+				collectionOfId.getSourceStop(),
+				collectionOfId.getDestStop(),
+				collectionOfId.getBus(),
+				agency.get());
 
-			Trip savedTrip = tripRepository.save(trip);
-			return savedTrip;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Trip savedTrip = tripRepository.save(trip);
+		return savedTrip;
 	}
 
 	@Override
@@ -117,21 +110,16 @@ public class TripServiceImpl implements TripService {
 		}
 
 		Optional<Agency> agency = agencyRepository.findById(tripRequest.getAgencyId());
-		CollectionOfId collectionOfId = checkingIfIdExist(agency, tripRequest);
+		CollectionOfId collectionOfId = checkIfIdExist(agency, tripRequest);
 
-		try {
-			trip.get().setFare(tripRequest.getFare());
-			trip.get().setJourneyTime(tripRequest.getJourneyTime());
-			trip.get().setSourceStop(collectionOfId.getSourceStop());
-			trip.get().setDestStop(collectionOfId.getDestStop());
-			trip.get().setBus(collectionOfId.getBus());
-			trip.get().setAgency(agency.get());
+		trip.get().setFare(tripRequest.getFare());
+		trip.get().setJourneyTime(tripRequest.getJourneyTime());
+		trip.get().setSourceStop(collectionOfId.getSourceStop());
+		trip.get().setDestStop(collectionOfId.getDestStop());
+		trip.get().setBus(collectionOfId.getBus());
+		trip.get().setAgency(agency.get());
 
-			Trip updatedTrip = tripRepository.save(trip.get());
-			return updatedTrip;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Trip updatedTrip = tripRepository.save(trip.get());
+		return updatedTrip;
 	}
 }

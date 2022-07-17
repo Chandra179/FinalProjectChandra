@@ -1,17 +1,5 @@
 package com.chandra.bus.service.ticket;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.chandra.bus.model.bus.Ticket;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.model.user.User;
@@ -19,8 +7,18 @@ import com.chandra.bus.payload.request.TicketRequest;
 import com.chandra.bus.repository.TicketRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
 import com.chandra.bus.repository.UserRepository;
-
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * Class untuk handling Ticket
@@ -102,29 +100,24 @@ public class TicketServiceImpl implements TicketService {
 
 		Optional<User> user = checkIfUserPresent(currentUser);
 		Optional<TripSchedule> tripSchedule = checkIfTripScheduleAvailable(ticketRequest);
-		
-		try {
-			Ticket ticket = new Ticket()
-					// kursi passenger dimulai dari descending 30, 29, 28, .... 1
-					.setSeatNumber(tripSchedule.get().getTripDetail().getBus().getCapacity() - tripSchedule.get().getAvailableSeats())
-					.setCancellable(false)
-					.setJourneyDate(ticketRequest.getJourneyDate())
-					.setPassenger(user.get())
-					.setTripSchedule(tripSchedule.get());
 
-			ticketRepository.save(ticket);
+		Ticket ticket = new Ticket()
+				// kursi passenger dimulai dari descending 30, 29, 28, .... 1
+				.setSeatNumber(tripSchedule.get().getTripDetail().getBus().getCapacity() - tripSchedule.get().getAvailableSeats())
+				.setCancellable(false)
+				.setJourneyDate(ticketRequest.getJourneyDate())
+				.setPassenger(user.get())
+				.setTripSchedule(tripSchedule.get());
 
-			// setiap (1) tiket yang dibeli akan mengurangi kursi sebanyak (1)
-			tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1);
+		ticketRepository.save(ticket);
 
-			// update trip schedule
-			tripScheduleRepository.save(tripSchedule.get());
+		// setiap (1) tiket yang dibeli akan mengurangi kursi sebanyak (1)
+		tripSchedule.get().setAvailableSeats(tripSchedule.get().getAvailableSeats() - 1);
 
-			return ticket;
-			
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		// update trip schedule
+		tripScheduleRepository.save(tripSchedule.get());
+
+		return ticket;
 	}
 
 	/**

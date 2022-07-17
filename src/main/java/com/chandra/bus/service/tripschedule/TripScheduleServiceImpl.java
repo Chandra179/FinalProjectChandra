@@ -1,21 +1,20 @@
 package com.chandra.bus.service.tripschedule;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.chandra.bus.model.bus.Trip;
 import com.chandra.bus.model.bus.TripSchedule;
 import com.chandra.bus.payload.request.TripScheduleRequest;
 import com.chandra.bus.repository.TripRepository;
 import com.chandra.bus.repository.TripScheduleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * Class untuk handling Trip Schedule
@@ -68,20 +67,15 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 
 		String requestDate = tripScheduleRequest.getTripDate();
 		String checkedDate = checkIfDateIsGreaterThanToday(requestDate);
-		
-		try {
-			TripSchedule tripSchedule = new TripSchedule(
-					checkedDate,
-					tripScheduleRequest.getAvailableSeats(),
-					trip.get());
 
-			TripSchedule newTrip = tripScheduleRepository.save(tripSchedule);
+		TripSchedule tripSchedule = new TripSchedule(
+				checkedDate,
+				tripScheduleRequest.getAvailableSeats(),
+				trip.get());
 
-			return newTrip;
+		TripSchedule newTrip = tripScheduleRepository.save(tripSchedule);
 
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		return newTrip;
 	}
 
 	/**
@@ -108,20 +102,15 @@ public class TripScheduleServiceImpl implements TripScheduleService {
 
 		String requestDate = tripScheduleRequest.getTripDate();
 		String checkedDate = checkIfDateIsGreaterThanToday(requestDate);
-		
-		try {
-			TripSchedule updatedTrip = new TripSchedule(
-					checkedDate,
-					tripScheduleRequest.getAvailableSeats(),
-					trip.get());
 
-			TripSchedule savedTrip = tripScheduleRepository.save(updatedTrip);
+		TripSchedule updatedTrip = new TripSchedule(
+				checkedDate,
+				tripScheduleRequest.getAvailableSeats(),
+				trip.get());
 
-			return savedTrip;
+		TripSchedule savedTrip = tripScheduleRepository.save(updatedTrip);
 
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		return savedTrip;
 	}
 
 }

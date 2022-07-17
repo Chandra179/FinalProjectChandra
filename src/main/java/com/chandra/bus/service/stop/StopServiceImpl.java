@@ -1,15 +1,14 @@
 package com.chandra.bus.service.stop;
 
-import java.util.Optional;
-
+import com.chandra.bus.model.bus.Stop;
+import com.chandra.bus.payload.request.StopRequest;
+import com.chandra.bus.repository.StopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.chandra.bus.model.bus.Stop;
-import com.chandra.bus.payload.request.StopRequest;
-import com.chandra.bus.repository.StopRepository;
+import java.util.Optional;
 
 /**
  * Class untuk handling Bus Stop
@@ -30,14 +29,10 @@ public class StopServiceImpl implements StopService {
 	 */
 	@Override
 	public Stop addNewStop(StopRequest stopReq) {
-		try {
-			Stop stop = new Stop(stopReq.getCode(), stopReq.getName(), stopReq.getDetail());
-			Stop savedStop = stopRepository.save(stop);
-			return savedStop;
 
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Stop stop = new Stop(stopReq.getCode(), stopReq.getName(), stopReq.getDetail());
+		Stop savedStop = stopRepository.save(stop);
+		return savedStop;
 	}
 
 	/**
@@ -56,17 +51,13 @@ public class StopServiceImpl implements StopService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No stop found");
 		}
 
-		try {
-			stop.get().setCode(stopReq.getCode());
-			stop.get().setName(stopReq.getName());
-			stop.get().setDetail(stopReq.getDetail());
+		stop.get().setCode(stopReq.getCode());
+		stop.get().setName(stopReq.getName());
+		stop.get().setDetail(stopReq.getDetail());
 
-			Stop savedStop = stopRepository.save(stop.get());
-			return savedStop;
+		Stop savedStop = stopRepository.save(stop.get());
+		return savedStop;
 
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
 	}
 
 }
