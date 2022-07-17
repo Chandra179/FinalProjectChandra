@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
@@ -67,9 +67,6 @@ class UserTest {
 	@Test
 	public void registerNewUser() {
 
-		Role adminRole = new Role(UserRoles.ROLE_ADMIN);
-		when(roleRepository.findByName(UserRoles.ROLE_ADMIN)).thenReturn(Optional.of(adminRole));
-
 		User regisUser = new User(
 				"chandraaa",
 				"chan@gmail.com",
@@ -87,6 +84,9 @@ class UserTest {
 				Collections.singleton("ROLE_ADMIN"),
 				passwordEncoder.encode("chan12345"));
 
+
+		Role adminRole = new Role(UserRoles.ROLE_ADMIN);
+		doReturn(Optional.of(adminRole)).when(roleRepository).findByName(UserRoles.ROLE_ADMIN);
 		doReturn(regisUser).when(userRepository).save(any());
 
 		User savedUser = userService.registerNewUser(signupRequest);

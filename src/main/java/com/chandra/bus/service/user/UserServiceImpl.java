@@ -108,13 +108,8 @@ public class UserServiceImpl implements UserService {
 		Set<Role> roles = handleUserRole(strRoles);
 
 		user.setRoles(roles);
-
-		try {
-			User savedUser = userRepository.save(user);
-			return savedUser;
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		User savedUser = userRepository.save(user);
+		return savedUser;
 	}
 
 	/**

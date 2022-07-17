@@ -1,17 +1,16 @@
 package com.chandra.bus.service.agency;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.user.User;
 import com.chandra.bus.payload.request.AgencyRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 /**
  * Class untuk handling Agency
@@ -42,19 +41,14 @@ public class AgencyServiceImpl implements AgencyService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
 		}
 
-		try {
-			Agency agency = new Agency(
-					agencyRequest.getCode(),
-					agencyRequest.getDetails(),
-					agencyRequest.getName(),
-					user.get());
+		Agency agency = new Agency(
+				agencyRequest.getCode(),
+				agencyRequest.getDetails(),
+				agencyRequest.getName(),
+				user.get());
 
-			Agency savedAgency = agencyRepository.save(agency);
-			return savedAgency;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Agency savedAgency = agencyRepository.save(agency);
+		return savedAgency;
 	}
 
 	/**
@@ -78,18 +72,12 @@ public class AgencyServiceImpl implements AgencyService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Agency not found");
 		}
 
-		try {
-			agency.get().setCode(agencyRequest.getCode());
-			agency.get().setDetails(agencyRequest.getDetails());
-			agency.get().setName(agencyRequest.getName());
-			agency.get().setOwner(user.get());
+		agency.get().setCode(agencyRequest.getCode());
+		agency.get().setDetails(agencyRequest.getDetails());
+		agency.get().setName(agencyRequest.getName());
+		agency.get().setOwner(user.get());
 
-			Agency updatedAgency = agencyRepository.save(agency.get());
-			return updatedAgency;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Agency updatedAgency = agencyRepository.save(agency.get());
+		return updatedAgency;
 	}
-
 }

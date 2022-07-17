@@ -1,17 +1,16 @@
 package com.chandra.bus.service.bus;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.chandra.bus.model.bus.Agency;
 import com.chandra.bus.model.bus.Bus;
 import com.chandra.bus.payload.request.BusRequest;
 import com.chandra.bus.repository.AgencyRepository;
 import com.chandra.bus.repository.BusRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 /**
  * Class untuk handling Bus
@@ -42,19 +41,14 @@ public class BusServiceImpl implements BusService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No agency found");
 		}
 
-		try {
-			Bus bus = new Bus(
-					busRequest.getCode(),
-					busRequest.getCapacity(),
-					busRequest.getMake(), 
-					agency.get());
+		Bus bus = new Bus(
+				busRequest.getCode(),
+				busRequest.getCapacity(),
+				busRequest.getMake(),
+				agency.get());
 
-			Bus savedBus = busRepository.save(bus);
-			return savedBus;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Bus savedBus = busRepository.save(bus);
+		return savedBus;
 	}
 
 	/**
@@ -77,17 +71,12 @@ public class BusServiceImpl implements BusService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No bus found");
 		}
 
-		try {
-			bus.get().setCode(busRequest.getCode());
-			bus.get().setCapacity(busRequest.getCapacity());
-			bus.get().setMake(busRequest.getMake());
-			bus.get().setAgency(agency.get());
+		bus.get().setCode(busRequest.getCode());
+		bus.get().setCapacity(busRequest.getCapacity());
+		bus.get().setMake(busRequest.getMake());
+		bus.get().setAgency(agency.get());
 
-			Bus savedBus = busRepository.save(bus.get());
-			return savedBus;
-
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
-		}
+		Bus savedBus = busRepository.save(bus.get());
+		return savedBus;
 	}
 }
