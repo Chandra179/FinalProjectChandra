@@ -23,8 +23,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserTest {
@@ -76,7 +75,7 @@ class UserTest {
 	}
 
 	@Test
-	public void registerNewUser() {
+	public void registerUserRoleAdmin() {
 
 		User regisUser = new User(
 				"chandraaa",
@@ -103,5 +102,78 @@ class UserTest {
 		User savedUser = userService.registerNewUser(signupRequest);
 		assertNotNull(savedUser);
 		assertThat(signupRequest.getUsername()).isEqualTo(savedUser.getUsername());
+	}
+
+	@Test
+	public void registerserRoleUser() {
+
+		User regisUser = new User(
+				"chandraaa",
+				"chan@gmail.com",
+				passwordEncoder.encode("chan12345"),
+				"chandra",
+				"aja",
+				"25254324");
+
+		final SignupRequest signupRequest = new SignupRequest(
+				"chandraaa",
+				"chan@gmail.com",
+				"chandra",
+				"aja",
+				"25254324",
+				Collections.singleton("ROLE_USER"),
+				passwordEncoder.encode("chan12345"));
+
+		Role userRole = new Role(UserRoles.ROLE_USER);
+		doReturn(Optional.of(userRole)).when(roleRepository).findByName(UserRoles.ROLE_USER);
+		doReturn(regisUser).when(userRepository).save(any());
+
+		User savedUser = userService.registerNewUser(signupRequest);
+		assertNotNull(savedUser);
+		assertThat(signupRequest.getUsername()).isEqualTo(savedUser.getUsername());
+	}
+
+	@Test
+	public void registerUserRoleEmpty() {
+
+		User regisUser = new User(
+				"chandraaa",
+				"chan@gmail.com",
+				passwordEncoder.encode("chan12345"),
+				"chandra",
+				"aja",
+				"25254324");
+
+		final SignupRequest signupRequest = new SignupRequest(
+				"chandraaa",
+				"chan@gmail.com",
+				"chandra",
+				"aja",
+				"25254324",
+				Collections.emptySet(),
+				passwordEncoder.encode("chan12345"));
+
+		Role userRole = new Role(UserRoles.ROLE_USER);
+		doReturn(Optional.of(userRole)).when(roleRepository).findByName(UserRoles.ROLE_USER);
+		doReturn(regisUser).when(userRepository).save(any());
+
+		User savedUser = userService.registerNewUser(signupRequest);
+		assertNotNull(savedUser);
+		assertThat(signupRequest.getUsername()).isEqualTo(savedUser.getUsername());
+	}
+
+	@Test
+	public void registerUsernameIsAlreadyTaken() {
+
+	}
+
+	@Test
+	public void registerEmailIsAlreadyTaken() {
+
+	}
+
+	@Test
+	public void updatingUser() {
+
 	}
 }
