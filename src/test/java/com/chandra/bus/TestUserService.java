@@ -76,8 +76,8 @@ class UserTest {
 				"25254324");
 
 		final SignupRequest signupRequest = new SignupRequest(
-				"dsadsadasd",
-				"chaasdasdasn12312@gmail.com",
+				"chandraaa",
+				"chan@gmail.com",
 				"chandra",
 				"aja",
 				"25254324",
@@ -91,6 +91,6 @@ class UserTest {
 
 		User savedUser = userService.registerNewUser(signupRequest);
 		assertNotNull(savedUser);
-		assertThat(regisUser.getUsername()).isEqualTo(savedUser.getUsername());
+		assertThat(signupRequest.getUsername()).isEqualTo(savedUser.getUsername());
 	}
 }
